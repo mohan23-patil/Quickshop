@@ -11,24 +11,10 @@ public class DBConnection
 
     private DBConnection(){}
 
-    public static Connection getConnection() {
+    public static Connection getConnection()
+    {
         try
         {
-//            if (con == null)
-//            {
-////                Class.forName("oracle.jdbc.OracleDriver");
-////                con = DriverManager.getConnection(
-////                        "jdbc:oracle:thin:@host.docker.internal:1521:xe",
-////                        "system",
-////                        "1234"
-////                );
-////                System.out.println("Connection established SuccessFully");
-//
-//            }
-//            else
-//            {
-//                return con;
-//            }
             if (con == null)
             {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -38,11 +24,24 @@ public class DBConnection
                 InputStream inputStream =
                         DBConnection.class.getClassLoader().getResourceAsStream("db.properties");
 
-                properties.load(inputStream);
+                String url;
+                String username;
+                String password;
 
-                String url = properties.getProperty("db.url");
-                String username = properties.getProperty("db.username");
-                String password = properties.getProperty("db.password");
+                if (inputStream != null)
+                {
+                    properties.load(inputStream);
+
+                    url = properties.getProperty("db.url");
+                    username = properties.getProperty("db.username");
+                    password = properties.getProperty("db.password");
+                }
+                else
+                {
+                    url = System.getenv("DB_URL");
+                    username = System.getenv("DB_USERNAME");
+                    password = System.getenv("DB_PASSWORD");
+                }
 
                 con = DriverManager.getConnection(url, username, password);
 
@@ -52,10 +51,12 @@ public class DBConnection
             {
                 return con;
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
+
         return con;
     }
 }
