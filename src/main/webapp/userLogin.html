@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+    <title>Quick Shop - Customer Sign In</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <style>
+
+        :root {
+            --qs-navy-dark: #131921;
+            --qs-navy-medium: #232f3e;
+            --qs-amber-light: #febd69;
+            --qs-amber-main: #f3a847;
+            --qs-yellow-btn: #ffd814;
+            --qs-yellow-hover: #f7ca00;
+            --qs-orange-accent: #ffa41c;
+            --qs-bg-neutral: #eaeded;
+            --qs-text-primary: #0f1111;
+            --qs-text-muted: #565959;
+            --qs-border-color: #d5d9d9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: var(--qs-bg-neutral);
+            color: var(--qs-text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ================= HEADER ================= */
+
+        .qs-navbar {
+            background-color: var(--qs-navy-dark);
+            border-bottom: 2px solid var(--qs-amber-light);
+        }
+
+        .qs-logo-brand {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .qs-logo-brand span.highlight {
+            color: var(--qs-amber-light);
+        }
+
+        .qs-nav-link {
+            color: #d1d5db;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: color 0.15s ease-in-out;
+        }
+
+        .qs-nav-link:hover {
+            color: var(--qs-amber-light);
+        }
+
+        /* ================= MAIN ================= */
+
+        .auth-main {
+            flex: 1;
+        }
+
+        .auth-container {
+            max-width: 1250px;
+        }
+
+        /* ================= DIAMOND ================= */
+
+        .diamond-stage-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .diamond-outer-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 35px auto 55px;
+        }
+
+        .diamond-box {
+            width: 100%;
+            height: 100%;
+            transform: rotate(45deg);
+            border-radius: 36px;
+            overflow: hidden;
+            border: 3px solid #f3a847;
+            background: linear-gradient(135deg, #131921 0%, #232f3e 100%);
+            box-shadow:
+                0 12px 35px rgba(19, 25, 33, 0.25),
+                0 0 25px rgba(254, 189, 105, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: gentleFloat 5s ease-in-out infinite alternate;
+        }
+
+        .diamond-image-content {
+            width: 142%;
+            height: 142%;
+            transform: rotate(-45deg);
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        @keyframes gentleFloat {
+
+            0% {
+                transform: rotate(45deg) translateY(0);
+            }
+
+            100% {
+                transform: rotate(45deg) translateY(-10px);
+            }
+
+        }
+
+        .hero-title {
+            color: var(--qs-navy-medium);
+            font-size: 1.15rem;
+        }
+
+        .hero-description {
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .perk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background-color: #ffffff;
+            border: 1px solid #d5d9d9;
+            border-radius: 20px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--qs-navy-medium);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .qs-auth-card {
+            background-color: #ffffff;
+            border: 1px solid var(--qs-border-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .qs-auth-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.11);
+        }
+
+        .login-card-header {
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .login-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background-color: #fff3cd;
+            color: #f3a847;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .login-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .login-subtitle {
+            color: var(--qs-text-muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .secure-badge {
+            white-space: nowrap;
+            font-size: 0.72rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--qs-text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            min-height: 45px;
+            border: 1px solid #888c8c;
+            border-radius: 6px;
+            padding: 0.6rem 0.75rem;
+            font-size: 0.9rem;
+            color: #111;
+        }
+
+        .form-control:focus {
+            border-color: #e77600;
+            box-shadow: 0 0 0 3px rgba(228, 121, 17, 0.25);
+        }
+
+        .login-options {
+            font-size: 0.78rem;
+        }
+
+        .login-options a {
+            color: #007185;
+            text-decoration: none;
+        }
+
+        .login-options a:hover {
+            color: #c7511f;
+            text-decoration: underline;
+        }
+
+        .btn-login-action {
+            min-height: 46px;
+            background: linear-gradient(to bottom, #ffd814, #f7ca00);
+            border: 1px solid #fcd200;
+            color: #0f1111;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+        }
+
+        .btn-login-action:hover {
+            background: linear-gradient(to bottom, #f7ca00, #f0b800);
+            border-color: #e0ac00;
+            color: #0f1111;
+            transform: translateY(-1px);
+        }
+
+        .login-help {
+            text-align: center;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid #eeeeee;
+            font-size: 0.78rem;
+            color: var(--qs-text-muted);
+        }
+
+        .login-help a {
+            color: #007185;
+            text-decoration: none;
+        }
+
+        .login-help a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .qs-footer {
+            background-color: var(--qs-navy-dark);
+            color: #9ca3af;
+            font-size: 0.8125rem;
+            border-top: 1px solid #374151;
+        }
+
+        .qs-footer a {
+            color: #d1d5db;
+            text-decoration: none;
+            margin: 0 0.45rem;
+        }
+
+        .qs-footer a:hover {
+            color: var(--qs-amber-light);
+            text-decoration: underline;
+        }
+
+        /* ================= LAPTOP ================= */
+
+        @media (min-width: 992px) {
+
+            .auth-main {
+                display: flex;
+                align-items: center;
+            }
+
+            .diamond-stage-container {
+                padding-right: 2rem;
+            }
+
+            .diamond-outer-wrapper {
+                width: 350px;
+                height: 350px;
+            }
+
+            .login-wrapper {
+                max-width: 620px;
+            }
+
+        }
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 991.98px) {
+
+            .auth-main {
+                padding-top: 25px;
+                padding-bottom: 25px;
+            }
+
+            .diamond-stage-container {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .diamond-outer-wrapper {
+                width: 270px;
+                height: 270px;
+                margin-top: 25px;
+                margin-bottom: 45px;
+            }
+
+            .login-wrapper {
+                max-width: 700px;
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 767.98px) {
+
+            .qs-navbar {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .qs-logo-brand {
+                font-size: 1.3rem;
+            }
+
+            .qs-logo-brand i {
+                font-size: 1.35rem !important;
+            }
+
+            .auth-main {
+                padding-top: 15px;
+                padding-bottom: 20px;
+            }
+
+            .diamond-stage-container {
+                padding: 10px 8px 25px;
+            }
+
+            .diamond-outer-wrapper {
+                width: 230px;
+                height: 230px;
+                margin-top: 20px;
+                margin-bottom: 38px;
+            }
+
+            .diamond-box {
+                border-radius: 28px;
+            }
+
+            .hero-title {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 0.78rem !important;
+                line-height: 1.5;
+                padding: 0 15px;
+            }
+
+            .perk-badge {
+                font-size: 0.7rem;
+                padding: 0.35rem 0.65rem;
+            }
+
+            .login-wrapper {
+                width: 100%;
+            }
+
+            .qs-auth-card {
+                padding: 20px 17px;
+                border-radius: 10px;
+            }
+
+            .login-card-header {
+                align-items: flex-start !important;
+            }
+
+            .login-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .login-title {
+                font-size: 1rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.75rem;
+            }
+
+            .secure-badge {
+                font-size: 0.65rem;
+                padding: 5px 7px !important;
+            }
+
+            .form-label {
+                font-size: 0.8rem;
+            }
+
+            .form-control {
+                min-height: 43px;
+                font-size: 0.85rem;
+            }
+
+            .btn-login-action {
+                min-height: 44px;
+                font-size: 0.88rem;
+            }
+
+            .login-options {
+                font-size: 0.72rem;
+            }
+
+            .qs-footer {
+                font-size: 0.72rem;
+            }
+
+            .qs-footer a {
+                display: inline-block;
+                margin: 2px 3px;
+            }
+
+        }
+
+        /* ================= SMALL MOBILE ================= */
+
+        @media (max-width: 480px) {
+
+            .qs-logo-brand {
+                font-size: 1.2rem;
+            }
+
+            .diamond-outer-wrapper {
+                width: 190px;
+                height: 190px;
+                margin-top: 15px;
+                margin-bottom: 32px;
+            }
+
+            .diamond-box {
+                border-width: 2px;
+                border-radius: 22px;
+            }
+
+            .hero-title {
+                font-size: 0.92rem;
+            }
+
+            .hero-description {
+                font-size: 0.72rem !important;
+                padding: 0 8px;
+            }
+
+            .perk-badge {
+                width: 100%;
+                justify-content: center;
+                max-width: 280px;
+            }
+
+            .qs-auth-card {
+                padding: 17px 14px;
+            }
+
+            .login-card-header {
+                gap: 10px;
+            }
+
+            .login-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .login-title {
+                font-size: 0.92rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.7rem;
+            }
+
+            .secure-badge {
+                display: none;
+            }
+
+            .login-options {
+                align-items: flex-start !important;
+                gap: 8px;
+            }
+
+            .login-options .form-check {
+                max-width: 65%;
+            }
+
+            .btn-login-action {
+                font-size: 0.82rem;
+            }
+
+            .qs-footer p {
+                font-size: 0.68rem !important;
+                line-height: 1.4;
+            }
+
+        }
+
+        /* ================= VERY SMALL MOBILE ================= */
+
+        @media (max-width: 360px) {
+
+            .diamond-outer-wrapper {
+                width: 165px;
+                height: 165px;
+            }
+
+            .qs-auth-card {
+                padding: 15px 12px;
+            }
+
+            .login-title {
+                font-size: 0.86rem;
+            }
+
+            .login-subtitle {
+                font-size: 0.66rem;
+            }
+
+            .form-control {
+                min-height: 41px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="qs-navbar py-2 px-3">
+
+    <div class="container-fluid d-flex flex-wrap align-items-center justify-content-between">
+
+        <a class="qs-logo-brand"
+           href="#"
+           title="Quick Shop Home">
+
+            <i class="bi bi-cart3 text-warning fs-3"></i>
+
+            <span>
+                Quick<span class="highlight">Shop</span>
+            </span>
+
+        </a>
+    </div>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="auth-main py-4 py-lg-5">
+
+    <div class="container auth-container">
+
+        <div class="row g-4 g-lg-5 align-items-center">
+
+            <!-- ================= LEFT SIDE ================= -->
+
+            <div class="col-12 col-lg-5 text-center">
+
+                <div class="diamond-stage-container">
+
+                    <div class="diamond-outer-wrapper"
+                         title="Quick Shop Online Shopping Experience">
+
+                        <div class="diamond-box">
+
+                            <img
+                                    alt="Quick Shop Online Shopping Experience"
+                                    class="diamond-image-content"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5vpT2socJypATd1G3tug51tzKF-3-Pr-Nm5IhJRf70x0QkIH9z7_7DEhALoq3zDxSV6-5WUTXiC0Rw1FS80bRpAztmWBQav8NibzWz9MrRfTSWhsrkYb46A-d0986l6bvRARx4SBUmcYs7KXT0geK-n6MOkXtyWAOjioXh4xkzRwd3qfkbGVfrLx6Pk_7hdwhkwLDs-fz_WcrUD9Rn50SnXjiPyWavFw3z_sukEzWpHRKynTU91c"/>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-2 text-center">
+
+                        <h5 class="fw-bold mb-1 hero-title">
+                            The Everything Store at Your Fingertips
+                        </h5>
+
+                        <p class="text-secondary small mb-3 hero-description">
+                            Fast delivery, low prices, and secure order tracking worldwide.
+                        </p>
+
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+
+                            <span class="perk-badge">
+                                <i class="bi bi-lightning-charge-fill text-warning"></i>
+                                Fast Prime Delivery
+                            </span>
+
+                            <span class="perk-badge">
+                                <i class="bi bi-lock-fill text-success"></i>
+                                256-Bit SSL Protection
+                            </span>
+
+                            <span class="perk-badge">
+                                <i class="bi bi-arrow-counterclockwise text-primary"></i>
+                                30-Day Easy Returns
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RIGHT SIDE LOGIN ================= -->
+
+            <div class="col-12 col-lg-7">
+
+                <div class="login-wrapper">
+
+                    <section class="qs-auth-card">
+
+                        <div class="d-flex align-items-center justify-content-between gap-3 login-card-header">
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                <div class="login-icon">
+
+                                    <i class="bi bi-box-arrow-in-right"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h2 class="login-title">
+                                        Already a Customer? Sign In
+                                    </h2>
+
+                                    <div class="login-subtitle">
+                                        Access your orders, wishlist, and saved payment methods.
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 secure-badge">
+
+                                <i class="bi bi-shield-lock-fill me-1"></i>
+                                Secure
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- ================= LOGIN FORM ================= -->
+
+                        <form action="userLogin" method="POST">
+
+                            <div class="row g-3">
+
+                                <div class="col-12">
+
+                                    <label class="form-label"
+                                           for="login-identity">
+
+                                        Your User Name
+
+                                    </label>
+
+                                    <input
+                                            class="form-control"
+                                            id="login-identity"
+                                            name="emailId"
+                                            placeholder="Enter registered email"
+                                            required
+                                            type="text">
+
+                                </div>
+
+
+                                <div class="col-12">
+
+                                    <label class="form-label"
+                                           for="login-password">
+
+                                        Password
+
+                                    </label>
+
+                                    <input
+                                            class="form-control"
+                                            id="login-password"
+                                            name="password"
+                                            placeholder="Enter your password"
+                                            required
+                                            type="password">
+
+                                </div>
+
+
+
+
+
+                                <div class="col-12 mt-3">
+
+                                    <button
+                                            class="btn btn-login-action w-100"
+                                            type="submit">
+
+                                        <i class="bi bi-arrow-right-square me-1"></i>
+
+                                        Sign In to Your Account
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+
+                        <div class="login-help">
+
+                            New to Quick Shop?
+
+                            <a href="userRegistation.html">
+                                Create your account
+                            </a>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="qs-footer py-3 mt-auto">
+
+    <div class="container text-center">
+        <p class="mb-0 text-secondary"
+           style="font-size: 0.75rem;">
+
+            © 2026 Quickshop.com dev-Mohan Patil
+
+        </p>
+
+    </div>
+
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuickShop - AdminRegistration & adminlogin.html</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
+    <style>
+
+        :root {
+            --amazon-dark: #131921;
+            --amazon-navy: #232f3e;
+            --amazon-hover: #37475a;
+            --amazon-gold: #febd69;
+            --amazon-orange: #ff9900;
+            --amazon-orange-hover: #fa8900;
+            --amazon-bg: #eaeded;
+            --amazon-card-border: #d5d9d9;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            background-color: var(--amazon-bg);
+            color: #0f1111;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .header-main {
+            background-color: var(--amazon-dark);
+            border-bottom: 3px solid var(--amazon-orange);
+        }
+
+
+        .brand-logo {
+            color: #ffffff;
+            font-size: 1.65rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+        }
+
+
+        .brand-logo span.accent {
+            color: var(--amazon-orange);
+        }
+
+
+        .brand-badge {
+            background-color: var(--amazon-orange);
+            color: #111;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 6px;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main-wrapper {
+            flex: 1 0 auto;
+            width: 100%;
+        }
+
+
+        .main-container {
+            width: 100%;
+        }
+
+
+        /* ================= CARDS ================= */
+
+        .wireframe-card {
+            background: #ffffff;
+            border: 1px solid var(--amazon-card-border);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(15, 17, 17, 0.08);
+            transition: all 0.2s ease-in-out;
+        }
+
+
+        .wireframe-card:hover {
+            box-shadow: 0 5px 15px rgba(15, 17, 17, 0.12);
+        }
+
+
+        /* ================= BUTTONS ================= */
+
+        .btn-amazon-primary {
+            background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+            border: 1px solid #a88734;
+            border-top-color: #9c7e31;
+            border-bottom-color: #846a29;
+            color: #111111;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+            transition: all 0.15s ease-in-out;
+        }
+
+
+        .btn-amazon-primary:hover {
+            background: linear-gradient(to bottom, #f5d78e, #eeb933);
+            color: #111111;
+            transform: translateY(-1px);
+        }
+
+
+        .btn-amazon-warning {
+            background: linear-gradient(to bottom, #ffa724, #ff9900);
+            border: 1px solid #d47e00;
+            color: #111111;
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+            transition: all 0.15s ease-in-out;
+        }
+
+
+        .btn-amazon-warning:hover {
+            background: linear-gradient(to bottom, #ff9900, #e68a00);
+            color: #000;
+            transform: translateY(-1px);
+        }
+
+
+        /* ================= HERO IMAGE ================= */
+
+        .hero-image-frame {
+            overflow: hidden;
+            border-radius: 7px;
+            position: relative;
+            background: #f8f9fa;
+            width: 100%;
+            min-height: 280px;
+        }
+
+
+        .hero-image-frame img {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+
+        .hero-image-frame:hover img {
+            transform: scale(1.02);
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .feature-item {
+            flex: 1 1 180px;
+            min-width: 150px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .footer-bottom {
+            background-color: var(--amazon-dark);
+            font-size: 0.75rem;
+            color: #999999;
+        }
+
+
+        /* =========================================================
+           LARGE LAPTOP / DESKTOP
+           ========================================================= */
+
+        @media (min-width: 1200px) {
+
+            .main-container {
+                max-width: 1500px;
+                margin: 0 auto;
+            }
+
+
+            .hero-image-frame {
+                min-height: 450px;
+            }
+
+
+            .hero-image-frame img {
+                min-height: 450px;
+            }
+
+
+            .admin-card {
+                min-height: 220px;
+            }
+
+        }
+
+
+        /* =========================================================
+           TABLET + SMALL LAPTOP
+           ========================================================= */
+
+        @media (max-width: 1199.98px) {
+
+            .hero-image-frame {
+                min-height: 360px;
+            }
+
+
+            .hero-image-frame img {
+                min-height: 360px;
+            }
+
+
+            .wireframe-card {
+                border-radius: 9px;
+            }
+
+        }
+
+
+        /* =========================================================
+           TABLET
+           ========================================================= */
+
+        @media (max-width: 991.98px) {
+
+            .main-wrapper {
+                padding-top: 25px !important;
+                padding-bottom: 25px !important;
+            }
+
+
+            .main-container {
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+            }
+
+
+            .hero-image-frame {
+                min-height: 330px;
+            }
+
+
+            .hero-image-frame img {
+                min-height: 330px;
+            }
+
+
+            .admin-action-column {
+                gap: 20px !important;
+            }
+
+
+            .admin-card {
+                min-height: 210px;
+            }
+
+
+            .feature-item {
+                flex: 1 1 200px;
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 767.98px) {
+
+            .header-main {
+                border-bottom-width: 3px;
+            }
+
+
+            .header-main .container-fluid {
+                justify-content: center !important;
+            }
+
+
+            .brand-logo {
+                font-size: 1.45rem;
+            }
+
+
+            .brand-logo .bi {
+                font-size: 1.5rem !important;
+            }
+
+
+            .brand-badge {
+                font-size: 0.58rem;
+            }
+
+
+            .main-wrapper {
+                padding-top: 16px !important;
+                padding-bottom: 16px !important;
+            }
+
+
+            .main-container {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+
+            .wireframe-card {
+                border-radius: 9px;
+            }
+
+
+            /* Image section */
+
+            .image-card {
+                padding: 16px !important;
+            }
+
+
+            .image-card-header {
+                display: block !important;
+            }
+
+
+            .image-card-header h1 {
+                display: block !important;
+                margin-top: 8px !important;
+                font-size: 1.05rem;
+                line-height: 1.4;
+            }
+
+
+            .hero-image-frame {
+                min-height: 260px;
+                height: 260px;
+            }
+
+
+            .hero-image-frame img {
+                min-height: 260px;
+                height: 260px;
+                object-fit: cover;
+            }
+
+
+            /* Feature section */
+
+            .feature-container {
+                flex-direction: column;
+                align-items: stretch !important;
+            }
+
+
+            .feature-item {
+                width: 100%;
+                min-width: 0;
+                justify-content: flex-start;
+                text-align: left !important;
+            }
+
+
+            .feature-item span {
+                text-align: left !important;
+            }
+
+
+            /* Admin cards */
+
+            .admin-action-column {
+                gap: 15px !important;
+            }
+
+
+            .admin-card {
+                padding: 18px !important;
+                min-height: auto;
+            }
+
+
+            .admin-card-header {
+                align-items: flex-start !important;
+                gap: 10px;
+            }
+
+
+            .admin-card-title {
+                min-width: 0;
+            }
+
+
+            .admin-card-title h2 {
+                font-size: 1rem;
+                line-height: 1.3;
+            }
+
+
+            .admin-card-title small {
+                font-size: 0.7rem;
+            }
+
+
+            .admin-card-description {
+                font-size: 0.78rem;
+                line-height: 1.55;
+            }
+
+
+            .admin-button {
+                min-height: 44px;
+                font-size: 0.9rem;
+            }
+
+
+            .footer-bottom {
+                font-size: 0.72rem;
+            }
+
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+           ========================================================= */
+
+        @media (max-width: 575.98px) {
+
+            .brand-logo {
+                font-size: 1.3rem;
+            }
+
+
+            .brand-logo .bi {
+                font-size: 1.35rem !important;
+                margin-right: 5px !important;
+            }
+
+
+            .brand-badge {
+                font-size: 0.52rem;
+                padding: 2px 5px;
+            }
+
+
+            .main-container {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+
+            .image-card {
+                padding: 13px !important;
+            }
+
+
+            .image-card-header .badge {
+                font-size: 0.65rem;
+            }
+
+
+            .image-card-header h1 {
+                font-size: 0.95rem;
+            }
+
+
+            .hero-image-frame {
+                height: 220px;
+                min-height: 220px;
+            }
+
+
+            .hero-image-frame img {
+                height: 220px;
+                min-height: 220px;
+            }
+
+
+            .feature-item {
+                padding: 2px 0;
+            }
+
+
+            .feature-item i {
+                font-size: 1.2rem !important;
+            }
+
+
+            .feature-item span {
+                font-size: 0.72rem !important;
+            }
+
+
+            .admin-card {
+                padding: 15px !important;
+            }
+
+
+            .admin-card-icon {
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+
+            .admin-card-icon i {
+                font-size: 1rem !important;
+            }
+
+
+            .admin-card-title h2 {
+                font-size: 0.95rem;
+            }
+
+
+            .admin-card-title small {
+                font-size: 0.64rem;
+            }
+
+
+            .admin-card-description {
+                font-size: 0.72rem;
+            }
+
+
+            .admin-button {
+                font-size: 0.82rem;
+                padding-top: 9px !important;
+                padding-bottom: 9px !important;
+            }
+
+        }
+
+
+        /* =========================================================
+           VERY SMALL PHONES
+           ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .brand-logo {
+                font-size: 1.15rem;
+            }
+
+
+            .brand-logo .bi {
+                font-size: 1.2rem !important;
+            }
+
+
+            .brand-badge {
+                font-size: 0.47rem;
+            }
+
+
+            .hero-image-frame {
+                height: 190px;
+                min-height: 190px;
+            }
+
+
+            .hero-image-frame img {
+                height: 190px;
+                min-height: 190px;
+            }
+
+
+            .image-card-header h1 {
+                font-size: 0.88rem;
+            }
+
+
+            .admin-card {
+                padding: 13px !important;
+            }
+
+
+            .admin-card-title h2 {
+                font-size: 0.88rem;
+            }
+
+
+            .admin-card-title small {
+                font-size: 0.58rem;
+            }
+
+
+            .admin-card-description {
+                font-size: 0.68rem;
+            }
+
+
+            .admin-button {
+                font-size: 0.76rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================= HEADER ======================= -->
+
+<header class="shadow-sm">
+
+    <div class="header-main py-2 px-3 px-md-4">
+
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+
+            <div class="d-flex align-items-center">
+
+                <a
+                        class="brand-logo"
+                        href="#"
+                        title="QuickShop Merchant & Admin Portal"
+                >
+
+                    <i class="bi bi-cart3 me-2 fs-3 text-warning"></i>
+
+                    <span>
+                        Quick<span class="accent">shop</span>
+                    </span>
+
+                    <span class="brand-badge">
+                        .admin
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ======================= MAIN CONTENT ======================= -->
+
+<main class="main-wrapper py-4 py-lg-5">
+
+    <div class="container-fluid px-3 px-md-5 main-container">
+
+        <div class="row g-4 align-items-stretch">
+
+
+            <!-- ================= LEFT IMAGE COLUMN ================= -->
+
+            <div
+                    class="col-12 col-lg-7"
+                    data-purpose="shopping-image-container"
+            >
+
+                <div
+                        class="wireframe-card h-100 p-3 p-md-4 d-flex flex-column justify-content-between image-card"
+                >
+
+
+                    <!-- Image Header -->
+
+                    <div
+                            class="d-flex justify-content-between align-items-center mb-3 image-card-header"
+                    >
+
+                        <div>
+
+                            <span class="badge bg-warning text-dark fw-bold me-2 px-2 py-1">
+                                QuickShop Hub
+                            </span>
+
+                            <h1 class="h5 fw-bold d-inline align-middle text-dark mb-0">
+                                E-Commerce Management Platform
+                            </h1>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Hero Image -->
+
+                    <div class="hero-image-frame shadow-sm border flex-grow-1">
+
+                        <img
+                                alt="E-commerce online shopping concept photography, modern vibrant parcels, shopping bags, laptop and mobile smartphone with discount tags, clean studio lighting, high resolution product photography"
+                                loading="eager"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB62ks-bX-HXepqFinSbe1a7Rx1B_xwBjORIFiEpwnbRpxKCxGthtOJk6B_lfKTAX8lNkuxzpk6J6X7CaEWENk3tf_RJtMnSkhMhvkw40sZgmHlcKa_d3XvDOGmjdObkdLongGlx5CxfsZr1NKJEIPt5Uw-7Z17CQYw62b8lCSKHupVqLn5sktXV-hikbgg3epOW291WCpx74m0Ee-Bo7_Re3mH0_CzkAFzS9f-z_iA2TCK4o9ETYpTMw"
+                        >
+
+                    </div>
+
+
+                    <!-- Feature Badges -->
+
+                    <div
+                            class="mt-3 pt-3 border-top d-flex flex-wrap justify-content-around align-items-center text-center gap-3 feature-container"
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RIGHT ADMIN COLUMN ================= -->
+
+            <div
+                    class="col-12 col-lg-5 d-flex flex-column gap-4 admin-action-column"
+                    data-purpose="admin-action-controls"
+            >
+
+
+                <!-- ================= REGISTRATION CARD ================= -->
+
+                <div
+                        class="wireframe-card p-4 flex-grow-1 d-flex flex-column justify-content-between border-top border-4 border-warning admin-card"
+                        data-purpose="admin-registration-block"
+                >
+
+                    <div>
+
+                        <div
+                                class="d-flex align-items-center justify-content-between mb-2 admin-card-header"
+                        >
+
+                            <div class="d-flex align-items-center">
+
+                                <div
+                                        class="bg-warning-subtle text-dark rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center admin-card-icon"
+                                        style="width: 42px; height: 42px;"
+                                >
+
+                                    <i class="bi bi-person-plus-fill fs-5 text-warning-emphasis"></i>
+
+                                </div>
+
+
+                                <div class="admin-card-title">
+
+                                    <h2 class="h5 fw-bold mb-0 text-dark">
+                                        Admin Registration
+                                    </h2>
+
+                                    <small class="text-muted">
+                                        Create Account For Manage Product
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <span class="badge bg-secondary-subtle text-secondary border">
+                                New Account
+                            </span>
+
+                        </div>
+
+
+                        <ul class="list-unstyled small text-secondary mb-3">
+
+                            <li class="mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                Dedicated multi-vendor permissions tier
+                            </li>
+
+                            <li class="mb-1">
+                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                SSO integration ready
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="pt-2">
+
+                        <a
+                                class="btn btn-amazon-warning w-100 py-2 d-flex align-items-center justify-content-center gap-2 fs-6 shadow-sm admin-button"
+                                href="adminRegistration.html"
+                                id="admin-registration-btn"
+                                role="button"
+                        >
+
+                            <i class="bi bi-person-plus-fill"></i>
+
+                            <span>
+                                Admin Registration
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= LOGIN CARD ================= -->
+
+                <div
+                        class="wireframe-card p-4 flex-grow-1 d-flex flex-column justify-content-between border-top border-4 border-dark admin-card"
+                        data-purpose="admin-login-block"
+                >
+
+                    <div>
+
+                        <div
+                                class="d-flex align-items-center justify-content-between mb-2 admin-card-header"
+                        >
+
+                            <div class="d-flex align-items-center">
+
+                                <div
+                                        class="bg-primary-subtle text-primary rounded-circle p-2 me-2 d-inline-flex align-items-center justify-content-center admin-card-icon"
+                                        style="width: 42px; height: 42px;"
+                                >
+
+                                    <i class="bi bi-shield-lock-fill fs-5"></i>
+
+                                </div>
+
+
+                                <div class="admin-card-title">
+
+                                    <h2 class="h5 fw-bold mb-0 text-dark">
+                                        Admin Login
+                                    </h2>
+
+                                    <small class="text-muted">
+                                        Login and Manage the Product
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="text-muted small mt-3 mb-3 admin-card-description">
+
+                            Sign in with your enterprise credentials and two-factor
+                            authenticator token to enter the administrative dashboard.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="pt-2">
+
+                        <a
+                                class="btn btn-amazon-primary w-100 py-2 d-flex align-items-center justify-content-center gap-2 fs-6 shadow-sm admin-button"
+                                href="adminLogin.html"
+                                id="admin-login-btn"
+                                role="button"
+                        >
+
+                            <i class="bi bi-box-arrow-in-right"></i>
+
+                            <span>
+                                Admin Login
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ======================= FOOTER ======================= -->
+
+<footer class="mt-auto">
+
+    <div class="footer-bottom py-3 px-3 text-center">
+
+        <div class="container-fluid text-light">
+
+            <div>
+                © 2024-2025, QuickShop.com
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+</html>
+

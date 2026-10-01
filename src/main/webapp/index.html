@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quikshop - Gateway Portal | Index.html</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --amazon-dark: #131921;
+            --amazon-slate: #232f3e;
+            --amazon-lightslate: #37475a;
+            --amazon-amber: #febd69;
+            --amazon-orange: #ff9900;
+            --amazon-btn-yellow: #f0c14b;
+            --amazon-blue: #146eb4;
+            --amazon-bg-gray: #eaeded;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: var(--amazon-bg-gray);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Oxygen, Ubuntu, Cantarell,
+                         "Helvetica Neue", sans-serif;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bg-amazon-dark {
+            background-color: var(--amazon-dark) !important;
+        }
+
+        .bg-amazon-slate {
+            background-color: var(--amazon-slate) !important;
+        }
+
+        .bg-amazon-lightslate {
+            background-color: var(--amazon-lightslate) !important;
+        }
+
+        .bg-amazon-amber {
+            background-color: var(--amazon-amber) !important;
+        }
+
+        .bg-amazon-orange {
+            background-color: var(--amazon-orange) !important;
+        }
+
+        .text-amazon-dark {
+            color: var(--amazon-dark) !important;
+        }
+
+        .text-amazon-slate {
+            color: var(--amazon-slate) !important;
+        }
+
+        .text-amazon-amber {
+            color: var(--amazon-amber) !important;
+        }
+
+        .text-amazon-orange {
+            color: var(--amazon-orange) !important;
+        }
+
+        .text-amazon-blue {
+            color: var(--amazon-blue) !important;
+        }
+
+        .border-amazon-orange {
+            border-color: var(--amazon-orange) !important;
+        }
+
+        .amazon-smile-arc {
+            border-bottom: 3.5px solid #ff9900;
+            border-radius: 0 0 100px 100px;
+        }
+
+        .shadow-amazon {
+            box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
+            transition: all 0.25s ease;
+        }
+
+        .shadow-amazon:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-amazon-yellow {
+            background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+            border: 1px solid #a88734;
+            color: #111;
+            transition: all 0.2s ease;
+        }
+
+        .btn-amazon-yellow:hover {
+            background: linear-gradient(to bottom, #f5d78e, #e7a817);
+            color: #111;
+            transform: translateY(-1px);
+        }
+
+        .btn-amazon-darkslate {
+            background-color: var(--amazon-slate);
+            color: #fff;
+            border: 1px solid #37475a;
+            transition: all 0.2s ease;
+        }
+
+        .btn-amazon-darkslate:hover {
+            background-color: var(--amazon-lightslate);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .welcome-section {
+            border-bottom: 4px solid var(--amazon-orange);
+        }
+
+        .welcome-icon {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+            background: linear-gradient(to top right, #f59e0b, #f97316);
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1320px;
+        }
+
+        .main-card {
+            background-color: #fff;
+            border-radius: 24px;
+        }
+
+        .brand-card {
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            min-height: 100%;
+        }
+
+        .featured-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 12px;
+            background-color: #1f2937;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.75;
+            display: block;
+        }
+
+        .image-badges {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .image-badge {
+            font-size: 11px;
+            padding: 8px 10px;
+            border-radius: 5px;
+        }
+
+        .trust-box {
+            background-color: #fff;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .login-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .login-card {
+            border-radius: 18px;
+            min-height: 0;
+        }
+
+        .login-card h2 {
+            line-height: 1.3;
+        }
+
+        .login-button {
+            min-height: 44px;
+        }
+
+        .footer {
+            border-top: 4px solid var(--amazon-orange);
+        }
+
+        .footer-text {
+            font-size: 15px;
+        }
+
+        @media (max-width: 991.98px) {
+
+            .main-card {
+                border-radius: 18px;
+            }
+
+            .brand-card {
+                min-height: auto;
+            }
+
+            .login-column {
+                gap: 18px;
+            }
+
+            .featured-image-wrapper {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+
+            .welcome-section .container {
+                padding-top: 14px;
+                padding-bottom: 14px;
+            }
+
+            .welcome-content {
+                justify-content: center !important;
+                text-align: center;
+            }
+
+            .welcome-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 24px !important;
+            }
+
+            .welcome-title {
+                font-size: 1.15rem;
+            }
+
+            .main-container {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .main-card {
+                padding: 14px !important;
+                border-radius: 16px;
+            }
+
+            .brand-card {
+                padding: 18px !important;
+                border-radius: 16px !important;
+            }
+
+            .logo-container {
+                padding-bottom: 18px !important;
+            }
+
+            .brand-logo {
+                font-size: 2rem !important;
+            }
+
+            .trust-box {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .featured-image-wrapper {
+                height: 240px;
+            }
+
+            .image-badges {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+            }
+
+            .image-badge {
+                font-size: 10px;
+                padding: 7px 8px;
+            }
+
+            .trust-indicators {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .trust-indicators > div {
+                width: 100%;
+            }
+
+            .login-card {
+                padding: 18px !important;
+                border-radius: 16px;
+            }
+
+            .login-card-header {
+                align-items: flex-start !important;
+            }
+
+            .login-card-header .auth-badge {
+                font-size: 10px;
+            }
+
+            .footer-text {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+
+            .welcome-content {
+                gap: 10px !important;
+            }
+
+            .welcome-title-row {
+                flex-direction: column;
+                gap: 6px !important;
+            }
+
+            .welcome-title {
+                font-size: 1.05rem;
+            }
+
+            .welcome-badge {
+                font-size: 9px !important;
+            }
+
+            .main-container {
+                margin-top: 16px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .main-card {
+                padding: 10px !important;
+            }
+
+            .brand-card {
+                padding: 15px !important;
+            }
+
+            .brand-header {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .brand-logo {
+                font-size: 1.8rem !important;
+            }
+
+            .brand-description {
+                font-size: 12px !important;
+                line-height: 1.6;
+            }
+
+            .featured-image-wrapper {
+                height: 210px;
+            }
+
+            .image-badges {
+                gap: 5px;
+            }
+
+            .image-badge {
+                font-size: 9px;
+                padding: 6px 7px;
+            }
+
+            .category-badges {
+                flex-direction: column;
+                align-items: flex-start !important;
+            }
+
+            .category-badges .badge {
+                font-size: 10px;
+            }
+
+            .login-column {
+                gap: 14px;
+            }
+
+            .login-card {
+                padding: 16px !important;
+            }
+
+            .login-card-header {
+                flex-wrap: wrap;
+                gap: 10px !important;
+            }
+
+            .login-card-header > div:first-child {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .login-card h2 {
+                font-size: 1rem;
+            }
+
+            .login-card p {
+                font-size: 12px !important;
+                line-height: 1.6;
+            }
+
+            .login-button {
+                font-size: 13px;
+            }
+
+            .customer-links {
+                flex-direction: column;
+                align-items: center !important;
+                gap: 5px;
+            }
+
+            .customer-links a {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .welcome-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 21px !important;
+            }
+
+            .welcome-title {
+                font-size: 0.98rem;
+            }
+
+            .brand-logo {
+                font-size: 1.6rem !important;
+            }
+
+            .featured-image-wrapper {
+                height: 185px;
+            }
+
+            .image-badge {
+                font-size: 8px;
+            }
+
+            .login-card {
+                padding: 14px !important;
+            }
+
+            .login-card h2 {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ======================= WELCOME SECTION ======================= -->
+
+<section class="w-100 bg-amazon-slate text-white welcome-section shadow">
+    <div class="container py-3 py-sm-4">
+
+        <div class="row align-items-center justify-content-center">
+
+            <div class="col-12 d-flex align-items-center gap-3 welcome-content">
+
+                <div class="rounded-3 d-flex align-items-center justify-content-center fs-3 shadow-sm welcome-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap welcome-title-row">
+
+                        <h1 class="fw-bold text-white mb-0 welcome-title">
+                            Welcome to Quikshop!
+                        </h1>
+
+                        <span class="badge bg-amazon-amber text-amazon-dark fw-bold px-2 py-1 text-uppercase shadow-sm welcome-badge">
+                            Today's Deals Live 🏷️
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ======================= MAIN CONTENT ======================= -->
+
+<main class="flex-grow-1 container my-4 my-md-5 main-container">
+
+    <div class="main-card border border-secondary border-opacity-25 shadow-amazon p-3 p-md-4 p-lg-5">
+
+        <div class="row g-4 align-items-stretch">
+
+            <!-- ======================= LEFT COLUMN ======================= -->
+
+            <section class="col-12 col-lg-7 d-flex flex-column rounded-4 border border-2 border-light p-3 p-sm-4 shadow-sm brand-card">
+
+                <!-- Brand Header -->
+
+                <div class="pb-4 border-bottom border-light logo-container">
+
+                    <div class="d-flex align-items-center justify-content-between gap-3 brand-header">
+
+                        <div class="d-flex flex-column">
+
+                            <div class="d-flex align-items-baseline">
+
+                                <span class="fw-black text-amazon-dark brand-logo"
+                                      style="font-weight: 900;">
+                                    quik
+                                </span>
+
+                                <span class="fw-black text-amazon-orange brand-logo"
+                                      style="font-weight: 900;">
+                                    shop
+                                </span>
+
+                                <span class="small fw-semibold text-muted ms-1">
+                                    .com
+                                </span>
+
+                            </div>
+
+                            <div class="amazon-smile-arc ms-1 mt-1 d-flex justify-content-end"
+                                 style="width: 100px;">
+
+                                <span style="font-size: 9px;
+                                             color: #ff9900;
+                                             transform: translate(4px, -4px);">
+                                    ▶
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex align-items-center gap-2 px-3 py-2 bg-white border border-light shadow-sm small trust-box">
+
+                            <span class="text-warning fw-bold">
+                                ★★★★★
+                            </span>
+
+                            <span class="fw-medium text-dark">
+                                Trusted Retail Portal
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="small text-muted mt-2 mb-0 brand-description">
+                        Official e-commerce gateway. Discover millions of products,
+                        verified vendor inventories, and instant checkout.
+                    </p>
+
+                </div>
+
+
+                <!-- Featured Image -->
+
+                <div class="my-4 flex-grow-1">
+
+                    <div class="featured-image-wrapper shadow">
+
+                        <img
+                                alt="Quikshop featured shopping items, bags, electronics, and daily prime deals"
+                                class="featured-image"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB88wQf_yHcrN-BKOG6MSiaEzvD3EwNYzJ8Pwx7wUdiuXGUWaZgyyevoRqFSRpw1oFKxTdJQ2VjcKz35dBrFfwHWZh3ruH7lMtPsvKXBAoez9vYWmvZazBN3NWC_Ydc7ehQ2JmHlEgWapUWcOk3FZO35SEy2q1ZIAF7tms3bNACvB2hK9E7p6qCEfjSFLyRPWfTAWTToC9QUc1UroR8Nh-3YFwSJ0DajjTMc8nBx19hADTGYB3EM5V8"
+                        >
+
+                        <div class="image-badges">
+
+                            <span class="badge bg-amazon-orange text-dark fw-bold image-badge shadow-sm">
+                                ⚡ PRIME FAST DISPATCH
+                            </span>
+
+                            <span class="badge bg-dark bg-opacity-75 text-warning fw-semibold image-badge border border-secondary shadow-sm">
+                                🛍️ 50,000+ Verified Products
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Trust Indicators -->
+
+                <div class="pt-3 border-top border-light d-flex flex-wrap align-items-center justify-content-between gap-2 small text-muted trust-indicators">
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap category-badges">
+
+                        <span class="badge bg-warning bg-opacity-25 text-dark fw-medium">
+                            📦 Easy 30-Day Returns
+                        </span>
+
+                        <span class="badge bg-info bg-opacity-25 text-dark fw-medium">
+                            🔒 256-Bit SSL Protection
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ======================= RIGHT COLUMN ======================= -->
+
+            <section class="col-12 col-lg-5 login-column">
+
+                <!-- ================= ADMIN CARD ================= -->
+
+                <div class="card bg-light border-2 border-light rounded-4 p-3 p-sm-4 shadow-sm login-card">
+
+                    <div class="card-body p-0">
+
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-3 login-card-header">
+
+                            <div class="d-flex align-items-center gap-2">
+
+                                <span class="fs-4 p-2 bg-secondary bg-opacity-10 rounded-3">
+                                    👨‍💼
+                                </span>
+
+                                <div>
+                                    <h2 class="h5 fw-bold text-amazon-dark mb-0">
+                                        Administrative Portal
+                                    </h2>
+                                </div>
+
+                            </div>
+
+                            <span class="badge bg-secondary bg-opacity-10 text-dark border border-secondary small d-flex align-items-center gap-1 auth-badge">
+                                🔐 Auth Required
+                            </span>
+
+                        </div>
+
+
+                        <p class="small text-muted mb-3">
+                            Secure access for store managers, vendors, catalogue controllers,
+                            and logistics personnel. Manage sales metrics and orders.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-footer bg-transparent border-0 p-0">
+
+                        <a
+                                class="btn btn-amazon-darkslate w-100 py-2 fw-semibold d-flex align-items-center justify-content-center gap-2 text-decoration-none shadow-sm login-button"
+                                href="adminLoginandRegistration.html"
+                        >
+
+                            <span class="fs-5">
+                                🛠️
+                            </span>
+
+                            <span>
+                                Admin
+                            </span>
+
+                            <span class="fw-bold text-uppercase ms-1 small"
+                                  style="color: var(--amazon-amber);">
+                                Portal ➔
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= CUSTOMER CARD ================= -->
+
+                <div
+                        class="card border-2 rounded-4 p-3 p-sm-4 shadow-sm login-card"
+                        style="background-color: #fffbf5; border-color: #fef0c7 !important;"
+                >
+
+                    <div class="card-body p-0">
+
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-3 login-card-header">
+
+                            <div class="d-flex align-items-center gap-2">
+
+                                <span class="fs-4 p-2 bg-warning bg-opacity-25 rounded-3">
+                                    👤
+                                </span>
+
+                                <div>
+
+                                    <h2 class="h5 fw-bold text-amazon-dark mb-0">
+                                        Customer Account
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="small text-muted mb-3">
+                            Sign in to view your orders, track shipments, check saved
+                            wishlists, and unlock member-only promotional discounts.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card-footer bg-transparent border-0 p-0">
+
+                        <a
+                                class="btn btn-amazon-yellow w-100 py-2 fw-bold d-flex align-items-center justify-content-center gap-2 text-decoration-none shadow-sm login-button"
+                                href="userLogin.html"
+                        >
+
+                            <span class="fs-5">
+                                🛒
+                            </span>
+
+                            <span>
+                                User Login
+                            </span>
+
+                            <span class="text-dark fw-bold">
+                                ➔
+                            </span>
+
+                        </a>
+
+
+                        <div class="d-flex align-items-center justify-content-between text-muted mt-2 px-1 customer-links">
+
+                            <a
+                                    class="text-amazon-blue text-decoration-none"
+                                    href="#new-customer"
+                            >
+                                New customer? Start here
+                            </a>
+
+                            <a
+                                    class="text-amazon-blue text-decoration-none"
+                                    href="#help"
+                            >
+                                Need assistance?
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ======================= FOOTER ======================= -->
+
+<footer class="mt-auto bg-amazon-dark text-secondary footer">
+
+    <div class="container py-3">
+
+        <div class="text-light text-center footer-text">
+
+            © 2026 Quikshop, Inc. or its affiliates.
+            All rights reserved. 📦
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

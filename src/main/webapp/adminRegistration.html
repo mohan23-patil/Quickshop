@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Registration - Quick Shop</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+            rel="stylesheet"
+    >
+
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com"
+            rel="preconnect"
+    >
+
+    <link
+            crossorigin=""
+            href="https://fonts.gstatic.com"
+            rel="preconnect"
+    >
+
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    >
+
+
+    <style>
+
+        :root {
+            --qs-dark-navy: #131921;
+            --qs-slate-blue: #232f3e;
+            --qs-accent-orange: #ff9900;
+            --qs-warm-amber: #febd69;
+            --qs-btn-gradient-top: #f7dfa5;
+            --qs-btn-gradient-bottom: #f0c14b;
+            --qs-btn-border: #a88734;
+            --qs-bg-gray: #eaeded;
+            --qs-text-dark: #111827;
+            --qs-text-muted: #565959;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--qs-bg-gray);
+            color: var(--qs-text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .qs-navbar {
+            background-color: var(--qs-dark-navy);
+            border-bottom: 3px solid var(--qs-accent-orange);
+        }
+
+
+        .qs-logo-text {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+
+        .qs-logo-badge {
+            color: var(--qs-accent-orange);
+            font-weight: 700;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .main-layout {
+            flex: 1 0 auto;
+            width: 100%;
+        }
+
+
+        .page-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+
+        .page-title h1 {
+            color: var(--qs-dark-navy);
+        }
+
+
+        /* ================= FORM CARD ================= */
+
+        .qs-form-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 1rem;
+            box-shadow: 0 12px 35px rgba(19, 25, 33, 0.08);
+        }
+
+
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #232f3e;
+            margin-bottom: 0.35rem;
+        }
+
+
+        .qs-input-group .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 0.5rem;
+            font-size: 0.92rem;
+            padding: 0.65rem 0.85rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+
+        .qs-input-group .form-control:focus {
+            border-color: var(--qs-accent-orange);
+            box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.25);
+        }
+
+
+        .qs-input-icon {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+            color: #565959;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+
+        .qs-input-group .form-control {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+
+        .password-toggle {
+            border-color: #ced4da !important;
+            background-color: #ffffff;
+        }
+
+
+        .password-toggle:hover {
+            background-color: #f8f9fa;
+        }
+
+
+        /* ================= REGISTER BUTTON ================= */
+
+        .qs-btn-register {
+            width: 100%;
+            background: linear-gradient(
+                180deg,
+                #f7dfa5 0%,
+                #f0c14b 100%
+            );
+            border: 1px solid var(--qs-btn-border);
+            border-radius: 0.5rem;
+            color: #111;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
+            transition: all 0.2s ease;
+        }
+
+
+        .qs-btn-register:hover {
+            background: linear-gradient(
+                180deg,
+                #f5d68d 0%,
+                #eeb933 100%
+            );
+            border-color: #846a29;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+
+        .qs-btn-register:active {
+            transform: translateY(0);
+            background: #f0c14b;
+        }
+
+
+        /* ================= AVATAR ================= */
+
+        @keyframes gentleFloat {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+
+        }
+
+
+        @keyframes pulseRing {
+
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 153, 0, 0.35);
+            }
+
+            70% {
+                box-shadow: 0 0 0 22px rgba(255, 153, 0, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 153, 0, 0);
+            }
+
+        }
+
+
+        .avatar-circle-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+
+        .avatar-circle-frame {
+            width: 380px;
+            height: 380px;
+            max-width: 100%;
+            border-radius: 50%;
+            border: 5px solid #ffffff;
+            background: #ffffff;
+            overflow: hidden;
+            margin: 0 auto;
+            box-shadow: 0 20px 45px rgba(35, 47, 62, 0.18);
+            animation: pulseRing 3.5s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .avatar-circle-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.04);
+        }
+
+
+        /* ================= FLOATING BADGES ================= */
+
+        .floating-badge {
+            position: absolute;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 0.75rem;
+            padding: 0.65rem 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #131921;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+
+        .badge-top-left {
+            top: 10px;
+            left: -15px;
+        }
+
+
+        .badge-bottom-right {
+            bottom: 25px;
+            right: -10px;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        .page-footer {
+            background-color: #ffffff;
+        }
+
+
+        /* =========================================================
+           LARGE LAPTOP / DESKTOP
+           ========================================================= */
+
+        @media (min-width: 1200px) {
+
+            .page-container {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+            .avatar-circle-frame {
+                width: 390px;
+                height: 390px;
+            }
+
+        }
+
+
+        /* =========================================================
+           LAPTOP
+           ========================================================= */
+
+        @media (max-width: 1199.98px) {
+
+            .avatar-circle-frame {
+                width: 340px;
+                height: 340px;
+            }
+
+
+            .floating-badge {
+                font-size: 0.72rem;
+                padding: 0.55rem 0.75rem;
+            }
+
+
+            .badge-top-left {
+                left: -5px;
+            }
+
+
+            .badge-bottom-right {
+                right: -5px;
+            }
+
+        }
+
+
+        /* =========================================================
+           TABLET
+           ========================================================= */
+
+        @media (max-width: 991.98px) {
+
+            .main-layout {
+                padding-top: 30px !important;
+                padding-bottom: 30px !important;
+            }
+
+
+            .page-title {
+                text-align: center;
+            }
+
+
+            .avatar-circle-frame {
+                width: 320px;
+                height: 320px;
+            }
+
+
+            .avatar-circle-wrapper {
+                margin-top: 10px;
+            }
+
+
+            .floating-badge {
+                font-size: 0.7rem;
+            }
+
+
+            .badge-top-left {
+                left: 5%;
+            }
+
+
+            .badge-bottom-right {
+                right: 5%;
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 767.98px) {
+
+            .qs-navbar {
+                padding-top: 12px !important;
+                padding-bottom: 12px !important;
+            }
+
+
+            .qs-logo-text {
+                font-size: 1.25rem;
+            }
+
+
+            .qs-logo-text .bi {
+                font-size: 1.45rem !important;
+            }
+
+
+            .main-layout {
+                padding-top: 18px !important;
+                padding-bottom: 18px !important;
+            }
+
+
+            .page-container {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+
+            .page-title {
+                margin-bottom: 20px !important;
+            }
+
+
+            .page-title .badge {
+                font-size: 0.65rem;
+            }
+
+
+            .page-title h1 {
+                font-size: 1.35rem;
+                line-height: 1.35;
+            }
+
+
+            .qs-form-card {
+                padding: 18px !important;
+                border-radius: 14px;
+            }
+
+
+            .form-card-header {
+                margin-bottom: 20px !important;
+            }
+
+
+            .form-card-header h2 {
+                font-size: 1rem;
+            }
+
+
+            .form-card-header p {
+                font-size: 0.72rem;
+            }
+
+
+            .form-label {
+                font-size: 0.78rem;
+            }
+
+
+            .qs-input-group .form-control {
+                font-size: 0.84rem;
+                padding: 0.62rem 0.7rem;
+            }
+
+
+            .qs-input-icon {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+
+            .qs-input-icon i {
+                font-size: 0.9rem;
+            }
+
+
+            .password-toggle {
+                padding-left: 11px;
+                padding-right: 11px;
+            }
+
+
+            .qs-btn-register {
+                font-size: 0.92rem;
+                padding: 0.7rem 1rem;
+            }
+
+
+            .avatar-section {
+                margin-top: 15px;
+            }
+
+
+            .avatar-circle-frame {
+                width: 270px;
+                height: 270px;
+            }
+
+
+            .avatar-circle-wrapper {
+                max-width: 330px;
+            }
+
+
+            .floating-badge {
+                display: none !important;
+            }
+
+
+            .avatar-caption {
+                margin-top: 20px !important;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+
+            .avatar-caption h3 {
+                font-size: 0.95rem;
+            }
+
+
+            .avatar-caption p {
+                font-size: 0.73rem;
+                line-height: 1.55;
+            }
+
+
+            .page-footer {
+                padding-top: 12px !important;
+                padding-bottom: 12px !important;
+            }
+
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+           ========================================================= */
+
+        @media (max-width: 575.98px) {
+
+            .qs-logo-text {
+                font-size: 1.12rem;
+            }
+
+
+            .qs-logo-text .bi {
+                font-size: 1.25rem !important;
+            }
+
+
+            .qs-form-card {
+                padding: 15px !important;
+            }
+
+
+            .form-card-header {
+                padding-bottom: 12px !important;
+            }
+
+
+            .form-card-header h2 {
+                font-size: 0.94rem;
+            }
+
+
+            .form-card-header p {
+                font-size: 0.68rem;
+            }
+
+
+            .form-label {
+                font-size: 0.75rem;
+            }
+
+
+            .qs-input-group .form-control {
+                font-size: 0.8rem;
+            }
+
+
+            .qs-btn-register {
+                font-size: 0.88rem;
+            }
+
+
+            .avatar-circle-frame {
+                width: 230px;
+                height: 230px;
+            }
+
+
+            .avatar-caption {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+
+            .avatar-caption h3 {
+                font-size: 0.9rem;
+            }
+
+
+            .avatar-caption p {
+                font-size: 0.68rem;
+            }
+
+        }
+
+
+        /* =========================================================
+           VERY SMALL PHONES
+           ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .qs-logo-text {
+                font-size: 1rem;
+            }
+
+
+            .qs-logo-text .bi {
+                font-size: 1.1rem !important;
+            }
+
+
+            .main-layout {
+                padding-top: 14px !important;
+            }
+
+
+            .page-container {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+
+            .page-title h1 {
+                font-size: 1.15rem;
+            }
+
+
+            .qs-form-card {
+                padding: 13px !important;
+            }
+
+
+            .form-card-header h2 {
+                font-size: 0.88rem;
+            }
+
+
+            .form-card-header p {
+                font-size: 0.64rem;
+            }
+
+
+            .qs-input-group .form-control {
+                font-size: 0.76rem;
+            }
+
+
+            .qs-input-icon {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+
+            .qs-input-icon i {
+                font-size: 0.82rem;
+            }
+
+
+            .qs-btn-register {
+                font-size: 0.82rem;
+                padding: 0.65rem;
+            }
+
+
+            .avatar-circle-frame {
+                width: 200px;
+                height: 200px;
+            }
+
+
+            .avatar-caption h3 {
+                font-size: 0.84rem;
+            }
+
+
+            .avatar-caption p {
+                font-size: 0.64rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================= HEADER ======================= -->
+
+<header
+        class="qs-navbar py-3 px-3 px-md-4 shadow-sm"
+        data-purpose="primary-header"
+>
+
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+
+        <a
+                class="qs-logo-text d-flex align-items-center gap-2"
+                href="#"
+        >
+
+            <i class="bi bi-cart3 fs-3 qs-logo-badge"></i>
+
+            <span>
+                Quick Shop
+                <span class="qs-logo-badge">
+                    Admin
+                </span>
+            </span>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- ======================= MAIN CONTENT ======================= -->
+
+<main
+        class="main-layout py-4 py-lg-5"
+        data-purpose="main-layout"
+>
+
+    <div class="container page-container">
+
+
+        <!-- ================= PAGE TITLE ================= -->
+
+        <div class="mb-4 page-title">
+
+            <span
+                    class="badge bg-warning text-dark px-3 py-1 mb-2 fw-semibold"
+                    style="background-color: var(--qs-warm-amber) !important;"
+            >
+                Onboarding Portal
+            </span>
+
+            <h1 class="h3 fw-bold mb-1">
+                Create Administrator Account
+            </h1>
+
+        </div>
+
+
+        <!-- ================= MAIN ROW ================= -->
+
+        <div class="row g-4 align-items-center">
+
+
+            <!-- ================= REGISTRATION FORM ================= -->
+
+            <div
+                    class="col-12 col-lg-7"
+                    data-purpose="registration-form-container"
+            >
+
+                <div class="qs-form-card p-4 p-md-5">
+
+
+                    <!-- Form Header -->
+
+                    <div
+                            class="border-bottom pb-3 mb-4 d-flex align-items-center justify-content-between form-card-header"
+                    >
+
+                        <div>
+
+                            <h2
+                                    class="h5 fw-bold mb-1"
+                                    style="color: var(--qs-slate-blue);"
+                            >
+                                Admin Registration Form
+                            </h2>
+
+                            <p class="text-muted small mb-0">
+                                Fill in the admin details below
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ================= FORM ================= -->
+
+                    <form
+                            action="adminRegistration"
+                            id="adminRegistrationForm"
+                            method="post"
+                            novalidate
+                    >
+
+
+                        <!-- Row 1 -->
+
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="adminUsername"
+                                >
+                                    Admin UserName
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-person-fill-lock"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="adminUsername"
+                                            name="adminName"
+                                            placeholder="e.g. Mohan"
+                                            required
+                                            type="text"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="adminPassword"
+                                >
+                                    Password
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-key-fill"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="adminPassword"
+                                            name="password"
+                                            placeholder="••••••••••••"
+                                            required
+                                            type="password"
+                                    >
+
+                                    <button
+                                            class="btn btn-outline-secondary password-toggle"
+                                            id="togglePasswordVisibility"
+                                            title="Show or hide password"
+                                            type="button"
+                                    >
+
+                                        <i
+                                                class="bi bi-eye"
+                                                id="passwordToggleIcon"
+                                        ></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Row 2 -->
+
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="firstName"
+                                >
+                                    First Name
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="firstName"
+                                            name="fName"
+                                            placeholder="First name"
+                                            required
+                                            type="text"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="lastName"
+                                >
+                                    Last Name
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-person"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="lastName"
+                                            name="lName"
+                                            placeholder="Last name"
+                                            required
+                                            type="text"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Row 3 -->
+
+                        <div class="row g-3 mb-4">
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="emailId"
+                                >
+                                    Email Id
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-envelope-at-fill"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="emailId"
+                                            name="emailId"
+                                            placeholder="admin@quickshop.com"
+                                            required
+                                            type="email"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-12 col-sm-6">
+
+                                <label
+                                        class="form-label"
+                                        for="mobileNo"
+                                >
+                                    Mobile No
+                                    <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="input-group qs-input-group">
+
+                                    <span class="input-group-text qs-input-icon">
+                                        <i class="bi bi-telephone-fill"></i>
+                                    </span>
+
+                                    <input
+                                            class="form-control"
+                                            id="mobileNo"
+                                            name="mobileNo"
+                                            placeholder="+91...."
+                                            required
+                                            type="tel"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Register Button -->
+
+                        <div class="d-grid mb-3">
+
+                            <button
+                                    class="qs-btn-register"
+                                    id="btnRegister"
+                                    type="submit"
+                            >
+                                Register Here →
+                            </button>
+
+                        </div>
+
+
+                        <!-- Login Link -->
+
+                        <div class="text-center pt-2">
+
+                            <p class="small text-muted mb-0">
+
+                                Already have Account ?
+
+                                <a
+                                        class="fw-bold text-decoration-none"
+                                        href="adminLogin.html"
+                                        style="color: var(--qs-slate-blue);"
+                                >
+                                    Sign in here
+                                </a>
+
+                            </p>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= AVATAR SECTION ================= -->
+
+            <div
+                    class="col-12 col-lg-5 text-center avatar-section"
+                    data-purpose="person-illustration-container"
+            >
+
+                <div class="avatar-circle-wrapper">
+
+
+                    <!-- Top Badge -->
+
+                    <div class="floating-badge badge-top-left d-none d-sm-flex">
+
+                        <span class="p-1 rounded-circle bg-warning-subtle text-warning">
+
+                            <i class="bi bi-shield-lock-fill"></i>
+
+                        </span>
+
+                        <span>
+                            Role-Based Access Control
+                        </span>
+
+                    </div>
+
+
+                    <!-- Avatar -->
+
+                    <div
+                            class="avatar-circle-frame"
+                            data-purpose="person-avatar-frame"
+                    >
+
+                        <img
+                                alt="Modern clean 3D vector style illustration of a professional administrator or e-commerce shop manager"
+                                class="img-fluid"
+                                loading="eager"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYL_DN6vtZQmlLEH1j933kN9SjK2H8h5jOVB3cj-UcKCwjaZY13yiJoL3leixlCChI5p5uBf0qf9JgGRtDQLpOU6YmZEp15-3eZiYjg9hy7ShQt-Soy3TDojBH4WWdTHh4cMNlG10vRcrdHsRzf2y0p5YvqcDAdmU5YkgQwcPayBWJHMcU0hUpBvsHPd90E23bu8UZotB17zAC5ZlY5n9-LM_4c6wI4VrfP7BgTFR4xH-J0JVbu_c"
+                        >
+
+                    </div>
+
+
+                    <!-- Bottom Badge -->
+
+                    <div class="floating-badge badge-bottom-right d-none d-sm-flex">
+
+                        <span class="p-1 rounded-circle bg-success-subtle text-success">
+
+                            <i class="bi bi-lightning-charge-fill"></i>
+
+                        </span>
+
+                        <span>
+                            Instant Store Provisioning
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Caption -->
+
+                <div class="mt-4 px-3 avatar-caption">
+
+                    <h3
+                            class="h6 fw-bold mb-1"
+                            style="color: var(--qs-slate-blue);"
+                    >
+                        Store Manager Onboarding
+                    </h3>
+
+                    <p class="text-muted small mb-0">
+                        Set up high-clearance merchant controls,
+                        inventory audits, and sales fulfillment capabilities.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ======================= FOOTER ======================= -->
+
+<footer
+        class="py-3 mt-auto text-center border-top page-footer"
+        data-purpose="page-footer"
+>
+
+    <div class="container">
+
+        <p class="text-muted small mb-0">
+            © 2024 QuickShop.com
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= PASSWORD TOGGLE ================= -->
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const toggleBtn =
+            document.getElementById('togglePasswordVisibility');
+
+        const passwordInput =
+            document.getElementById('adminPassword');
+
+        const toggleIcon =
+            document.getElementById('passwordToggleIcon');
+
+
+        if (toggleBtn && passwordInput && toggleIcon) {
+
+            toggleBtn.addEventListener('click', function () {
+
+                const isPassword =
+                    passwordInput.getAttribute('type') === 'password';
+
+
+                passwordInput.setAttribute(
+                    'type',
+                    isPassword ? 'text' : 'password'
+                );
+
+
+                toggleIcon.classList.toggle(
+                    'bi-eye',
+                    !isPassword
+                );
+
+                toggleIcon.classList.toggle(
+                    'bi-eye-slash',
+                    isPassword
+                );
+
+            });
+
+        }
+
+    });
+
+</script>
+
+
+<!-- Bootstrap 5 Bundle JS -->
+
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>
+

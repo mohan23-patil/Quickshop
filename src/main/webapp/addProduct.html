@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quick Shop - Add Product Page</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        :root {
+            --amazon-dark: #131921;
+            --amazon-nav-belt: #232f3e;
+            --amazon-accent: #ff9900;
+            --amazon-accent-hover: #e88b00;
+            --amazon-btn-grad-start: #f7dfa5;
+            --amazon-btn-grad-end: #f0c14b;
+            --amazon-btn-border: #a88734;
+            --amazon-btn-hover: #eeb933;
+            --amazon-bg: #eaeded;
+            --amazon-border: #d5d9d9;
+            --amazon-focus: #e77600;
+        }
+
+        body {
+            background-color: var(--amazon-bg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #0f1111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* =========================================================
+           NAVBAR
+        ========================================================= */
+
+        .admin-navbar {
+            width: 100%;
+            background-color: var(--amazon-dark);
+            border-bottom: 3px solid var(--amazon-accent);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+        }
+
+        .navbar-inner {
+            width: 100%;
+            min-height: 64px;
+            padding: 9px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar-brand-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .brand-link {
+            display: inline-flex;
+            align-items: center;
+            min-width: 0;
+            color: #ffffff;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .brand-link:hover {
+            color: #ffffff;
+        }
+
+        .brand-icon {
+            color: var(--amazon-accent);
+            font-size: 1.8rem;
+            margin-right: 9px;
+            flex-shrink: 0;
+        }
+
+        .brand-logo-text {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+
+        .badge-admin {
+            background-color: var(--amazon-accent);
+            color: #111111;
+            font-weight: 700;
+            font-size: 0.72rem;
+            padding: 5px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .navbar-action-area {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .dashboard-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-height: 38px;
+            padding: 7px 14px;
+            color: #ffffff;
+            background: transparent;
+            border: 1px solid #677788;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s ease;
+        }
+
+        .dashboard-btn:hover {
+            color: #111111;
+            background: #febd69;
+            border-color: #febd69;
+        }
+
+        .dashboard-btn i {
+            font-size: 0.95rem;
+        }
+
+        .dashboard-btn span {
+            color: #ffcc66;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
+        .main-container {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* =========================================================
+           BREADCRUMB
+        ========================================================= */
+
+        .breadcrumb {
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb-item {
+            font-size: 0.82rem;
+        }
+
+        /* =========================================================
+           FORM CARD
+        ========================================================= */
+
+        .form-card {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #d5d9d9;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+            padding: 40px;
+        }
+
+        /* =========================================================
+           CARD HEADING
+        ========================================================= */
+
+        .card-heading {
+            border-bottom: 1px solid #d5d9d9;
+            padding-bottom: 16px;
+            margin-bottom: 26px;
+        }
+
+        .card-heading h1 {
+            color: #0f1111;
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin: 0 0 5px;
+        }
+
+        .card-heading p {
+            color: #6c757d;
+            font-size: 0.84rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #232f3e;
+            margin-bottom: 6px;
+        }
+
+        .input-group {
+            width: 100%;
+            display: flex;
+            min-width: 0;
+        }
+
+        .input-group-text {
+            min-width: 46px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f3f3;
+            border: 1px solid #888c8c;
+            color: #565959;
+            flex-shrink: 0;
+        }
+
+        .input-group .form-control,
+        .input-group .form-select {
+            min-width: 0;
+            width: 100%;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #888c8c;
+            border-radius: 4px;
+            padding: 0.65rem 0.85rem;
+            min-height: 44px;
+            font-size: 0.95rem;
+            transition: border-color 0.15s ease-in-out,
+                        box-shadow 0.15s ease-in-out;
+        }
+
+        .input-group > .form-control,
+        .input-group > .form-select {
+            border-radius: 0 4px 4px 0;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--amazon-focus);
+            outline: 0;
+            box-shadow: 0 0 0 3px rgba(231, 118, 0, 0.25);
+        }
+
+        /* =========================================================
+           IMAGE UPLOAD
+        ========================================================= */
+
+        .dropzone-container {
+            width: 100%;
+            min-height: 84px;
+            border: 2px dashed #b5b6b6;
+            border-radius: 6px;
+            padding: 12px;
+            background-color: #fafafa;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.2s,
+                        background-color 0.2s;
+        }
+
+        .dropzone-container:hover {
+            border-color: var(--amazon-accent);
+            background-color: #fff9f0;
+        }
+
+        .upload-icon-box {
+            width: 54px;
+            height: 54px;
+            min-width: 54px;
+            border-radius: 5px;
+            background: #ffffff;
+            border: 1px solid #d5d9d9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--amazon-accent);
+            font-size: 1.6rem;
+        }
+
+        .upload-text {
+            min-width: 0;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .file-name {
+            width: 100%;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #232f3e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-help {
+            color: #6c757d;
+            font-size: 0.74rem;
+            margin-top: 2px;
+        }
+
+        .browse-btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .form-actions {
+            border-top: 1px solid #d5d9d9;
+            margin-top: 28px;
+            padding-top: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-amazon-primary {
+            background: linear-gradient(
+                to bottom,
+                var(--amazon-btn-grad-start),
+                var(--amazon-btn-grad-end)
+            );
+            border: 1px solid var(--amazon-btn-border);
+            color: #111111;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 10px 28px;
+            min-height: 44px;
+            border-radius: 7px;
+            box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
+            transition: 0.15s ease;
+        }
+
+        .btn-amazon-primary:hover {
+            background: linear-gradient(
+                to bottom,
+                #f5d78e,
+                var(--amazon-btn-hover)
+            );
+            border-color: #846a29;
+            color: #000000;
+        }
+
+        .btn-amazon-secondary {
+            background: #ffffff;
+            border: 1px solid #d5d9d9;
+            color: #0f1111;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 10px 28px;
+            min-height: 44px;
+            border-radius: 7px;
+            box-shadow: 0 2px 5px rgba(213, 217, 217, 0.5);
+        }
+
+        .btn-amazon-secondary:hover {
+            background-color: #f7fafa;
+            border-color: #b7b9b9;
+            color: #111111;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer-bar {
+            width: 100%;
+            background-color: var(--amazon-dark);
+            color: #999999;
+            font-size: 0.825rem;
+            margin-top: auto;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .footer-bar p {
+            margin: 0;
+        }
+
+        /* =========================================================
+           LARGE TABLET
+        ========================================================= */
+
+        @media (max-width: 991.98px) {
+
+            .navbar-inner {
+                padding: 9px 20px;
+            }
+
+            .main-container {
+                padding: 30px 18px;
+            }
+
+            .form-card {
+                padding: 30px;
+            }
+
+        }
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 767.98px) {
+
+            .admin-navbar {
+                border-bottom-width: 2px;
+            }
+
+            .navbar-inner {
+                min-height: auto;
+                padding: 10px 14px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .navbar-brand-area {
+                width: 100%;
+                flex: none;
+                justify-content: flex-start;
+                gap: 9px;
+            }
+
+            .brand-icon {
+                font-size: 1.55rem;
+                margin-right: 7px;
+            }
+
+            .brand-logo-text {
+                font-size: 1.2rem;
+            }
+
+            .badge-admin {
+                font-size: 0.65rem;
+                padding: 4px 7px;
+            }
+
+            .navbar-action-area {
+                width: 100%;
+                flex: none;
+            }
+
+            .dashboard-btn {
+                width: 100%;
+                min-height: 38px;
+                padding: 8px 12px;
+            }
+
+            .main-container {
+                width: 100%;
+                padding: 20px 12px 30px;
+            }
+
+            .breadcrumb {
+                margin-bottom: 12px;
+            }
+
+            .form-card {
+                padding: 24px 18px;
+                border-radius: 8px;
+            }
+
+            .card-heading {
+                margin-bottom: 22px;
+            }
+
+            .card-heading h1 {
+                font-size: 1.3rem;
+            }
+
+            .card-heading p {
+                font-size: 0.8rem;
+            }
+
+            .row.g-4 {
+                --bs-gutter-y: 1.25rem;
+                --bs-gutter-x: 1rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-amazon-primary,
+            .btn-amazon-secondary {
+                width: 100%;
+                min-height: 45px;
+            }
+
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 575.98px) {
+
+            .navbar-inner {
+                padding: 9px 11px;
+                gap: 8px;
+            }
+
+            .navbar-brand-area {
+                justify-content: space-between;
+            }
+
+            .brand-link {
+                min-width: 0;
+            }
+
+            .brand-icon {
+                font-size: 1.4rem;
+                margin-right: 6px;
+            }
+
+            .brand-logo-text {
+                font-size: 1.08rem;
+            }
+
+            .badge-admin {
+                font-size: 0.6rem;
+                padding: 4px 7px;
+            }
+
+            .dashboard-btn {
+                font-size: 0.73rem;
+                min-height: 37px;
+            }
+
+            .dashboard-btn i {
+                font-size: 0.9rem;
+            }
+
+            .main-container {
+                padding: 14px 8px 24px;
+            }
+
+            .breadcrumb-item {
+                font-size: 0.74rem;
+            }
+
+            .form-card {
+                padding: 20px 13px;
+                border-radius: 7px;
+            }
+
+            .card-heading {
+                padding-bottom: 13px;
+                margin-bottom: 19px;
+            }
+
+            .card-heading h1 {
+                font-size: 1.12rem;
+                line-height: 1.3;
+            }
+
+            .card-heading p {
+                font-size: 0.74rem;
+                line-height: 1.45;
+                margin-top: 4px;
+            }
+
+            .row.g-4 {
+                --bs-gutter-y: 1rem;
+                --bs-gutter-x: 0;
+            }
+
+            .form-label {
+                font-size: 0.8rem;
+                margin-bottom: 5px;
+            }
+
+            .form-control,
+            .form-select {
+                min-height: 43px;
+                font-size: 0.84rem;
+                padding: 9px 10px;
+            }
+
+            .input-group-text {
+                min-width: 41px;
+                width: 41px;
+                height: 43px;
+                padding: 0;
+                font-size: 0.88rem;
+            }
+
+            /* IMAGE UPLOAD MOBILE */
+
+            .dropzone-container {
+                min-height: 78px;
+                padding: 9px;
+                gap: 8px;
+            }
+
+            .upload-icon-box {
+                width: 43px;
+                min-width: 43px;
+                height: 43px;
+                font-size: 1.25rem;
+            }
+
+            .file-name {
+                font-size: 0.76rem;
+            }
+
+            .file-help {
+                font-size: 0.65rem;
+                line-height: 1.3;
+            }
+
+            .browse-btn {
+                padding: 5px 8px;
+                font-size: 0.68rem;
+            }
+
+            .form-actions {
+                margin-top: 22px;
+                padding-top: 18px;
+                gap: 9px;
+            }
+
+            .btn-amazon-primary,
+            .btn-amazon-secondary {
+                width: 100%;
+                padding: 9px 15px;
+                font-size: 0.84rem;
+            }
+
+            .footer-bar {
+                padding: 15px 8px;
+                font-size: 0.7rem;
+            }
+
+        }
+
+        /* =========================================================
+           VERY SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 380px) {
+
+            .navbar-inner {
+                padding: 8px 9px;
+            }
+
+            .brand-logo-text {
+                font-size: 1rem;
+            }
+
+            .brand-icon {
+                font-size: 1.25rem;
+            }
+
+            .badge-admin {
+                font-size: 0.55rem;
+                padding: 4px 6px;
+            }
+
+            .dashboard-btn {
+                font-size: 0.68rem;
+                min-height: 35px;
+            }
+
+            .main-container {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+
+            .form-card {
+                padding: 17px 10px;
+            }
+
+            .card-heading h1 {
+                font-size: 1rem;
+            }
+
+            .card-heading p {
+                font-size: 0.69rem;
+            }
+
+            .form-control,
+            .form-select {
+                font-size: 0.8rem;
+            }
+
+            .dropzone-container {
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .upload-icon-box {
+                width: 38px;
+                min-width: 38px;
+                height: 38px;
+                font-size: 1.05rem;
+            }
+
+            .file-name {
+                font-size: 0.7rem;
+            }
+
+            .file-help {
+                font-size: 0.59rem;
+            }
+
+            .browse-btn {
+                padding: 4px 6px;
+                font-size: 0.62rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="admin-navbar">
+
+    <div class="navbar-inner">
+
+        <div class="navbar-brand-area">
+
+            <a class="brand-link"
+               href="/QuickShop/viewAllProduct">
+
+                <i class="bi bi-cart3 brand-icon"></i>
+
+                <span class="brand-logo-text">
+                    Quick Shop
+                </span>
+
+            </a>
+
+            <span class="badge badge-admin text-uppercase">
+                Admin
+            </span>
+
+        </div>
+
+        <div class="navbar-action-area">
+
+            <a class="dashboard-btn"
+               href="/QuickShop/viewAllProduct">
+
+                <i class="bi bi-arrow-left-circle"></i>
+
+                <span>
+                    Back to Dashboard
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main-container">
+
+    <!-- BREADCRUMB -->
+
+    <nav aria-label="breadcrumb">
+
+        <ol class="breadcrumb">
+
+            <li class="breadcrumb-item">
+
+                <a class="text-decoration-none text-muted"
+                   href="/QuickShop/viewAllProduct">
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li class="breadcrumb-item active text-dark fw-semibold"
+                aria-current="page">
+
+                Add Product
+
+            </li>
+
+        </ol>
+
+    </nav>
+
+
+    <!-- =====================================================
+         FORM CARD
+    ====================================================== -->
+
+    <section class="form-card">
+
+        <!-- CARD HEADING -->
+
+        <div class="card-heading">
+
+            <h1>
+                Add New Product
+            </h1>
+
+            <p>
+                Fill in the catalog details, pricing, inventory stock,
+                and media to register a new item in the Quick Shop inventory.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form action="addProduct"
+              enctype="multipart/form-data"
+              id="addProductForm"
+              method="POST">
+
+
+            <div class="row g-4">
+
+
+                <!-- PRODUCT ID -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productId">
+
+                        Product ID
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-upc-scan"></i>
+
+                        </span>
+
+                        <input class="form-control"
+                               id="productId"
+                               name="productId"
+                               placeholder="prod101"
+                               required
+                               type="text">
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productName">
+
+                        Product Name
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-tag"></i>
+
+                        </span>
+
+                        <input class="form-control"
+                               id="productName"
+                               name="productName"
+                               placeholder="e.g. Wireless Headphones"
+                               required
+                               type="text">
+
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productCategory">
+
+                        Category
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-grid-3x3-gap"></i>
+
+                        </span>
+
+                        <select class="form-select"
+                                id="productCategory"
+                                name="category"
+                                required>
+
+                            <option disabled
+                                    selected
+                                    value="">
+
+                                Select Category...
+
+                            </option>
+
+                            <option value="electronics">
+                                Electronics
+                            </option>
+
+                            <option value="Fashion">
+                                Fashion
+                            </option>
+
+                            <option value="home">
+                                Home & Kitchen
+                            </option>
+
+                            <option value="computer & Accesseries">
+                                Computer & Accessories
+                            </option>
+
+                            <option value="Book">
+                                Book
+                            </option>
+
+                            <option value="sports">
+                                Sports & Outdoor Gear
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT PRICE -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productPrice">
+
+                        Product Price
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text fw-bold">
+
+                            ₹
+
+                        </span>
+
+                        <input class="form-control"
+                               id="productPrice"
+                               min="0"
+                               name="productPrice"
+                               placeholder="0.00"
+                               required
+                               step="0.01"
+                               type="number">
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT QUANTITY -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productQuantity">
+
+                        Product Quantity
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </span>
+
+                        <input class="form-control"
+                               id="productQuantity"
+                               min="0"
+                               name="productQty"
+                               placeholder="e.g. 100"
+                               required
+                               step="1"
+                               type="number">
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT IMAGE -->
+
+                <div class="col-12 col-md-6">
+
+                    <label class="form-label"
+                           for="productImage">
+
+                        Product Image
+                        <span class="text-danger">*</span>
+
+                    </label>
+
+
+                    <div class="dropzone-container"
+                         onclick="document.getElementById('productImage').click();">
+
+
+                        <div class="upload-icon-box">
+
+                            <i class="bi bi-cloud-arrow-up"></i>
+
+                        </div>
+
+
+                        <div class="upload-text">
+
+                            <div class="file-name"
+                                 id="fileNameDisplay">
+
+                                Upload Product Image
+
+                            </div>
+
+                            <div class="file-help">
+
+                                Click to browse JPG, PNG, WEBP
+
+                            </div>
+
+                        </div>
+
+
+                        <button class="btn btn-sm btn-outline-secondary browse-btn"
+                                type="button"
+                                onclick="event.stopPropagation(); document.getElementById('productImage').click();">
+
+                            Browse
+
+                        </button>
+
+                    </div>
+
+
+                    <input accept="image/*"
+                           class="d-none"
+                           id="productImage"
+                           name="image"
+                           onchange="handleFileSelected(this)"
+                           required
+                           type="file">
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTION BUTTONS
+            ================================================== -->
+
+            <div class="form-actions">
+
+                <a class="btn btn-amazon-secondary"
+                   href="/QuickShop/viewAllProduct">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+
+                    Back
+
+                </a>
+
+
+                <button class="btn btn-amazon-primary"
+                        id="submitProductBtn"
+                        type="submit">
+
+                    <i class="bi bi-plus-circle me-1"></i>
+
+                    Add Product
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer-bar">
+
+    <p>
+        © 2026 quickShop.com
+    </p>
+
+</footer>
+
+
+<!-- =========================================================
+     SCRIPT
+========================================================= -->
+
+<script>
+
+    function handleFileSelected(input) {
+
+        const display = document.getElementById("fileNameDisplay");
+
+        if (input.files && input.files[0]) {
+
+            display.textContent = input.files[0].name;
+
+            display.classList.add("text-success");
+
+        } else {
+
+            display.textContent = "Upload Product Image";
+
+            display.classList.remove("text-success");
+
+        }
+
+    }
+
+</script>
+
+</body>
+
+</html>
