@@ -1223,7 +1223,7 @@ body {
 
                     <p class="font-bold text-white mb-0">
 
-                        @2026 quickshop.com
+                        © 2026 Quickshop.com dev - Mohan Patil.
 
                     </p>
 

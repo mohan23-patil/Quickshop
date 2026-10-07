@@ -1237,7 +1237,7 @@ body {
 <footer class="footer-bar">
 
     <p>
-        © 2026 QuickShop.com
+         © 2026 Quickshop.com dev - Mohan Patil.
     </p>
 
 </footer>
