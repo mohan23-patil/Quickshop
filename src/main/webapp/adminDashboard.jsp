@@ -1,6 +1,6 @@
 <%@ page language="java"
-contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
 <%@ page import="java.util.List" %>
 <%@ page import="com.entity.Product" %>
@@ -861,17 +861,17 @@ Quick<span class="text-amazon-orange">Shop</span>
 </div>
 
 <svg class="w-24 h-3 ml-7 -mt-0.5 text-amazon-orange brand-arrow"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-width="2.6"
-  viewBox="0 0 100 15">
+     fill="none"
+     stroke="currentColor"
+     stroke-linecap="round"
+     stroke-width="2.6"
+     viewBox="0 0 100 15">
 
 <path d="M 5 5 Q 50 16 95 4"></path>
 
 <polygon fill="currentColor"
-      points="90,1 96,4 92,8"
-      stroke="none"></polygon>
+         points="90,1 96,4 92,8"
+         stroke="none"></polygon>
 
 </svg>
 
@@ -886,7 +886,7 @@ Admin
 <nav class="sidebar-nav p-3 space-y-1.5 mt-2">
 
 <a class="sidebar-link active"
-href="addProduct.html">
+   href="addProduct.html">
 
 <i class="bi bi-plus-circle-fill text-lg"></i>
 
@@ -895,7 +895,7 @@ href="addProduct.html">
 </a>
 
 <a class="sidebar-link"
-href="#">
+   href="#">
 
 <i class="bi bi-pencil-square text-amazon-orange text-lg"></i>
 
@@ -904,7 +904,7 @@ href="#">
 </a>
 
 <a class="sidebar-link"
-href="#">
+   href="#">
 
 <i class="bi bi-trash3 text-red-400 text-lg"></i>
 
@@ -913,7 +913,7 @@ href="#">
 </a>
 
 <a class="sidebar-link"
-href="#">
+   href="#">
 
 <i class="bi bi-people-fill text-amazon-orange text-lg"></i>
 
@@ -922,7 +922,7 @@ href="#">
 </a>
 
 <a class="sidebar-link"
-href="#">
+   href="#">
 
 <i class="bi bi-box-seam-fill text-amazon-orange text-lg"></i>
 
@@ -975,9 +975,9 @@ Admin Workspace
 <div class="input-group">
 
 <button aria-expanded="false"
-     class="btn btn-light bg-gray-100 dropdown-toggle text-xs md:text-sm font-semibold border-gray-300 px-3 text-gray-800 flex items-center gap-1"
-     data-bs-toggle="dropdown"
-     type="button">
+        class="btn btn-light bg-gray-100 dropdown-toggle text-xs md:text-sm font-semibold border-gray-300 px-3 text-gray-800 flex items-center gap-1"
+        data-bs-toggle="dropdown"
+        type="button">
 
 <i class="bi bi-funnel text-amazon-orange me-1"></i>
 
@@ -992,8 +992,8 @@ All Categories
 <li>
 
 <a class="dropdown-item active"
-href="#"
-onclick="selectCategory('All Categories'); return false;">
+   href="#"
+   onclick="selectCategory('All Categories'); return false;">
 
 All Categories
 
@@ -1008,8 +1008,8 @@ All Categories
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Electronics'); return false;">
+   href="#"
+   onclick="selectCategory('Electronics'); return false;">
 
 <i class="bi bi-laptop me-2"></i>
 Electronics
@@ -1021,8 +1021,8 @@ Electronics
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Clothes'); return false;">
+   href="#"
+   onclick="selectCategory('Clothes'); return false;">
 
 <i class="bi bi-bag me-2"></i>
 Clothes
@@ -1034,8 +1034,8 @@ Clothes
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Home & Kitchen'); return false;">
+   href="#"
+   onclick="selectCategory('Home & Kitchen'); return false;">
 
 <i class="bi bi-house me-2"></i>
 Home & Kitchen
@@ -1047,8 +1047,8 @@ Home & Kitchen
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Computers & Accessories'); return false;">
+   href="#"
+   onclick="selectCategory('Computers & Accessories'); return false;">
 
 <i class="bi bi-cpu me-2"></i>
 Computers & Acc.
@@ -1060,8 +1060,8 @@ Computers & Acc.
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Books & Media'); return false;">
+   href="#"
+   onclick="selectCategory('Books & Media'); return false;">
 
 <i class="bi bi-book me-2"></i>
 Books
@@ -1073,8 +1073,8 @@ Books
 <li>
 
 <a class="dropdown-item"
-href="#"
-onclick="selectCategory('Fitness & Sports'); return false;">
+   href="#"
+   onclick="selectCategory('Fitness & Sports'); return false;">
 
 <i class="bi bi-activity me-2"></i>
 Sports
@@ -1086,13 +1086,13 @@ Sports
 </ul>
 
 <input aria-label="product Search bar"
-    class="form-control text-sm border-0 py-2"
-    id="productSearchInput"
-    placeholder="Search product name, category, or ID..."
-    type="text">
+       class="form-control text-sm border-0 py-2"
+       id="productSearchInput"
+       placeholder="Search product name, category, or ID..."
+       type="text">
 
 <button class="btn amazon-search-addon px-4 text-base font-bold flex items-center justify-center"
-     type="button">
+        type="button">
 
 <i class="bi bi-search text-gray-900"></i>
 
@@ -1105,8 +1105,8 @@ Sports
 <div class="admin-actions flex items-center gap-3 ms-auto">
 
 <button class="notification-btn relative text-gray-300 hover:text-white p-2 text-lg"
-     title="Notifications"
-     type="button">
+        title="Notifications"
+        type="button">
 
 <i class="bi bi-bell"></i>
 
@@ -1127,8 +1127,8 @@ Signed in as
 </div>
 
 <button class="btn btn-outline-warning text-amazon-yellow border-amazon-yellow font-semibold text-xs md:text-sm px-3.5 py-1.5 flex items-center gap-1.5 rounded"
-     id="logOutBtn"
-     type="button">
+        id="logOutBtn"
+        type="button">
 
 <i class="bi bi-box-arrow-right"></i>
 
@@ -1191,52 +1191,87 @@ Actions
 <%
 
 List<Product> products =
-(List<Product>) request.getAttribute("product");
+        (List<Product>) request.getAttribute("product");
 
 if (products != null && !products.isEmpty())
 {
 
+    int count = 1;
 
-int count = 1;
-
-for (Product prod : products)
-{
-
-    String status;
-    String badgeClass;
-    String badgeLabel;
-
-    if (prod.getProductQty() == 0)
+    for (Product prod : products)
     {
 
-        status = "out-of-stock";
+        String status;
+        String badgeClass;
+        String badgeLabel;
 
-        badgeClass = "badge-out-stock";
+        if (prod.getProductQty() == 0)
+        {
 
-        badgeLabel = "0 (Out of stock)";
+            status = "out-of-stock";
 
-    }
-    else if (prod.getProductQty() <= 5)
-    {
+            badgeClass = "badge-out-stock";
 
-        status = "low-stock";
+            badgeLabel = "0 (Out of stock)";
 
-        badgeClass = "badge-low-stock";
+        }
+        else if (prod.getProductQty() <= 5)
+        {
 
-        badgeLabel = prod.getProductQty() + " left (Low Stock)";
+            status = "low-stock";
 
-    }
-    else
-    {
+            badgeClass = "badge-low-stock";
 
-        status = "in-stock";
+            badgeLabel = prod.getProductQty() + " left (Low Stock)";
 
-        badgeClass = "badge-in-stock";
+        }
+        else
+        {
 
-        badgeLabel = prod.getProductQty() + " in stock";
+            status = "in-stock";
 
-    }
+            badgeClass = "badge-in-stock";
 
+            badgeLabel = prod.getProductQty() + " in stock";
+
+        }
+
+        /*
+         * IMAGE HANDLING
+         *
+         * If database contains a full ImageKit URL,
+         * use it directly.
+         *
+         * If database contains an old local filename,
+         * use /images/filename.
+         */
+
+        String imageUrl = prod.getImage();
+
+        if (imageUrl != null && !imageUrl.trim().isEmpty())
+        {
+
+            imageUrl = imageUrl.trim();
+
+            if (!imageUrl.startsWith("http://")
+                    && !imageUrl.startsWith("https://"))
+            {
+
+                imageUrl =
+                        request.getContextPath()
+                        + "/images/"
+                        + imageUrl;
+
+            }
+
+        }
+        else
+        {
+
+            imageUrl =
+                    "https://placehold.co/100x100?text=No+Image";
+
+        }
 
 %>
 
@@ -1252,10 +1287,11 @@ for (Product prod : products)
 
 <td>
 
-<img src="<%= request.getContextPath() %>/images/<%= prod.getImage() %>"
-  alt="<%= prod.getProductName() %>"
-  class="product-img-box"
-  onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=No+Image';">
+<img src="<%= imageUrl %>"
+     alt="<%= prod.getProductName() %>"
+     class="product-img-box"
+     loading="lazy"
+     onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=No+Image';">
 
 </td>
 
@@ -1307,8 +1343,8 @@ Available
 
 <%
 
-if (prod.getProductQty() == 0)
-{
+        if (prod.getProductQty() == 0)
+        {
 
 %>
 
@@ -1316,9 +1352,9 @@ if (prod.getProductQty() == 0)
 
 <%
 
-}
-else if (prod.getProductQty() <= 5)
-{
+        }
+        else if (prod.getProductQty() <= 5)
+        {
 
 %>
 
@@ -1326,9 +1362,9 @@ else if (prod.getProductQty() <= 5)
 
 <%
 
-}
-else
-{
+        }
+        else
+        {
 
 %>
 
@@ -1336,7 +1372,7 @@ else
 
 <%
 
-}
+        }
 
 %>
 
@@ -1352,17 +1388,17 @@ else
      role="group">
 
 <a class="btn btn-outline-secondary"
-title="Update Product"
-href="updateProduct?productId=<%= prod.getProductId() %>">
+   title="Update Product"
+   href="updateProduct?productId=<%= prod.getProductId() %>">
 
 <i class="bi bi-pencil-square text-primary"></i>
 
 </a>
 
 <a class="btn btn-outline-secondary"
-title="Delete Product"
-href="deleteProduct?productId=<%= prod.getProductId() %>"
-onclick="return confirm('Are you sure you want to delete this product?');">
+   title="Delete Product"
+   href="deleteProduct?productId=<%= prod.getProductId() %>"
+   onclick="return confirm('Are you sure you want to delete this product?');">
 
 <i class="bi bi-trash3 text-danger"></i>
 
@@ -1376,11 +1412,9 @@ onclick="return confirm('Are you sure you want to delete this product?');">
 
 <%
 
+        count++;
 
-    count++;
-
-}
-
+    }
 
 }
 else
@@ -1459,20 +1493,29 @@ Quick Shop Product Inventory
 
 <script>
 
+/* =========================
+   PRODUCT SEARCH
+   ========================= */
+
 const searchInput =
     document.getElementById('productSearchInput');
 
-if (searchInput) {
+if (searchInput)
+{
 
-    searchInput.addEventListener('input', function(e) {
+    searchInput.addEventListener('input', function(e)
+    {
 
         const term =
             e.target.value.toLowerCase().trim();
 
         const rows =
-            document.querySelectorAll('#productTableBody .product-row');
+            document.querySelectorAll(
+                '#productTableBody .product-row'
+            );
 
-        rows.forEach(function(row) {
+        rows.forEach(function(row)
+        {
 
             const text =
                 row.innerText.toLowerCase();
@@ -1486,20 +1529,28 @@ if (searchInput) {
 
 }
 
+
+/* =========================
+   CATEGORY FILTER
+   ========================= */
+
 function selectCategory(categoryName)
 {
 
     const label =
         document.getElementById('selectedCategoryLabel');
 
-    if (label) {
+    if (label)
+    {
 
         label.innerText = categoryName;
 
     }
 
     const rows =
-        document.querySelectorAll('#productTableBody .product-row');
+        document.querySelectorAll(
+            '#productTableBody .product-row'
+        );
 
     rows.forEach(function(row)
     {
@@ -1517,7 +1568,9 @@ function selectCategory(categoryName)
         {
 
             row.style.display =
-                rowCategory === categoryName ? '' : 'none';
+                rowCategory === categoryName
+                    ? ''
+                    : 'none';
 
         }
 
@@ -1525,10 +1578,16 @@ function selectCategory(categoryName)
 
 }
 
+
+/* =========================
+   LOGOUT
+   ========================= */
+
 const logOutBtn =
     document.getElementById('logOutBtn');
 
-if (logOutBtn) {
+if (logOutBtn)
+{
 
     logOutBtn.addEventListener('click', function()
     {

@@ -1025,9 +1025,7 @@ body {
                     <div class="input-group">
 
                         <span class="input-group-text fw-bold">
-
                             ₹
-
                         </span>
 
                         <input class="form-control"
@@ -1083,9 +1081,7 @@ body {
                 <div class="col-12 col-md-6">
 
                     <label class="form-label">
-
                         Product Image
-
                     </label>
 
                     <div class="image-preview-box">
@@ -1096,12 +1092,39 @@ body {
 
                             <div class="image-preview">
 
-                                <% if (product.getImage() != null
-                                    && !product.getImage().isEmpty()) { %>
+                                <%
+                                String currentImage = product.getImage();
 
-                                    <img src="<%= request.getContextPath() %>/images/<%= product.getImage() %>"
-                                         alt="<%= product.getImage() %>"
-                                         id="imagePreviewImg">
+                                if (currentImage != null &&
+                                    !currentImage.trim().isEmpty())
+                                {
+                                    currentImage = currentImage.trim();
+
+                                    /*
+                                     * If image is an old local filename,
+                                     * use the local /images/ folder.
+                                     *
+                                     * If image is an ImageKit URL,
+                                     * use the URL directly.
+                                     */
+                                    if (!currentImage.startsWith("http://") &&
+                                        !currentImage.startsWith("https://"))
+                                    {
+                                        currentImage =
+                                                request.getContextPath()
+                                                + "/images/"
+                                                + currentImage;
+                                    }
+                                }
+                                %>
+
+                                <% if (currentImage != null &&
+                                       !currentImage.isEmpty()) { %>
+
+                                    <img src="<%= currentImage %>"
+                                         alt="Product Image"
+                                         id="imagePreviewImg"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=No+Image';">
 
                                 <% } else { %>
 

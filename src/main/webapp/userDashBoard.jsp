@@ -4,12 +4,14 @@
 
 <%@ page import="java.util.List" %>
 <%@ page import="com.entity.Product" %>
+
 <%
 String username = (String) session.getAttribute("username");
 
 if (username == null) {
     username = "User";
 }
+
 List<Product> products =
         (List<Product>) request.getAttribute("product");
 %>
@@ -32,7 +34,6 @@ List<Product> products =
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
       rel="stylesheet">
-
 
 <style>
 
@@ -1777,7 +1778,7 @@ Sports
 
 <!-- =================================================
      SEARCH INPUT
-================================================= -->
+========================================================= -->
 
 <input type="search"
        class="form-control"
@@ -1891,6 +1892,8 @@ Cart
 All
 
 </a>
+
+
 <!-- ELECTRONICS -->
 
 <a href="#"
@@ -1955,6 +1958,7 @@ Books
 Sports
 
 </a>
+
 </nav>
 
 
@@ -1972,7 +1976,7 @@ Sports
 
 <!-- =====================================================
      WELCOME
-===================================================== -->
+========================================================= -->
 
 <section class="qs-welcome">
 
@@ -2003,7 +2007,7 @@ Let's start the shopping. The best deals are waiting for you.
 
 <!-- =====================================================
      PRODUCT GRID
-===================================================== -->
+========================================================= -->
 
 <section class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3"
          id="productGrid">
@@ -2067,7 +2071,7 @@ if (products != null && !products.isEmpty()) {
 
 <!-- =====================================================
      PRODUCT
-===================================================== -->
+========================================================= -->
 
 <div class="col product-item"
 
@@ -2081,7 +2085,7 @@ if (products != null && !products.isEmpty()) {
 
 <!-- =================================================
      PRODUCT IMAGE
-================================================= -->
+========================================================= -->
 
 <div class="qs-image-box">
 
@@ -2100,9 +2104,15 @@ if (prod.getImage() != null &&
     !prod.getImage().trim().isEmpty()) {
 %>
 
-<img src="<%= request.getContextPath() %>/images/<%= prod.getImage() %>"
+<!-- ImageKit URL -->
+
+<img src="<%= prod.getImage() %>"
      alt="<%= prod.getProductName() == null ? "Product" : prod.getProductName() %>"
-     loading="lazy">
+     loading="lazy"
+     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+
+<i class="bi bi-image"
+   style="font-size:3rem;color:#aaa;display:none;"></i>
 
 <%
 }
@@ -2122,7 +2132,7 @@ else {
 
 <!-- =================================================
      CATEGORY
-================================================= -->
+========================================================= -->
 
 <div class="qs-product-meta">
 
@@ -2148,7 +2158,7 @@ prime
 
 <!-- =================================================
      PRODUCT NAME
-================================================= -->
+========================================================= -->
 
 <a href="#"
    class="qs-product-name">
@@ -2162,7 +2172,7 @@ prime
 
 <!-- =================================================
      RATING
-================================================= -->
+========================================================= -->
 
 <div class="d-flex align-items-center mb-1">
 
@@ -2185,7 +2195,7 @@ prime
 
 <!-- =================================================
      PRICE
-================================================= -->
+========================================================= -->
 
 <div class="qs-price">
 
@@ -2200,7 +2210,7 @@ prime
 
 <!-- =================================================
      STOCK
-================================================= -->
+========================================================= -->
 
 <div class="qs-stock
 
@@ -2264,7 +2274,7 @@ else {
 
 <!-- =================================================
      BUTTONS
-================================================= -->
+========================================================= -->
 
 <div class="qs-buttons">
 
@@ -2308,7 +2318,7 @@ else {
 
 <!-- =====================================================
      NO PRODUCTS
-===================================================== -->
+========================================================= -->
 
 <div class="col-12">
 
@@ -2349,7 +2359,7 @@ There is no product data available in the database.
 
 <!-- =====================================================
      SEARCH RESULT
-===================================================== -->
+========================================================= -->
 
 <div id="noSearchResult"
      class="qs-no-products mt-3 d-none">

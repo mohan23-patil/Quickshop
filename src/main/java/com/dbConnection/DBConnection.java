@@ -1,62 +1,56 @@
 package com.dbConnection;
 
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Properties;
 
 public class DBConnection
 {
     private static Connection con = null;
 
-    private DBConnection(){}
+    private DBConnection() {}
 
     public static Connection getConnection()
     {
         try
         {
-            if (con == null)
+            if (con == null || con.isClosed())
             {
                 Class.forName("com.mysql.cj.jdbc.Driver");
 
-                Properties properties = new Properties();
+                String url =
+                        System.getenv("DB_URL");
 
-                InputStream inputStream =
-                        DBConnection.class.getClassLoader().getResourceAsStream("db.properties");
+                String username =
+                        System.getenv("DB_USERNAME");
 
-                String url;
-                String username;
-                String password;
+                String password =
+                        System.getenv("DB_PASSWORD");
 
-                if (inputStream != null)
+                if (url == null || username == null || password == null)
                 {
-                    properties.load(inputStream);
-
-                    url = properties.getProperty("db.url");
-                    username = properties.getProperty("db.username");
-                    password = properties.getProperty("db.password");
-                }
-                else
-                {
-                    url = System.getenv("DB_URL");
-                    username = System.getenv("DB_USERNAME");
-                    password = System.getenv("DB_PASSWORD");
+                    throw new RuntimeException(
+                            "Database environment variables are missing!"
+                    );
                 }
 
-                con = DriverManager.getConnection(url, username, password);
+                con = DriverManager.getConnection(
+                        url,
+                        username,
+                        password
+                );
 
-                System.out.println("Aiven MySQL Connection established Successfully");
+                System.out.println(
+                        "MySQL Connection established Successfully"
+                );
             }
-            else
-            {
-                return con;
-            }
+
+            return con;
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
 
-        return con;
+        return null;
     }
 }
