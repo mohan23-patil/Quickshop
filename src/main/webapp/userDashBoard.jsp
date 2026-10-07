@@ -8,7 +8,7 @@
 <%
 String username = (String) session.getAttribute("username");
 
-if (username == null) {
+if (username == null || username.trim().isEmpty()) {
     username = "User";
 }
 
@@ -17,1578 +17,1309 @@ List<Product> products =
 %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<title>Quick Shop - User Dashboard</title>
+    <title>Quick Shop - User Dashboard</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-      rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
 
-<style>
+    <style>
 
-/* =========================================================
-   ROOT
-========================================================= */
+        /* =========================================================
+           ROOT
+        ========================================================= */
 
-:root {
+        :root {
+            --qs-dark: #131921;
+            --qs-sub: #232f3e;
+            --qs-hover: #37475a;
 
-    --qs-dark: #131921;
-    --qs-sub: #232f3e;
-    --qs-hover: #37475a;
+            --qs-yellow: #ffd814;
+            --qs-yellow-hover: #f7ca00;
 
-    --qs-yellow: #ffd814;
-    --qs-yellow-hover: #f7ca00;
+            --qs-orange: #ffa41c;
+            --qs-orange-hover: #fa8900;
 
-    --qs-orange: #ffa41c;
-    --qs-orange-hover: #fa8900;
+            --qs-amber: #febd69;
 
-    --qs-amber: #febd69;
+            --qs-bg: #eaeded;
+            --qs-border: #d5d9d9;
 
-    --qs-bg: #eaeded;
-    --qs-border: #d5d9d9;
+            --qs-text: #0f1111;
+            --qs-muted: #565959;
 
-    --qs-text: #0f1111;
-    --qs-muted: #565959;
+            --qs-green: #007600;
+            --qs-red: #b12704;
+        }
 
-    --qs-green: #007600;
-    --qs-red: #b12704;
-}
 
+        /* =========================================================
+           GENERAL
+        ========================================================= */
 
-/* =========================================================
-   GENERAL
-========================================================= */
+        * {
+            box-sizing: border-box;
+        }
 
-* {
-    box-sizing: border-box;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-html {
-    scroll-behavior: smooth;
-}
+        body {
+            margin: 0;
+            background: var(--qs-bg);
+            color: var(--qs-text);
 
-body {
+            font-family:
+                "Segoe UI",
+                system-ui,
+                -apple-system,
+                sans-serif;
 
-    margin: 0;
+            overflow-x: hidden;
+        }
 
-    background: var(--qs-bg);
 
-    color: var(--qs-text);
+        /* =========================================================
+           HEADER
+        ========================================================= */
 
-    font-family:
-        "Segoe UI",
-        system-ui,
-        -apple-system,
-        sans-serif;
+        .qs-header {
+            width: 100%;
+            background: var(--qs-dark);
+            color: white;
+        }
 
-    overflow-x: hidden;
-}
 
+        /* =========================================================
+           TOP BAR
+        ========================================================= */
 
-/* =========================================================
-   HEADER
-========================================================= */
+        .qs-topbar {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--qs-dark);
+        }
 
-.qs-header {
+        .qs-topbar-inner {
+            width: 100%;
 
-    width: 100%;
+            display: grid;
 
-    background: var(--qs-dark);
+            grid-template-columns:
+                auto
+                minmax(0, 1fr)
+                auto;
 
-    color: white;
-}
+            align-items: center;
 
+            gap: 12px;
+        }
 
-/* =========================================================
-   TOP BAR
-========================================================= */
 
-.qs-topbar {
+        /* =========================================================
+           LOGO
+        ========================================================= */
 
-    width: 100%;
+        .qs-logo {
+            color: white;
 
-    padding: 8px 12px;
+            text-decoration: none;
 
-    background: var(--qs-dark);
-}
+            font-size: 1.5rem;
 
+            font-weight: 800;
 
-/* =========================================================
-   TOP BAR LAYOUT
-========================================================= */
+            white-space: nowrap;
 
-.qs-topbar-inner {
+            display: flex;
 
-    width: 100%;
+            align-items: center;
 
-    display: grid;
+            gap: 5px;
 
-    grid-template-columns:
-        auto
-        minmax(0, 1fr)
-        auto;
+            padding: 6px 5px;
+        }
 
-    align-items: center;
+        .qs-logo i {
+            color: var(--qs-amber);
+            font-size: 1.55rem;
+        }
 
-    gap: 12px;
-}
+        .qs-logo span {
+            color: var(--qs-amber);
+        }
 
 
-/* =========================================================
-   LOGO
-========================================================= */
+        /* =========================================================
+           SEARCH AREA
+        ========================================================= */
 
-.qs-logo {
+        .qs-search-wrapper {
+            width: 100%;
+            min-width: 0;
+        }
 
-    color: white;
+        .qs-search {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-    text-decoration: none;
+        .qs-search .input-group {
+            width: 100%;
 
-    font-size: 1.5rem;
+            height: 50px;
 
-    font-weight: 800;
+            display: flex;
 
-    white-space: nowrap;
+            flex-wrap: nowrap;
 
-    display: flex;
+            align-items: stretch;
 
-    align-items: center;
+            border-radius: 6px;
 
-    gap: 5px;
+            overflow: visible;
+        }
 
-    padding: 6px 5px;
-}
 
-.qs-logo i {
+        /* =========================================================
+           CATEGORY DROPDOWN
+        ========================================================= */
 
-    color: var(--qs-amber);
+        .qs-category-dropdown {
+            position: relative;
 
-    font-size: 1.55rem;
-}
+            width: 135px;
 
-.qs-logo span {
+            min-width: 135px;
 
-    color: var(--qs-amber);
-}
+            flex: 0 0 135px;
+        }
 
+        .qs-category-select {
+            width: 100%;
 
-/* =========================================================
-   SEARCH AREA
-========================================================= */
+            height: 50px;
 
-.qs-search-wrapper {
+            border: none;
 
-    width: 100%;
+            border-right: 1px solid #ccc;
 
-    min-width: 0;
-}
+            border-radius: 6px 0 0 6px;
 
+            background: #f3f3f3;
 
-.qs-search {
+            color: #222;
 
-    width: 100%;
+            padding: 0 12px;
 
-    margin: 0;
+            display: flex;
 
-    padding: 0;
-}
+            align-items: center;
 
+            gap: 7px;
 
-.qs-search .input-group {
+            font-size: 0.82rem;
 
-    width: 100%;
+            cursor: pointer;
 
-    height: 50px;
+            white-space: nowrap;
+        }
 
-    display: flex;
+        .qs-category-select:hover {
+            background: #e8e8e8;
+        }
 
-    flex-wrap: nowrap;
+        .qs-category-select > i:first-child {
+            color: #f39c12;
+            font-size: 1rem;
+        }
 
-    align-items: stretch;
+        .qs-category-select span {
+            overflow: hidden;
 
-    border-radius: 6px;
+            text-overflow: ellipsis;
 
-    overflow: visible;
-}
+            white-space: nowrap;
+        }
 
+        .qs-category-arrow {
+            font-size: 0.58rem;
 
-/* =========================================================
-   CATEGORY DROPDOWN
-========================================================= */
+            margin-left: auto;
 
-.qs-category-dropdown {
+            flex-shrink: 0;
+        }
 
-    position: relative;
 
-    width: 135px;
+        /* =========================================================
+           CATEGORY MENU
+        ========================================================= */
 
-    min-width: 135px;
+        .qs-category-menu {
+            display: none;
 
-    flex: 0 0 135px;
-}
+            position: absolute;
 
+            top: 52px;
 
-.qs-category-select {
+            left: 0;
 
-    width: 100%;
+            width: 220px;
 
-    height: 50px;
+            background: white;
 
-    border: none;
+            border-radius: 0 0 7px 7px;
 
-    border-right: 1px solid #ccc;
+            border: 1px solid #ddd;
 
-    border-radius: 6px 0 0 6px;
+            box-shadow:
+                0 5px 16px rgba(0, 0, 0, 0.25);
 
-    background: #f3f3f3;
+            z-index: 99999;
 
-    color: #222;
+            overflow: hidden;
+        }
 
-    padding: 0 12px;
+        .qs-category-menu.show {
+            display: block;
+        }
 
-    display: flex;
+        .qs-category-option {
+            min-height: 45px;
 
-    align-items: center;
+            display: flex;
 
-    gap: 7px;
+            align-items: center;
 
-    font-size: 0.82rem;
+            gap: 13px;
 
-    cursor: pointer;
+            padding: 0 17px;
 
-    white-space: nowrap;
-}
+            color: #222;
 
+            font-size: 0.91rem;
 
-.qs-category-select:hover {
+            cursor: pointer;
 
-    background: #e8e8e8;
-}
+            white-space: nowrap;
+        }
 
+        .qs-category-option i {
+            width: 20px;
 
-.qs-category-select > i:first-child {
+            text-align: center;
 
-    color: #f39c12;
+            font-size: 1rem;
 
-    font-size: 1rem;
-}
+            flex-shrink: 0;
+        }
 
+        .qs-category-option:hover {
+            background: #f1f1f1;
+        }
 
-.qs-category-select span {
+        .qs-category-option.active {
+            background: #146ff5;
+            color: white;
+        }
 
-    overflow: hidden;
+        .qs-category-option.active:hover {
+            background: #146ff5;
+        }
 
-    text-overflow: ellipsis;
 
-    white-space: nowrap;
-}
+        /* =========================================================
+           SEARCH INPUT
+        ========================================================= */
 
+        .qs-search input {
+            flex: 1 1 auto;
 
-.qs-category-arrow {
+            width: 1%;
 
-    font-size: 0.58rem;
+            min-width: 0;
 
-    margin-left: auto;
+            height: 50px;
 
-    flex-shrink: 0;
-}
+            border: none;
 
+            border-radius: 0;
 
-/* =========================================================
-   CATEGORY MENU
-========================================================= */
+            background: white;
 
-.qs-category-menu {
+            color: #111;
 
-    display: none;
+            font-size: 0.95rem;
 
-    position: absolute;
+            padding: 8px 14px;
 
-    top: 52px;
+            outline: none;
+        }
 
-    left: 0;
+        .qs-search input:focus {
+            box-shadow: none;
+        }
 
-    width: 220px;
 
-    background: white;
+        /* =========================================================
+           SEARCH BUTTON
+        ========================================================= */
 
-    border-radius: 0 0 7px 7px;
+        .qs-search button[type="submit"] {
+            width: 52px;
 
-    border: 1px solid #ddd;
+            min-width: 52px;
 
-    box-shadow:
-        0 5px 16px rgba(0,0,0,0.25);
+            height: 50px;
 
-    z-index: 99999;
+            flex: 0 0 52px;
 
-    overflow: hidden;
-}
+            border: none;
 
+            border-radius: 0 6px 6px 0;
 
-.qs-category-menu.show {
+            background: var(--qs-amber);
 
-    display: block;
-}
+            color: #111;
 
+            display: flex;
 
-.qs-category-option {
+            align-items: center;
 
-    min-height: 45px;
+            justify-content: center;
 
-    display: flex;
+            cursor: pointer;
+        }
 
-    align-items: center;
+        .qs-search button[type="submit"]:hover {
+            background: #f3a847;
+        }
 
-    gap: 13px;
+        .qs-search button[type="submit"] i {
+            font-size: 1.05rem;
+        }
 
-    padding: 0 17px;
 
-    color: #222;
+        /* =========================================================
+           ACCOUNT / ORDERS / CART
+        ========================================================= */
 
-    font-size: 0.91rem;
+        .qs-user-actions {
+            display: flex;
 
-    cursor: pointer;
+            align-items: center;
 
-    white-space: nowrap;
-}
+            justify-content: flex-end;
 
+            gap: 3px;
+        }
 
-.qs-category-option i {
+        .qs-nav-box {
+            color: white;
 
-    width: 20px;
+            text-decoration: none;
 
-    text-align: center;
+            padding: 6px 8px;
 
-    font-size: 1rem;
+            border: 1px solid transparent;
 
-    flex-shrink: 0;
-}
+            border-radius: 3px;
 
+            white-space: nowrap;
+        }
 
-.qs-category-option:hover {
+        .qs-nav-box:hover {
+            color: white;
 
-    background: #f1f1f1;
-}
+            border-color: white;
+        }
 
+        .qs-small-text {
+            display: block;
 
-.qs-category-option.active {
+            font-size: 0.67rem;
 
-    background: #146ff5;
+            color: #ccc;
+        }
 
-    color: white;
-}
+        .qs-nav-title {
+            font-size: 0.81rem;
 
+            font-weight: 700;
+        }
 
-.qs-category-option.active:hover {
 
-    background: #146ff5;
-}
+        /* =========================================================
+           CART
+        ========================================================= */
 
+        .qs-cart-link {
+            padding-left: 8px;
+            padding-right: 5px;
+        }
 
-/* =========================================================
-   SEARCH INPUT
-========================================================= */
+        .qs-cart-container {
+            position: relative;
 
-.qs-search input {
+            display: flex;
 
-    flex: 1 1 auto;
+            align-items: center;
+        }
 
-    width: 1%;
+        .qs-cart-container > i {
+            color: var(--qs-amber);
 
-    min-width: 0;
+            font-size: 1.9rem;
+        }
 
-    height: 50px;
+        .qs-cart-count {
+            position: absolute;
 
-    border: none;
+            top: -5px;
 
-    border-radius: 0;
+            left: 13px;
 
-    background: white;
+            min-width: 18px;
 
-    color: #111;
+            height: 18px;
 
-    font-size: 0.95rem;
+            padding: 1px 5px;
 
-    padding: 8px 14px;
+            border-radius: 10px;
 
-    outline: none;
-}
+            background: var(--qs-yellow);
 
+            color: #111;
 
-.qs-search input:focus {
+            font-size: 0.68rem;
 
-    box-shadow: none;
-}
+            font-weight: 700;
 
+            display: flex;
 
-/* =========================================================
-   SEARCH BUTTON
-========================================================= */
+            align-items: center;
 
-.qs-search button[type="submit"] {
+            justify-content: center;
+        }
 
-    width: 52px;
+        .qs-cart-text {
+            font-weight: 700;
 
-    min-width: 52px;
+            font-size: 0.84rem;
 
-    height: 50px;
+            margin-left: 5px;
+        }
 
-    flex: 0 0 52px;
 
-    border: none;
+        /* =========================================================
+           CATEGORY NAVIGATION
+        ========================================================= */
 
-    border-radius: 0 6px 6px 0;
+        .qs-category-bar {
+            width: 100%;
 
-    background: var(--qs-amber);
+            min-height: 42px;
 
-    color: #111;
+            display: flex;
 
-    display: flex;
+            align-items: center;
 
-    align-items: center;
+            gap: 0;
 
-    justify-content: center;
+            background: var(--qs-sub);
 
-    cursor: pointer;
-}
+            overflow-x: auto;
 
+            overflow-y: hidden;
 
-.qs-search button[type="submit"]:hover {
+            white-space: nowrap;
 
-    background: #f3a847;
-}
+            scrollbar-width: thin;
+        }
 
+        .qs-category-bar::-webkit-scrollbar {
+            height: 3px;
+        }
 
-.qs-search button[type="submit"] i {
+        .qs-category-bar::-webkit-scrollbar-thumb {
+            background: #697586;
 
-    font-size: 1.05rem;
-}
+            border-radius: 5px;
+        }
 
+        .qs-category {
+            color: white;
 
-/* =========================================================
-   ACCOUNT / ORDERS / CART
-========================================================= */
+            text-decoration: none;
 
-.qs-user-actions {
+            padding: 8px 15px;
 
-    display: flex;
+            min-height: 42px;
 
-    align-items: center;
+            display: inline-flex;
 
-    justify-content: flex-end;
+            align-items: center;
 
-    gap: 3px;
-}
+            gap: 5px;
 
+            font-size: 0.84rem;
 
-.qs-nav-box {
+            white-space: nowrap;
 
-    color: white;
+            border: 1px solid transparent;
 
-    text-decoration: none;
+            flex-shrink: 0;
+        }
 
-    padding: 6px 8px;
+        .qs-category:hover {
+            color: white;
 
-    border: 1px solid transparent;
+            border-color: white;
+        }
 
-    border-radius: 3px;
+        .qs-category.active {
+            color: white;
 
-    white-space: nowrap;
-}
+            border-color: white;
 
+            background: #2e3c4f;
+        }
 
-.qs-nav-box:hover {
 
-    color: white;
+        /* =========================================================
+           MAIN
+        ========================================================= */
 
-    border-color: white;
-}
+        .qs-main {
+            padding: 14px;
+        }
 
 
-.qs-small-text {
+        /* =========================================================
+           WELCOME
+        ========================================================= */
 
-    display: block;
+        .qs-welcome {
+            background:
+                linear-gradient(
+                    90deg,
+                    #1f2937,
+                    #374151
+                );
 
-    font-size: 0.67rem;
+            color: white;
 
-    color: #ccc;
-}
+            border-radius: 8px;
 
+            padding: 16px;
 
-.qs-nav-title {
+            margin-bottom: 14px;
+        }
 
-    font-size: 0.81rem;
+        .qs-welcome h1 {
+            font-size: 1.25rem;
 
-    font-weight: 700;
-}
+            margin: 8px 0 4px;
 
+            font-weight: 700;
+        }
 
-/* =========================================================
-   CART
-========================================================= */
+        .qs-welcome p {
+            margin: 0;
 
-.qs-cart-link {
+            color: #ddd;
 
-    padding-left: 8px;
+            font-size: 0.84rem;
+        }
 
-    padding-right: 5px;
-}
 
+        /* =========================================================
+           PRODUCT GRID
+        ========================================================= */
 
-.qs-cart-container {
+        #productGrid {
+            --bs-gutter-x: 12px;
+            --bs-gutter-y: 12px;
+        }
 
-    position: relative;
 
-    display: flex;
+        /* =========================================================
+           PRODUCT CARD
+        ========================================================= */
 
-    align-items: center;
-}
+        .qs-product-card {
+            height: 100%;
 
+            background: white;
 
-.qs-cart-container > i {
+            border: 1px solid var(--qs-border);
 
-    color: var(--qs-amber);
+            border-radius: 8px;
 
-    font-size: 1.9rem;
-}
+            padding: 10px;
 
+            display: flex;
 
-.qs-cart-count {
+            flex-direction: column;
 
-    position: absolute;
+            transition: 0.2s ease;
 
-    top: -5px;
+            min-width: 0;
+        }
 
-    left: 13px;
+        .qs-product-card:hover {
+            transform: translateY(-2px);
 
-    min-width: 18px;
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.08);
+        }
 
-    height: 18px;
 
-    padding: 1px 5px;
+        /* =========================================================
+           IMAGE
+        ========================================================= */
 
-    border-radius: 10px;
+        .qs-image-box {
+            height: 160px;
 
-    background: var(--qs-yellow);
+            background: #f7f7f7;
 
-    color: #111;
+            border-radius: 6px;
 
-    font-size: 0.68rem;
+            display: flex;
 
-    font-weight: 700;
+            align-items: center;
 
-    display: flex;
+            justify-content: center;
 
-    align-items: center;
+            position: relative;
 
-    justify-content: center;
-}
+            overflow: hidden;
 
+            margin-bottom: 8px;
+        }
 
-.qs-cart-text {
+        .qs-image-box img {
+            width: 100%;
 
-    font-weight: 700;
+            height: 100%;
 
-    font-size: 0.84rem;
+            max-width: 100%;
 
-    margin-left: 5px;
-}
+            max-height: 100%;
 
+            object-fit: contain;
+        }
 
-/* =========================================================
-   CATEGORY NAVIGATION
-========================================================= */
 
-.qs-category-bar {
+        /* =========================================================
+           WISHLIST
+        ========================================================= */
 
-    width: 100%;
+        .qs-wishlist {
+            position: absolute;
 
-    min-height: 42px;
+            top: 7px;
 
-    display: flex;
+            right: 7px;
 
-    align-items: center;
+            width: 30px;
 
-    gap: 0;
+            height: 30px;
 
-    background: var(--qs-sub);
+            border-radius: 50%;
 
-    overflow-x: auto;
+            border: 1px solid var(--qs-border);
 
-    overflow-y: hidden;
+            background: white;
 
-    white-space: nowrap;
+            color: #666;
 
-    scrollbar-width: thin;
-}
+            display: flex;
 
+            align-items: center;
 
-.qs-category-bar::-webkit-scrollbar {
+            justify-content: center;
 
-    height: 3px;
-}
+            z-index: 2;
 
+            cursor: pointer;
+        }
 
-.qs-category-bar::-webkit-scrollbar-thumb {
+        .qs-wishlist:hover {
+            color: var(--qs-red);
+        }
 
-    background: #697586;
 
-    border-radius: 5px;
-}
+        /* =========================================================
+           PRODUCT CATEGORY
+        ========================================================= */
 
+        .qs-product-meta {
+            display: flex;
 
-.qs-category {
+            align-items: center;
 
-    color: white;
+            gap: 7px;
 
-    text-decoration: none;
+            min-width: 0;
+        }
 
-    padding: 8px 15px;
+        .qs-category-badge {
+            font-size: 0.65rem;
 
-    min-height: 42px;
+            background: #f1f5f9;
 
-    display: inline-flex;
+            color: #475569;
 
-    align-items: center;
+            border: 1px solid #d5d9d9;
 
-    gap: 5px;
+            border-radius: 4px;
 
-    font-size: 0.84rem;
+            padding: 3px 6px;
 
-    white-space: nowrap;
+            white-space: nowrap;
 
-    border: 1px solid transparent;
+            overflow: hidden;
 
-    flex-shrink: 0;
-}
+            text-overflow: ellipsis;
+        }
 
+        .qs-prime {
+            color: #00a8e1;
 
-.qs-category:hover {
+            font-size: 0.72rem;
 
-    color: white;
+            font-weight: 800;
 
-    border-color: white;
-}
+            font-style: italic;
+        }
 
 
-.qs-category.active {
+        /* =========================================================
+           PRODUCT NAME
+        ========================================================= */
 
-    color: white;
+        .qs-product-name {
+            color: var(--qs-text);
 
-    border-color: white;
+            text-decoration: none;
 
-    background: #2e3c4f;
-}
+            font-size: 0.88rem;
 
+            font-weight: 600;
 
-/* =========================================================
-   MAIN
-========================================================= */
+            line-height: 1.3;
 
-.qs-main {
+            margin: 6px 0;
 
-    padding: 14px;
-}
+            display: -webkit-box;
 
+            -webkit-line-clamp: 2;
 
-/* =========================================================
-   WELCOME
-========================================================= */
+            -webkit-box-orient: vertical;
 
-.qs-welcome {
+            overflow: hidden;
+        }
 
-    background:
-        linear-gradient(
-            90deg,
-            #1f2937,
-            #374151
-        );
+        .qs-product-name:hover {
+            color: #c7511f;
+        }
 
-    color: white;
 
-    border-radius: 8px;
+        /* =========================================================
+           RATING
+        ========================================================= */
 
-    padding: 16px;
+        .qs-stars {
+            color: #de7921;
 
-    margin-bottom: 14px;
-}
+            font-size: 0.76rem;
+        }
 
 
-.qs-welcome h1 {
+        /* =========================================================
+           PRICE
+        ========================================================= */
 
-    font-size: 1.25rem;
+        .qs-price {
+            font-size: 1.12rem;
 
-    margin: 8px 0 4px;
+            font-weight: 700;
+        }
 
-    font-weight: 700;
-}
 
+        /* =========================================================
+           STOCK
+        ========================================================= */
 
-.qs-welcome p {
+        .qs-stock {
+            font-size: 0.75rem;
 
-    margin: 0;
+            font-weight: 600;
 
-    color: #ddd;
+            margin: 5px 0 8px;
+        }
 
-    font-size: 0.84rem;
-}
+        .qs-stock-in {
+            color: var(--qs-green);
+        }
 
+        .qs-stock-low {
+            color: var(--qs-red);
+        }
 
-/* =========================================================
-   PRODUCT GRID
-========================================================= */
+        .qs-stock-out {
+            color: #777;
+        }
 
-#productGrid {
 
-    --bs-gutter-x: 12px;
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
 
-    --bs-gutter-y: 12px;
-}
+        .qs-buttons {
+            margin-top: auto;
 
+            display: grid;
 
-/* =========================================================
-   PRODUCT CARD
-========================================================= */
+            gap: 5px;
+        }
 
-.qs-product-card {
+        .qs-cart-btn {
+            background: var(--qs-yellow);
 
-    height: 100%;
+            border: 1px solid #fcd200;
 
-    background: white;
+            border-radius: 20px;
 
-    border: 1px solid var(--qs-border);
+            padding: 6px;
 
-    border-radius: 8px;
+            font-size: 0.78rem;
 
-    padding: 10px;
+            cursor: pointer;
+        }
 
-    display: flex;
+        .qs-cart-btn:hover {
+            background: var(--qs-yellow-hover);
+        }
 
-    flex-direction: column;
+        .qs-buy-btn {
+            background: var(--qs-orange);
 
-    transition: 0.2s ease;
+            border: 1px solid #ff8f00;
 
-    min-width: 0;
-}
+            border-radius: 20px;
 
+            padding: 6px;
 
-.qs-product-card:hover {
+            font-size: 0.78rem;
 
-    transform: translateY(-2px);
+            cursor: pointer;
+        }
 
-    box-shadow:
-        0 5px 15px rgba(0,0,0,0.08);
-}
+        .qs-buy-btn:hover {
+            background: var(--qs-orange-hover);
+        }
 
 
-/* =========================================================
-   IMAGE
-========================================================= */
+        /* =========================================================
+           NO PRODUCTS
+        ========================================================= */
 
-.qs-image-box {
+        .qs-no-products {
+            background: white;
 
-    height: 160px;
+            border: 1px solid var(--qs-border);
 
-    background: #f7f7f7;
+            border-radius: 8px;
 
-    border-radius: 6px;
+            padding: 45px 20px;
 
-    display: flex;
+            text-align: center;
 
-    align-items: center;
+            color: #666;
+        }
 
-    justify-content: center;
+        .qs-no-products i {
+            font-size: 3rem;
 
-    position: relative;
+            color: #aaa;
+        }
 
-    overflow: hidden;
 
-    margin-bottom: 8px;
-}
+        /* =========================================================
+           FOOTER
+        ========================================================= */
 
+        .qs-back-top {
+            display: block;
 
-.qs-image-box img {
+            background: var(--qs-hover);
 
-    width: 100%;
+            color: white;
 
-    height: 100%;
+            text-align: center;
 
-    max-width: 100%;
+            padding: 12px;
 
-    max-height: 100%;
+            text-decoration: none;
 
-    object-fit: contain;
-}
+            font-size: 0.82rem;
+        }
 
+        .qs-back-top:hover {
+            color: white;
 
-/* =========================================================
-   WISHLIST
-========================================================= */
+            background: #485769;
+        }
 
-.qs-wishlist {
+        .qs-footer {
+            background: var(--qs-dark);
 
-    position: absolute;
+            color: #aaa;
 
-    top: 7px;
+            text-align: center;
 
-    right: 7px;
+            padding: 18px;
 
-    width: 30px;
+            font-size: 0.75rem;
+        }
 
-    height: 30px;
 
-    border-radius: 50%;
+        /* =========================================================
+           TABLET
+        ========================================================= */
 
-    border: 1px solid var(--qs-border);
+        @media (min-width: 768px)
+        and (max-width: 1100px) {
 
-    background: white;
+            .qs-topbar-inner {
+                grid-template-columns:
+                    auto
+                    minmax(0, 1fr)
+                    auto;
 
-    color: #666;
+                gap: 6px;
+            }
 
-    display: flex;
+            .qs-logo {
+                font-size: 1.25rem;
+            }
 
-    align-items: center;
+            .qs-account,
+            .qs-orders {
+                display: none;
+            }
 
-    justify-content: center;
+            .qs-category-dropdown {
+                width: 125px;
 
-    z-index: 2;
+                min-width: 125px;
 
-    cursor: pointer;
-}
+                flex-basis: 125px;
+            }
 
+            .qs-image-box {
+                height: 160px;
+            }
+        }
 
-.qs-wishlist:hover {
 
-    color: var(--qs-red);
-}
+        /* =========================================================
+           MOBILE
+        ========================================================= */
 
+        @media (max-width: 767.98px) {
 
-/* =========================================================
-   PRODUCT CATEGORY
-========================================================= */
+            .qs-topbar {
+                padding: 7px;
+            }
 
-.qs-product-meta {
+            .qs-topbar-inner {
+                grid-template-columns:
+                    1fr
+                    auto;
 
-    display: flex;
+                grid-template-rows:
+                    auto
+                    auto;
 
-    align-items: center;
+                gap: 5px 8px;
+            }
 
-    gap: 7px;
+            .qs-logo {
+                grid-column: 1;
 
-    min-width: 0;
-}
+                grid-row: 1;
 
+                font-size: 1.15rem;
 
-.qs-category-badge {
+                padding: 4px;
+            }
 
-    font-size: 0.65rem;
+            .qs-logo i {
+                font-size: 1.25rem;
+            }
 
-    background: #f1f5f9;
+            .qs-user-actions {
+                grid-column: 2;
 
-    color: #475569;
+                grid-row: 1;
+            }
 
-    border: 1px solid #d5d9d9;
+            .qs-account,
+            .qs-orders {
+                display: none;
+            }
 
-    border-radius: 4px;
+            .qs-cart-link {
+                padding: 3px 5px;
+            }
 
-    padding: 3px 6px;
+            .qs-cart-container > i {
+                font-size: 1.7rem;
+            }
 
-    white-space: nowrap;
+            .qs-cart-text {
+                display: none;
+            }
 
-    overflow: hidden;
+            .qs-search-wrapper {
+                grid-column: 1 / -1;
 
-    text-overflow: ellipsis;
-}
+                grid-row: 2;
 
+                width: 100%;
+            }
 
-.qs-prime {
+            .qs-search {
+                width: 100%;
+            }
 
-    color: #00a8e1;
+            .qs-search .input-group {
+                height: 42px;
+            }
 
-    font-size: 0.72rem;
+            .qs-category-dropdown {
+                width: 105px;
 
-    font-weight: 800;
+                min-width: 105px;
 
-    font-style: italic;
-}
+                flex-basis: 105px;
+            }
 
+            .qs-category-select {
+                height: 42px;
 
-/* =========================================================
-   PRODUCT NAME
-========================================================= */
+                padding: 0 7px;
 
-.qs-product-name {
+                gap: 4px;
 
-    color: var(--qs-text);
+                font-size: 0.70rem;
+            }
 
-    text-decoration: none;
+            .qs-category-select > i:first-child {
+                font-size: 0.85rem;
+            }
 
-    font-size: 0.88rem;
+            .qs-category-arrow {
+                font-size: 0.5rem;
+            }
 
-    font-weight: 600;
+            .qs-category-menu {
+                top: 44px;
 
-    line-height: 1.3;
+                width: 215px;
+            }
 
-    margin: 6px 0;
+            .qs-category-option {
+                min-height: 44px;
 
-    display: -webkit-box;
+                font-size: 0.86rem;
+            }
 
-    -webkit-line-clamp: 2;
+            .qs-search input {
+                height: 42px;
 
-    -webkit-box-orient: vertical;
+                font-size: 0.78rem;
 
-    overflow: hidden;
-}
+                padding: 7px 9px;
+            }
 
+            .qs-search button[type="submit"] {
+                width: 44px;
 
-.qs-product-name:hover {
+                min-width: 44px;
 
-    color: #c7511f;
-}
+                height: 42px;
 
+                flex-basis: 44px;
+            }
 
-/* =========================================================
-   RATING
-========================================================= */
+            .qs-category-bar {
+                min-height: 40px;
+            }
 
-.qs-stars {
+            .qs-category {
+                min-height: 40px;
 
-    color: #de7921;
+                padding: 7px 10px;
 
-    font-size: 0.76rem;
-}
+                font-size: 0.73rem;
+            }
 
+            .qs-main {
+                padding: 9px;
+            }
 
-/* =========================================================
-   PRICE
-========================================================= */
+            .qs-welcome {
+                padding: 12px;
 
-.qs-price {
+                margin-bottom: 10px;
+            }
 
-    font-size: 1.12rem;
+            .qs-welcome h1 {
+                font-size: 1rem;
+            }
 
-    font-weight: 700;
-}
+            .qs-welcome p {
+                font-size: 0.76rem;
 
+                line-height: 1.4;
+            }
 
-/* =========================================================
-   STOCK
-========================================================= */
+            #productGrid {
+                --bs-gutter-x: 8px;
 
-.qs-stock {
+                --bs-gutter-y: 8px;
+            }
 
-    font-size: 0.75rem;
+            .qs-product-card {
+                padding: 8px;
 
-    font-weight: 600;
+                border-radius: 7px;
+            }
 
-    margin: 5px 0 8px;
-}
+            .qs-image-box {
+                height: 135px;
 
+                margin-bottom: 7px;
+            }
 
-.qs-stock-in {
+            .qs-wishlist {
+                width: 28px;
 
-    color: var(--qs-green);
-}
+                height: 28px;
 
+                top: 6px;
 
-.qs-stock-low {
+                right: 6px;
+            }
 
-    color: var(--qs-red);
-}
+            .qs-category-badge {
+                font-size: 0.59rem;
 
+                padding: 3px 5px;
+            }
 
-.qs-stock-out {
+            .qs-prime {
+                font-size: 0.68rem;
+            }
 
-    color: #777;
-}
+            .qs-product-name {
+                font-size: 0.80rem;
 
+                margin: 5px 0;
+            }
 
-/* =========================================================
-   BUTTONS
-========================================================= */
+            .qs-stars {
+                font-size: 0.68rem;
+            }
 
-.qs-buttons {
+            .qs-price {
+                font-size: 1rem;
+            }
 
-    margin-top: auto;
+            .qs-stock {
+                font-size: 0.68rem;
 
-    display: grid;
+                margin: 4px 0 7px;
+            }
 
-    gap: 5px;
-}
+            .qs-cart-btn,
+            .qs-buy-btn {
+                padding: 5px;
 
+                font-size: 0.68rem;
+            }
+        }
 
-.qs-cart-btn {
 
-    background: var(--qs-yellow);
+        /* =========================================================
+           VERY SMALL MOBILE
+        ========================================================= */
 
-    border: 1px solid #fcd200;
+        @media (max-width: 400px) {
 
-    border-radius: 20px;
+            .qs-logo {
+                font-size: 1rem;
+            }
 
-    padding: 6px;
+            .qs-category-dropdown {
+                width: 95px;
 
-    font-size: 0.78rem;
+                min-width: 95px;
 
-    cursor: pointer;
-}
+                flex-basis: 95px;
+            }
 
+            .qs-category-select {
+                font-size: 0.65rem;
 
-.qs-cart-btn:hover {
+                padding: 0 5px;
+            }
 
-    background: var(--qs-yellow-hover);
-}
+            .qs-image-box {
+                height: 125px;
+            }
 
+            .qs-product-card {
+                padding: 7px;
+            }
 
-.qs-buy-btn {
+            .qs-product-name {
+                font-size: 0.76rem;
+            }
 
-    background: var(--qs-orange);
+            .qs-price {
+                font-size: 0.95rem;
+            }
 
-    border: 1px solid #ff8f00;
+            .qs-cart-btn,
+            .qs-buy-btn {
+                font-size: 0.64rem;
 
-    border-radius: 20px;
+                padding: 5px;
+            }
+        }
 
-    padding: 6px;
-
-    font-size: 0.78rem;
-
-    cursor: pointer;
-}
-
-
-.qs-buy-btn:hover {
-
-    background: var(--qs-orange-hover);
-}
-
-
-/* =========================================================
-   NO PRODUCTS
-========================================================= */
-
-.qs-no-products {
-
-    background: white;
-
-    border: 1px solid var(--qs-border);
-
-    border-radius: 8px;
-
-    padding: 45px 20px;
-
-    text-align: center;
-
-    color: #666;
-}
-
-
-.qs-no-products i {
-
-    font-size: 3rem;
-
-    color: #aaa;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.qs-back-top {
-
-    display: block;
-
-    background: var(--qs-hover);
-
-    color: white;
-
-    text-align: center;
-
-    padding: 12px;
-
-    text-decoration: none;
-
-    font-size: 0.82rem;
-}
-
-
-.qs-back-top:hover {
-
-    color: white;
-
-    background: #485769;
-}
-
-
-.qs-footer {
-
-    background: var(--qs-dark);
-
-    color: #aaa;
-
-    text-align: center;
-
-    padding: 18px;
-
-    font-size: 0.75rem;
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (min-width: 768px)
-       and (max-width: 1100px) {
-
-    .qs-topbar-inner {
-
-        grid-template-columns:
-            auto
-            minmax(0, 1fr)
-            auto;
-
-        gap: 6px;
-    }
-
-
-    .qs-logo {
-
-        font-size: 1.25rem;
-    }
-
-
-    .qs-account,
-    .qs-orders {
-
-        display: none;
-    }
-
-
-    .qs-category-dropdown {
-
-        width: 125px;
-
-        min-width: 125px;
-
-        flex-basis: 125px;
-    }
-
-
-    .qs-image-box {
-
-        height: 160px;
-    }
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 767.98px) {
-
-    .qs-topbar {
-
-        padding: 7px;
-    }
-
-
-    .qs-topbar-inner {
-
-        grid-template-columns:
-            1fr
-            auto;
-
-        grid-template-rows:
-            auto
-            auto;
-
-        gap: 5px 8px;
-    }
-
-
-    /* LOGO */
-
-    .qs-logo {
-
-        grid-column: 1;
-
-        grid-row: 1;
-
-        font-size: 1.15rem;
-
-        padding: 4px;
-    }
-
-
-    .qs-logo i {
-
-        font-size: 1.25rem;
-    }
-
-
-    /* USER ACTIONS */
-
-    .qs-user-actions {
-
-        grid-column: 2;
-
-        grid-row: 1;
-    }
-
-
-    .qs-account,
-    .qs-orders {
-
-        display: none;
-    }
-
-
-    .qs-cart-link {
-
-        padding: 3px 5px;
-    }
-
-
-    .qs-cart-container > i {
-
-        font-size: 1.7rem;
-    }
-
-
-    .qs-cart-text {
-
-        display: none;
-    }
-
-
-    /* SEARCH */
-
-    .qs-search-wrapper {
-
-        grid-column: 1 / -1;
-
-        grid-row: 2;
-
-        width: 100%;
-    }
-
-
-    .qs-search {
-
-        width: 100%;
-    }
-
-
-    .qs-search .input-group {
-
-        height: 42px;
-    }
-
-
-    .qs-category-dropdown {
-
-        width: 105px;
-
-        min-width: 105px;
-
-        flex-basis: 105px;
-    }
-
-
-    .qs-category-select {
-
-        height: 42px;
-
-        padding: 0 7px;
-
-        gap: 4px;
-
-        font-size: 0.70rem;
-    }
-
-
-    .qs-category-select > i:first-child {
-
-        font-size: 0.85rem;
-    }
-
-
-    .qs-category-arrow {
-
-        font-size: 0.5rem;
-    }
-
-
-    .qs-category-menu {
-
-        top: 44px;
-
-        width: 215px;
-    }
-
-
-    .qs-category-option {
-
-        min-height: 44px;
-
-        font-size: 0.86rem;
-    }
-
-
-    .qs-search input {
-
-        height: 42px;
-
-        font-size: 0.78rem;
-
-        padding: 7px 9px;
-    }
-
-
-    .qs-search button[type="submit"] {
-
-        width: 44px;
-
-        min-width: 44px;
-
-        height: 42px;
-
-        flex-basis: 44px;
-    }
-
-
-    /* CATEGORY BAR */
-
-    .qs-category-bar {
-
-        min-height: 40px;
-    }
-
-
-    .qs-category {
-
-        min-height: 40px;
-
-        padding: 7px 10px;
-
-        font-size: 0.73rem;
-    }
-
-
-    /* MAIN */
-
-    .qs-main {
-
-        padding: 9px;
-    }
-
-
-    /* WELCOME */
-
-    .qs-welcome {
-
-        padding: 12px;
-
-        margin-bottom: 10px;
-    }
-
-
-    .qs-welcome h1 {
-
-        font-size: 1rem;
-    }
-
-
-    .qs-welcome p {
-
-        font-size: 0.76rem;
-
-        line-height: 1.4;
-    }
-
-
-    /* PRODUCT GRID */
-
-    #productGrid {
-
-        --bs-gutter-x: 8px;
-
-        --bs-gutter-y: 8px;
-    }
-
-
-    /* PRODUCT CARD */
-
-    .qs-product-card {
-
-        padding: 8px;
-
-        border-radius: 7px;
-    }
-
-
-    /* IMAGE */
-
-    .qs-image-box {
-
-        height: 135px;
-
-        margin-bottom: 7px;
-    }
-
-
-    .qs-wishlist {
-
-        width: 28px;
-
-        height: 28px;
-
-        top: 6px;
-
-        right: 6px;
-    }
-
-
-    /* CATEGORY */
-
-    .qs-category-badge {
-
-        font-size: 0.59rem;
-
-        padding: 3px 5px;
-    }
-
-
-    .qs-prime {
-
-        font-size: 0.68rem;
-    }
-
-
-    /* NAME */
-
-    .qs-product-name {
-
-        font-size: 0.80rem;
-
-        margin: 5px 0;
-    }
-
-
-    /* RATING */
-
-    .qs-stars {
-
-        font-size: 0.68rem;
-    }
-
-
-    /* PRICE */
-
-    .qs-price {
-
-        font-size: 1rem;
-    }
-
-
-    /* STOCK */
-
-    .qs-stock {
-
-        font-size: 0.68rem;
-
-        margin: 4px 0 7px;
-    }
-
-
-    /* BUTTONS */
-
-    .qs-cart-btn,
-    .qs-buy-btn {
-
-        padding: 5px;
-
-        font-size: 0.68rem;
-    }
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media (max-width: 400px) {
-
-    .qs-logo {
-
-        font-size: 1rem;
-    }
-
-
-    .qs-category-dropdown {
-
-        width: 95px;
-
-        min-width: 95px;
-
-        flex-basis: 95px;
-    }
-
-
-    .qs-category-select {
-
-        font-size: 0.65rem;
-
-        padding: 0 5px;
-    }
-
-
-    .qs-image-box {
-
-        height: 125px;
-    }
-
-
-    .qs-product-card {
-
-        padding: 7px;
-    }
-
-
-    .qs-product-name {
-
-        font-size: 0.76rem;
-    }
-
-
-    .qs-price {
-
-        font-size: 0.95rem;
-    }
-
-
-    .qs-cart-btn,
-    .qs-buy-btn {
-
-        font-size: 0.64rem;
-
-        padding: 5px;
-    }
-}
-
-</style>
+    </style>
 
 </head>
 
@@ -1603,366 +1334,328 @@ body {
 <header class="qs-header">
 
 
-<!-- =========================================================
-     TOP HEADER
-========================================================= -->
+    <!-- TOP HEADER -->
 
-<div class="qs-topbar">
+    <div class="qs-topbar">
 
-<div class="qs-topbar-inner">
+        <div class="qs-topbar-inner">
 
 
-<!-- =====================================================
-     LOGO
-===================================================== -->
+            <!-- LOGO -->
 
-<a href="#"
-   class="qs-logo">
+            <a href="#"
+               class="qs-logo">
 
-<i class="bi bi-cart3"></i>
+                <i class="bi bi-cart3"></i>
 
-Quick<span>Shop</span>
+                Quick<span>Shop</span>
 
-</a>
+            </a>
 
 
-<!-- =====================================================
-     SEARCH
-===================================================== -->
+            <!-- SEARCH -->
 
-<div class="qs-search-wrapper">
+            <div class="qs-search-wrapper">
 
-<form class="qs-search"
-      id="searchForm">
+                <form class="qs-search"
+                      id="searchForm">
 
+                    <div class="input-group">
 
-<div class="input-group">
 
+                        <!-- CATEGORY -->
 
-<!-- =================================================
-     CATEGORY
-================================================= -->
+                        <div class="qs-category-dropdown">
 
-<div class="qs-category-dropdown">
+                            <button type="button"
+                                    class="qs-category-select"
+                                    id="categoryButton">
 
+                                <i class="bi bi-funnel"></i>
 
-<button type="button"
-        class="qs-category-select"
-        id="categoryButton">
+                                <span id="selectedCategory">
+                                    All Categories
+                                </span>
 
+                                <i class="bi bi-caret-down-fill qs-category-arrow"></i>
 
-<i class="bi bi-funnel"></i>
+                            </button>
 
 
-<span id="selectedCategory">
-All Categories
-</span>
+                            <!-- CATEGORY MENU -->
 
+                            <div class="qs-category-menu"
+                                 id="categoryMenu">
 
-<i class="bi bi-caret-down-fill qs-category-arrow"></i>
 
+                                <!-- ALL -->
 
-</button>
+                                <div class="qs-category-option active"
+                                     data-category="all">
 
+                                    <i class="bi bi-list"></i>
 
-<!-- =================================================
-     CATEGORY MENU
-================================================= -->
+                                    <span>All Categories</span>
 
-<div class="qs-category-menu"
-     id="categoryMenu">
+                                </div>
 
 
-<!-- ALL -->
+                                <!-- ELECTRONICS -->
 
-<div class="qs-category-option active"
-     data-category="all">
+                                <div class="qs-category-option"
+                                     data-category="electronics">
 
-<i class="bi bi-list"></i>
+                                    <i class="bi bi-laptop"></i>
 
-<span>
-All Categories
-</span>
+                                    <span>Electronics</span>
 
-</div>
+                                </div>
 
 
-<!-- ELECTRONICS -->
+                                <!-- CLOTHES -->
 
-<div class="qs-category-option"
-     data-category="electronics">
+                                <div class="qs-category-option"
+                                     data-category="clothes">
 
-<i class="bi bi-laptop"></i>
+                                    <i class="bi bi-handbag"></i>
 
-<span>
-Electronics
-</span>
+                                    <span>Clothes</span>
 
-</div>
+                                </div>
 
 
-<!-- CLOTHES -->
+                                <!-- HOME & KITCHEN -->
 
-<div class="qs-category-option"
-     data-category="clothes">
+                                <div class="qs-category-option"
+                                     data-category="home">
 
-<i class="bi bi-handbag"></i>
+                                    <i class="bi bi-house"></i>
 
-<span>
-Clothes
-</span>
+                                    <span>Home & Kitchen</span>
 
-</div>
+                                </div>
 
 
-<!-- HOME & KITCHEN -->
+                                <!-- COMPUTERS -->
 
-<div class="qs-category-option"
-     data-category="home & kitchen">
+                                <div class="qs-category-option"
+                                     data-category="computers">
 
-<i class="bi bi-house"></i>
+                                    <i class="bi bi-cpu"></i>
 
-<span>
-Home & Kitchen
-</span>
+                                    <span>Computers & Acc.</span>
 
-</div>
+                                </div>
 
 
-<!-- COMPUTERS -->
+                                <!-- BOOKS -->
 
-<div class="qs-category-option"
-     data-category="computers & acc.">
+                                <div class="qs-category-option"
+                                     data-category="books">
 
-<i class="bi bi-cpu"></i>
+                                    <i class="bi bi-book"></i>
 
-<span>
-Computers & Acc.
-</span>
+                                    <span>Books</span>
 
-</div>
+                                </div>
 
 
-<!-- BOOKS -->
+                                <!-- SPORTS -->
 
-<div class="qs-category-option"
-     data-category="books">
+                                <div class="qs-category-option"
+                                     data-category="sports">
 
-<i class="bi bi-book"></i>
+                                    <i class="bi bi-activity"></i>
 
-<span>
-Books
-</span>
+                                    <span>Sports</span>
 
-</div>
+                                </div>
 
+                            </div>
 
-<!-- SPORTS -->
+                        </div>
 
-<div class="qs-category-option"
-     data-category="sports">
 
-<i class="bi bi-activity"></i>
+                        <!-- SEARCH INPUT -->
 
-<span>
-Sports
-</span>
+                        <input type="search"
+                               class="form-control"
+                               id="searchInput"
+                               placeholder="Search products...">
 
-</div>
 
+                        <!-- SEARCH BUTTON -->
 
-</div>
+                        <button type="submit"
+                                aria-label="Search">
 
-</div>
+                            <i class="bi bi-search"></i>
 
+                        </button>
 
-<!-- =================================================
-     SEARCH INPUT
-========================================================= -->
+                    </div>
 
-<input type="search"
-       class="form-control"
-       id="searchInput"
-       placeholder="Search products...">
+                </form>
 
+            </div>
 
-<button type="submit"
-        aria-label="Search">
 
-<i class="bi bi-search"></i>
+            <!-- ACCOUNT / CART -->
 
-</button>
+            <div class="qs-user-actions">
 
 
-</div>
+                <!-- ACCOUNT -->
 
-</form>
+                <a href="#"
+                   class="qs-nav-box qs-account">
 
-</div>
+                    <span class="qs-small-text">
+                        Hello, <%= username %>
+                    </span>
 
+                    <span class="qs-nav-title">
 
-<!-- =====================================================
-     ACCOUNT / CART
-===================================================== -->
+                        Account & Lists
 
-<div class="qs-user-actions">
+                        <i class="bi bi-caret-down-fill"></i>
 
+                    </span>
 
-<a href="#"
-   class="qs-nav-box qs-account">
+                </a>
 
-<span class="qs-small-text">
 
-Hello, <%=username%>
+                <!-- ORDERS -->
 
-</span>
+                <a href="#"
+                   class="qs-nav-box qs-orders">
 
-<span class="qs-nav-title">
+                    <span class="qs-small-text">
+                        Returns
+                    </span>
 
-Account & Lists
+                    <span class="qs-nav-title">
+                        & Orders
+                    </span>
 
-<i class="bi bi-caret-down-fill"></i>
+                </a>
 
-</span>
 
-</a>
+                <!-- CART -->
 
+                <a href="#"
+                   class="qs-nav-box qs-cart-link">
 
-<a href="#"
-   class="qs-nav-box qs-orders">
+                    <div class="qs-cart-container">
 
-<span class="qs-small-text">
+                        <i class="bi bi-cart2"></i>
 
-Returns
+                        <span class="qs-cart-count">
+                            3
+                        </span>
 
-</span>
+                        <span class="qs-cart-text">
+                            Cart
+                        </span>
 
-<span class="qs-nav-title">
+                    </div>
 
-& Orders
+                </a>
 
-</span>
+            </div>
 
-</a>
+        </div>
 
+    </div>
 
-<a href="#"
-   class="qs-nav-box qs-cart-link">
 
-<div class="qs-cart-container">
+    <!-- CATEGORY NAVIGATION -->
 
-<i class="bi bi-cart2"></i>
+    <nav class="qs-category-bar">
 
-<span class="qs-cart-count">
-3
-</span>
 
-<span class="qs-cart-text">
-Cart
-</span>
+        <!-- ALL -->
 
-</div>
+        <a href="#"
+           class="qs-category active"
+           data-category="all">
 
-</a>
+            <i class="bi bi-list"></i>
 
+            All
 
-</div>
+        </a>
 
 
-</div>
+        <!-- ELECTRONICS -->
 
-</div>
+        <a href="#"
+           class="qs-category"
+           data-category="electronics">
 
+            Electronics
 
-<!-- =========================================================
-     CATEGORY NAVIGATION
-========================================================= -->
+        </a>
 
-<nav class="qs-category-bar">
 
+        <!-- CLOTHES -->
 
-<!-- ALL -->
+        <a href="#"
+           class="qs-category"
+           data-category="clothes">
 
-<a href="#"
-   class="qs-category active"
-   data-category="all">
+            Clothes
 
-<i class="bi bi-list"></i>
+        </a>
 
-All
 
-</a>
+        <!-- HOME -->
 
+        <a href="#"
+           class="qs-category"
+           data-category="home">
 
-<!-- ELECTRONICS -->
+            Home & Kitchen
 
-<a href="#"
-   class="qs-category"
-   data-category="electronics">
+        </a>
 
-Electronics
 
-</a>
+        <!-- COMPUTERS -->
 
+        <a href="#"
+           class="qs-category"
+           data-category="computers">
 
-<!-- CLOTHES -->
+            Computers & Acc.
 
-<a href="#"
-   class="qs-category"
-   data-category="clothes">
+        </a>
 
-Clothes
 
-</a>
+        <!-- BOOKS -->
 
+        <a href="#"
+           class="qs-category"
+           data-category="books">
 
-<!-- HOME -->
+            Books
 
-<a href="#"
-   class="qs-category"
-   data-category="home & kitchen">
+        </a>
 
-Home & Kitchen
 
-</a>
+        <!-- SPORTS -->
 
+        <a href="#"
+           class="qs-category"
+           data-category="sports">
 
-<!-- COMPUTERS -->
+            Sports
 
-<a href="#"
-   class="qs-category"
-   data-category="computers & acc.">
+        </a>
 
-Computers & Acc.
-
-</a>
-
-
-<!-- BOOKS -->
-
-<a href="#"
-   class="qs-category"
-   data-category="books">
-
-Books
-
-</a>
-
-
-<!-- SPORTS -->
-
-<a href="#"
-   class="qs-category"
-   data-category="sports">
-
-Sports
-
-</a>
-
-</nav>
-
+    </nav>
 
 </header>
+
 
 
 <!-- =========================================================
@@ -1971,423 +1664,356 @@ Sports
 
 <main class="qs-main">
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
 
-<!-- =====================================================
-     WELCOME
-========================================================= -->
+        <!-- WELCOME -->
 
-<section class="qs-welcome">
+        <section class="qs-welcome">
 
+            <span class="badge bg-warning text-dark">
+                Fast Delivery
+            </span>
 
-<span class="badge bg-warning text-dark">
+            <h1>
+                Welcome back, <%= username %>
+            </h1>
 
-Fast Delivery
+            <p>
+                Let's start the shopping.
+                The best deals are waiting for you.
+            </p>
 
-</span>
+        </section>
 
 
-<h1>
+        <!-- PRODUCT GRID -->
 
-Welcome back, <%= username %>
+        <section
+            class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3"
+            id="productGrid">
 
-</h1>
 
+            <%
+            if (products != null && !products.isEmpty()) {
 
-<p>
+                for (Product prod : products) {
 
-Let's start the shopping. The best deals are waiting for you.
+                    String status;
 
-</p>
+                    String stockText;
 
 
-</section>
+                    if (prod.getProductQty() == 0) {
 
+                        status = "out";
 
-<!-- =====================================================
-     PRODUCT GRID
-========================================================= -->
+                        stockText = "Out of Stock";
 
-<section class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3"
-         id="productGrid">
+                    }
 
+                    else if (prod.getProductQty() <= 5) {
 
-<%
-if (products != null && !products.isEmpty()) {
+                        status = "low";
 
-    for (Product prod : products) {
+                        stockText =
+                                "Only "
+                                + prod.getProductQty()
+                                + " left";
 
-        String status;
+                    }
 
-        String stockText;
+                    else {
 
+                        status = "in";
 
-        if (prod.getProductQty() == 0) {
+                        stockText = "In Stock";
 
-            status = "out";
+                    }
 
-            stockText = "Out of Stock";
 
-        }
+                    String productName =
+                            prod.getProductName() == null
+                            ? ""
+                            : prod.getProductName()
+                                    .trim()
+                                    .toLowerCase();
 
-        else if (prod.getProductQty() <= 5) {
 
-            status = "low";
+                    String productCategory =
+                            prod.getCategory() == null
+                            ? ""
+                            : prod.getCategory()
+                                    .trim()
+                                    .toLowerCase();
 
-            stockText =
-                "Only " +
-                prod.getProductQty() +
-                " left";
+            %>
 
-        }
 
-        else {
+            <!-- PRODUCT -->
 
-            status = "in";
+            <div class="col product-item"
+                 data-name="<%= productName %>"
+                 data-category="<%= productCategory %>">
 
-            stockText = "In Stock";
 
-        }
+                <article class="qs-product-card">
 
 
-        String productName =
-            prod.getProductName() == null
-            ? ""
-            : prod.getProductName()
-                  .trim()
-                  .toLowerCase();
+                    <!-- PRODUCT IMAGE -->
 
+                    <div class="qs-image-box">
 
-        String productCategory =
-            prod.getCategory() == null
-            ? ""
-            : prod.getCategory()
-                  .trim()
-                  .toLowerCase();
 
-%>
+                        <!-- WISHLIST -->
 
+                        <button
+                            class="qs-wishlist"
+                            type="button"
+                            aria-label="Add to wishlist">
 
-<!-- =====================================================
-     PRODUCT
-========================================================= -->
+                            <i class="bi bi-heart"></i>
 
-<div class="col product-item"
+                        </button>
 
-     data-name="<%= productName %>"
 
-     data-category="<%= productCategory %>">
+                        <%
+                        if (prod.getImage() != null
+                            && !prod.getImage().trim().isEmpty()) {
+                        %>
 
+                            <img
+                                src="<%= prod.getImage() %>"
+                                alt="<%= prod.getProductName() == null
+                                      ? "Product"
+                                      : prod.getProductName() %>"
+                                loading="lazy"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
 
-<article class="qs-product-card">
 
+                            <i
+                                class="bi bi-image"
+                                style="font-size:3rem;color:#aaa;display:none;">
+                            </i>
 
-<!-- =================================================
-     PRODUCT IMAGE
-========================================================= -->
 
-<div class="qs-image-box">
+                        <%
+                        } else {
+                        %>
 
+                            <i
+                                class="bi bi-image"
+                                style="font-size:3rem;color:#aaa;">
+                            </i>
 
-<button class="qs-wishlist"
-        type="button"
-        aria-label="Add to wishlist">
+                        <%
+                        }
+                        %>
 
-<i class="bi bi-heart"></i>
+                    </div>
 
-</button>
 
+                    <!-- CATEGORY -->
 
-<%
-if (prod.getImage() != null &&
-    !prod.getImage().trim().isEmpty()) {
-%>
+                    <div class="qs-product-meta">
 
-<!-- ImageKit URL -->
+                        <span class="qs-prime">
+                            prime
+                        </span>
 
-<img src="<%= prod.getImage() %>"
-     alt="<%= prod.getProductName() == null ? "Product" : prod.getProductName() %>"
-     loading="lazy"
-     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <span class="qs-category-badge">
 
-<i class="bi bi-image"
-   style="font-size:3rem;color:#aaa;display:none;"></i>
+                            <%= prod.getCategory() == null
+                                ? ""
+                                : prod.getCategory() %>
 
-<%
-}
-else {
-%>
+                        </span>
 
-<i class="bi bi-image"
-   style="font-size:3rem;color:#aaa;"></i>
+                    </div>
 
-<%
-}
-%>
 
+                    <!-- PRODUCT NAME -->
 
-</div>
+                    <a href="#"
+                       class="qs-product-name">
 
+                        <%= prod.getProductName() == null
+                            ? "Product"
+                            : prod.getProductName() %>
 
-<!-- =================================================
-     CATEGORY
-========================================================= -->
+                    </a>
 
-<div class="qs-product-meta">
 
+                    <!-- RATING -->
 
-<span class="qs-prime">
+                    <div class="d-flex align-items-center mb-1">
 
-prime
+                        <span class="qs-stars">
 
-</span>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-half"></i>
 
+                        </span>
 
-<span class="qs-category-badge">
+                    </div>
 
-<%= prod.getCategory() == null
-        ? ""
-        : prod.getCategory() %>
 
-</span>
+                    <!-- PRICE -->
 
+                    <div class="qs-price">
 
-</div>
+                        ₹ <%= String.format(
+                                "%.2f",
+                                prod.getProductPrice()
+                            ) %>
 
+                    </div>
 
-<!-- =================================================
-     PRODUCT NAME
-========================================================= -->
 
-<a href="#"
-   class="qs-product-name">
+                    <!-- STOCK -->
 
-<%= prod.getProductName() == null
-        ? "Product"
-        : prod.getProductName() %>
+                    <div class="qs-stock
+                        <% if ("in".equals(status)) { %>
+                            qs-stock-in
+                        <% }
+                        else if ("low".equals(status)) { %>
+                            qs-stock-low
+                        <% }
+                        else { %>
+                            qs-stock-out
+                        <% } %>
+                    ">
 
-</a>
 
+                        <%
+                        if ("in".equals(status)) {
+                        %>
 
-<!-- =================================================
-     RATING
-========================================================= -->
+                            <i class="bi bi-check-circle-fill"></i>
 
-<div class="d-flex align-items-center mb-1">
+                        <%
+                        }
+                        else if ("low".equals(status)) {
+                        %>
 
-<span class="qs-stars">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
 
-<i class="bi bi-star-fill"></i>
+                        <%
+                        }
+                        else {
+                        %>
 
-<i class="bi bi-star-fill"></i>
+                            <i class="bi bi-x-circle-fill"></i>
 
-<i class="bi bi-star-fill"></i>
+                        <%
+                        }
+                        %>
 
-<i class="bi bi-star-fill"></i>
 
-<i class="bi bi-star-half"></i>
+                        <%= stockText %>
 
-</span>
+                    </div>
 
-</div>
 
+                    <!-- BUTTONS -->
 
-<!-- =================================================
-     PRICE
-========================================================= -->
+                    <div class="qs-buttons">
 
-<div class="qs-price">
 
-₹ <%= String.format(
-        "%.2f",
-        prod.getProductPrice()
-    )
-%>
+                        <!-- ADD TO CART -->
 
-</div>
+                        <button
+                            type="button"
+                            class="qs-cart-btn">
 
+                            <i class="bi bi-cart-plus"></i>
 
-<!-- =================================================
-     STOCK
-========================================================= -->
+                            Add to Cart
 
-<div class="qs-stock
+                        </button>
 
-<%
-if ("in".equals(status)) {
-%>
 
-qs-stock-in
+                        <!-- BUY NOW -->
 
-<%
-}
-else if ("low".equals(status)) {
-%>
+                        <button
+                            type="button"
+                            class="qs-buy-btn">
 
-qs-stock-low
+                            <i class="bi bi-lightning-fill"></i>
 
-<%
-}
-else {
-%>
+                            Buy Now
 
-qs-stock-out
+                        </button>
 
-<%
-}
-%>
+                    </div>
 
-">
 
+                </article>
 
-<%
-if ("in".equals(status)) {
-%>
+            </div>
 
-<i class="bi bi-check-circle-fill"></i>
 
-<%
-}
-else if ("low".equals(status)) {
-%>
+            <%
+                }
+            }
+            else {
+            %>
 
-<i class="bi bi-exclamation-triangle-fill"></i>
 
-<%
-}
-else {
-%>
+            <!-- NO PRODUCTS -->
 
-<i class="bi bi-x-circle-fill"></i>
+            <div class="col-12">
 
-<%
-}
-%>
+                <div class="qs-no-products">
 
+                    <i class="bi bi-box-seam"></i>
 
-<%= stockText %>
+                    <h5 class="mt-3">
+                        No products found
+                    </h5>
 
+                    <p class="mb-0">
+                        There is no product data available
+                        in the database.
+                    </p>
 
-</div>
+                </div>
 
+            </div>
 
-<!-- =================================================
-     BUTTONS
-========================================================= -->
 
-<div class="qs-buttons">
+            <%
+            }
+            %>
 
+        </section>
 
-<button type="button"
-        class="qs-cart-btn">
 
-<i class="bi bi-cart-plus"></i>
+        <!-- SEARCH RESULT -->
 
-Add to Cart
+        <div
+            id="noSearchResult"
+            class="qs-no-products mt-3 d-none">
 
-</button>
+            <i class="bi bi-search"></i>
 
+            <h5 class="mt-3">
+                No matching products
+            </h5>
 
-<button type="button"
-        class="qs-buy-btn">
+            <p class="mb-0">
+                Try another product name or category.
+            </p>
 
-<i class="bi bi-lightning-fill"></i>
+        </div>
 
-Buy Now
-
-</button>
-
-
-</div>
-
-
-</article>
-
-
-</div>
-
-
-<%
-    }
-
-}
-else {
-%>
-
-
-<!-- =====================================================
-     NO PRODUCTS
-========================================================= -->
-
-<div class="col-12">
-
-
-<div class="qs-no-products">
-
-
-<i class="bi bi-box-seam"></i>
-
-
-<h5 class="mt-3">
-
-No products found
-
-</h5>
-
-
-<p class="mb-0">
-
-There is no product data available in the database.
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-<%
-}
-%>
-
-
-</section>
-
-
-<!-- =====================================================
-     SEARCH RESULT
-========================================================= -->
-
-<div id="noSearchResult"
-     class="qs-no-products mt-3 d-none">
-
-
-<i class="bi bi-search"></i>
-
-
-<h5 class="mt-3">
-
-No matching products
-
-</h5>
-
-
-<p class="mb-0">
-
-Try another product name or category.
-
-</p>
-
-
-</div>
-
-
-</div>
+    </div>
 
 </main>
+
 
 
 <!-- =========================================================
@@ -2397,23 +2023,27 @@ Try another product name or category.
 <footer>
 
 
-<a href="#"
-   class="qs-back-top"
-   id="backToTop">
+    <!-- BACK TO TOP -->
 
-Back to top
+    <a href="#"
+       class="qs-back-top"
+       id="backToTop">
 
-</a>
+        Back to top
+
+    </a>
 
 
-<div class="qs-footer">
+    <!-- FOOTER -->
 
-© 2026 Quickshop.com dev - Mohan Patil.
+    <div class="qs-footer">
 
-</div>
+        © 2026 Quickshop.com dev - Mohan Patil.
 
+    </div>
 
 </footer>
+
 
 
 <!-- =========================================================
@@ -2422,436 +2052,542 @@ Back to top
 
 <script>
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
 
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
 
-
-const searchForm =
-    document.getElementById(
-        "searchForm"
-    );
+    const searchInput =
+        document.getElementById("searchInput");
 
 
-const products =
-    document.querySelectorAll(
-        ".product-item"
-    );
+    const searchForm =
+        document.getElementById("searchForm");
 
 
-const noResult =
-    document.getElementById(
-        "noSearchResult"
-    );
+    const products =
+        document.querySelectorAll(".product-item");
 
 
-const categoryLinks =
-    document.querySelectorAll(
-        ".qs-category"
-    );
+    const noResult =
+        document.getElementById("noSearchResult");
 
 
-const categoryButton =
-    document.getElementById(
-        "categoryButton"
-    );
+    const categoryLinks =
+        document.querySelectorAll(".qs-category");
 
 
-const categoryMenu =
-    document.getElementById(
-        "categoryMenu"
-    );
+    const categoryButton =
+        document.getElementById("categoryButton");
 
 
-const selectedCategoryText =
-    document.getElementById(
-        "selectedCategory"
-    );
+    const categoryMenu =
+        document.getElementById("categoryMenu");
 
 
-const categoryOptions =
-    document.querySelectorAll(
-        ".qs-category-option"
-    );
+    const selectedCategoryText =
+        document.getElementById("selectedCategory");
 
 
-/* =========================================================
-   CURRENT CATEGORY
-========================================================= */
-
-let selectedCategory = "all";
+    const categoryOptions =
+        document.querySelectorAll(".qs-category-option");
 
 
-/* =========================================================
-   CATEGORY MATCH
-========================================================= */
+    /* =========================================================
+       CURRENT CATEGORY
+    ========================================================= */
 
-function categoryMatches(
-    productCategory,
-    selectedCategory
-) {
-
-    productCategory =
-        productCategory
-            .trim()
-            .toLowerCase();
+    let selectedCategory = "all";
 
 
-    selectedCategory =
-        selectedCategory
-            .trim()
-            .toLowerCase();
+    /* =========================================================
+       NORMALIZE CATEGORY
+       SAME LOGIC AS ADMIN DASHBOARD
+    ========================================================= */
+
+    function normalizeCategory(category) {
+
+        category =
+            (category || "")
+                .trim()
+                .toLowerCase();
 
 
-    if (selectedCategory === "all") {
+        /*
+         * REMOVE EXTRA SPACES
+         */
 
-        return true;
-
-    }
-
-
-    /*
-       Clothes also matches Fashion
-       because your database product
-       can contain category = Fashion.
-    */
-
-    if (selectedCategory === "clothes") {
-
-        return (
-            productCategory === "clothes" ||
-            productCategory === "fashion"
-        );
-
-    }
+        category =
+            category.replace(/\s+/g, " ");
 
 
-    return (
-        productCategory ===
-        selectedCategory
-    );
-}
-
-
-/* =========================================================
-   FILTER PRODUCTS
-========================================================= */
-
-function filterProducts() {
-
-    const searchText =
-        searchInput.value
-            .trim()
-            .toLowerCase();
-
-
-    let visibleProducts = 0;
-
-
-    products.forEach(product => {
-
-
-        const productName =
-            (
-                product.dataset.name ||
-                ""
-            )
-            .trim()
-            .toLowerCase();
-
-
-        const productCategory =
-            (
-                product.dataset.category ||
-                ""
-            )
-            .trim()
-            .toLowerCase();
-
-
-        const nameMatch =
-            productName.includes(
-                searchText
-            );
-
-
-        const categoryMatch =
-            categoryMatches(
-                productCategory,
-                selectedCategory
-            );
-
+        /*
+         * ELECTRONICS
+         */
 
         if (
-            nameMatch &&
-            categoryMatch
+            category === "electronic" ||
+            category === "electronics"
         ) {
 
-            product.classList.remove(
-                "d-none"
-            );
-
-            visibleProducts++;
-
-        }
-        else {
-
-            product.classList.add(
-                "d-none"
-            );
-
+            return "electronics";
         }
 
-    });
+
+        /*
+         * CLOTHES / FASHION
+         */
+
+        if (
+            category === "clothes" ||
+            category === "cloth" ||
+            category === "fashion"
+        ) {
+
+            return "clothes";
+        }
 
 
-    noResult.classList.toggle(
+        /*
+         * HOME
+         *
+         * Database may contain:
+         * home
+         * home & kitchen
+         * home and kitchen
+         */
 
-        "d-none",
+        if (
+            category === "home" ||
+            category === "home & kitchen" ||
+            category === "home and kitchen"
+        ) {
 
-        visibleProducts !== 0
-
-    );
-}
+            return "home";
+        }
 
 
-/* =========================================================
-   OPEN CATEGORY DROPDOWN
-========================================================= */
+        /*
+         * COMPUTERS
+         *
+         * Database may contain:
+         * computers
+         * computer
+         * computers & acc.
+         * computers & accessories
+         * computer & accessories
+         * computer accessories
+         */
 
-categoryButton.addEventListener(
+        if (
+            category === "computer" ||
+            category === "computers" ||
+            category === "computer & accessories" ||
+            category === "computers & accessories" ||
+            category === "computer accessories" ||
+            category === "computers & acc." ||
+            category === "computer & acc." ||
+            category === "computers and accessories" ||
+            category === "computer and accessories"
+        ) {
 
-    "click",
+            return "computers";
+        }
 
-    function(event) {
 
-        event.stopPropagation();
+        /*
+         * BOOKS
+         */
 
-        categoryMenu.classList.toggle(
-            "show"
-        );
+        if (
+            category === "book" ||
+            category === "books"
+        ) {
 
+            return "books";
+        }
+
+
+        /*
+         * SPORTS
+         *
+         * Database may contain:
+         * sport
+         * sports
+         */
+
+        if (
+            category === "sport" ||
+            category === "sports"
+        ) {
+
+            return "sports";
+        }
+
+
+        /*
+         * RETURN ORIGINAL CATEGORY
+         * IF NO MAPPING FOUND
+         */
+
+        return category;
     }
 
-);
+
+    /* =========================================================
+       CATEGORY MATCH
+    ========================================================= */
+
+    function categoryMatches(
+        productCategory,
+        selectedCategory
+    ) {
+
+        const normalizedProductCategory =
+            normalizeCategory(productCategory);
 
 
-/* =========================================================
-   CATEGORY DROPDOWN OPTIONS
-========================================================= */
+        const normalizedSelectedCategory =
+            normalizeCategory(selectedCategory);
 
-categoryOptions.forEach(option => {
 
-    option.addEventListener(
+        /*
+         * ALL CATEGORIES
+         */
 
+        if (
+            normalizedSelectedCategory === "all"
+        ) {
+
+            return true;
+        }
+
+
+        /*
+         * NORMALIZED CATEGORY COMPARISON
+         */
+
+        return (
+            normalizedProductCategory ===
+            normalizedSelectedCategory
+        );
+    }
+
+
+    /* =========================================================
+       FILTER PRODUCTS
+    ========================================================= */
+
+    function filterProducts() {
+
+        const searchText =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        let visibleProducts = 0;
+
+
+        products.forEach(product => {
+
+
+            const productName =
+                (
+                    product.dataset.name || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            const productCategory =
+                (
+                    product.dataset.category || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            /*
+             * SEARCH MATCH
+             */
+
+            const nameMatch =
+                productName.includes(searchText);
+
+
+            /*
+             * CATEGORY MATCH
+             */
+
+            const categoryMatch =
+                categoryMatches(
+                    productCategory,
+                    selectedCategory
+                );
+
+
+            /*
+             * SHOW PRODUCT
+             */
+
+            if (
+                nameMatch &&
+                categoryMatch
+            ) {
+
+                product.classList.remove("d-none");
+
+                visibleProducts++;
+
+            }
+
+            /*
+             * HIDE PRODUCT
+             */
+
+            else {
+
+                product.classList.add("d-none");
+
+            }
+
+        });
+
+
+        /*
+         * SHOW NO RESULT ONLY WHEN
+         * PRODUCTS EXIST BUT NONE MATCH
+         */
+
+        noResult.classList.toggle(
+            "d-none",
+            products.length === 0 ||
+            visibleProducts !== 0
+        );
+    }
+
+
+    /* =========================================================
+       OPEN CATEGORY DROPDOWN
+    ========================================================= */
+
+    categoryButton.addEventListener(
         "click",
-
         function(event) {
 
             event.stopPropagation();
 
-
-            selectedCategory =
-                this.dataset.category
-                    .trim()
-                    .toLowerCase();
-
-
-            selectedCategoryText.textContent =
-                this.querySelector(
-                    "span"
-                ).textContent.trim();
-
-
-            categoryOptions.forEach(
-                item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-
-            this.classList.add(
-                "active"
-            );
-
-
-            categoryMenu.classList.remove(
-                "show"
-            );
-
-
-            updateNavbarActive();
-
-
-            filterProducts();
+            categoryMenu.classList.toggle("show");
 
         }
-
     );
 
-});
+
+    /* =========================================================
+       CATEGORY DROPDOWN OPTIONS
+    ========================================================= */
+
+    categoryOptions.forEach(option => {
+
+        option.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
 
 
-/* =========================================================
-   CLOSE DROPDOWN OUTSIDE
-========================================================= */
+                /*
+                 * GET CATEGORY
+                 */
 
-document.addEventListener(
+                selectedCategory =
+                    normalizeCategory(
+                        this.dataset.category
+                    );
 
-    "click",
 
-    function() {
+                /*
+                 * UPDATE DROPDOWN TEXT
+                 */
 
-        categoryMenu.classList.remove(
-            "show"
+                selectedCategoryText.textContent =
+                    this.querySelector("span")
+                        .textContent
+                        .trim();
+
+
+                /*
+                 * REMOVE ACTIVE
+                 */
+
+                categoryOptions.forEach(item => {
+
+                    item.classList.remove("active");
+
+                });
+
+
+                /*
+                 * ACTIVE SELECTED OPTION
+                 */
+
+                this.classList.add("active");
+
+
+                /*
+                 * CLOSE MENU
+                 */
+
+                categoryMenu.classList.remove("show");
+
+
+                /*
+                 * UPDATE NAVBAR
+                 */
+
+                updateNavbarActive();
+
+
+                /*
+                 * FILTER
+                 */
+
+                filterProducts();
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       CLOSE DROPDOWN OUTSIDE
+    ========================================================= */
+
+    document.addEventListener(
+        "click",
+        function() {
+
+            categoryMenu.classList.remove("show");
+
+        }
+    );
+
+
+    /* =========================================================
+       UPDATE NAVBAR ACTIVE
+    ========================================================= */
+
+    function updateNavbarActive() {
+
+        categoryLinks.forEach(
+            link => {
+
+                link.classList.remove("active");
+
+
+                const linkCategory =
+                    normalizeCategory(
+                        link.dataset.category || "all"
+                    );
+
+
+                if (
+                    linkCategory ===
+                    selectedCategory
+                ) {
+
+                    link.classList.add("active");
+
+                }
+
+            }
         );
 
     }
 
-);
 
+    /* =========================================================
+       SEARCH FORM
+    ========================================================= */
 
-/* =========================================================
-   UPDATE NAVBAR ACTIVE
-========================================================= */
-
-function updateNavbarActive() {
-
-    categoryLinks.forEach(
-        link => {
-
-            link.classList.remove(
-                "active"
-            );
-
-
-            const linkCategory =
-                (
-                    link.dataset.category ||
-                    "all"
-                )
-                .trim()
-                .toLowerCase();
-
-
-            if (
-                linkCategory ===
-                selectedCategory
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SEARCH FORM
-========================================================= */
-
-searchForm.addEventListener(
-
-    "submit",
-
-    function(event) {
-
-        event.preventDefault();
-
-        filterProducts();
-
-    }
-
-);
-
-
-/* =========================================================
-   LIVE SEARCH
-========================================================= */
-
-searchInput.addEventListener(
-
-    "input",
-
-    function() {
-
-        filterProducts();
-
-    }
-
-);
-
-
-/* =========================================================
-   NAVBAR CATEGORY
-========================================================= */
-
-categoryLinks.forEach(link => {
-
-    link.addEventListener(
-
-        "click",
-
+    searchForm.addEventListener(
+        "submit",
         function(event) {
 
             event.preventDefault();
 
+            filterProducts();
 
-            selectedCategory =
-                (
-                    this.dataset.category ||
-                    "all"
-                )
-                .trim()
-                .toLowerCase();
+        }
+    );
 
 
-            categoryLinks.forEach(
-                item => {
+    /* =========================================================
+       LIVE SEARCH
+    ========================================================= */
 
-                    item.classList.remove(
-                        "active"
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            filterProducts();
+
+        }
+    );
+
+
+    /* =========================================================
+       NAVBAR CATEGORY
+    ========================================================= */
+
+    categoryLinks.forEach(link => {
+
+        link.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * GET AND NORMALIZE CATEGORY
+                 */
+
+                selectedCategory =
+                    normalizeCategory(
+                        this.dataset.category || "all"
                     );
 
-                }
-            );
+
+                /*
+                 * UPDATE NAVBAR ACTIVE
+                 */
+
+                categoryLinks.forEach(item => {
+
+                    item.classList.remove("active");
+
+                });
 
 
-            this.classList.add(
-                "active"
-            );
+                this.classList.add("active");
 
 
-            /*
-               Update dropdown selected item
-            */
+                /*
+                 * UPDATE DROPDOWN
+                 */
 
-            categoryOptions.forEach(
-                option => {
+                categoryOptions.forEach(option => {
 
-                    option.classList.remove(
-                        "active"
-                    );
+                    option.classList.remove("active");
 
 
                     const optionCategory =
-                        option.dataset.category
-                            .trim()
-                            .toLowerCase();
+                        normalizeCategory(
+                            option.dataset.category
+                        );
 
 
                     if (
@@ -2859,121 +2595,107 @@ categoryLinks.forEach(link => {
                         selectedCategory
                     ) {
 
-                        option.classList.add(
-                            "active"
-                        );
+                        option.classList.add("active");
 
 
                         selectedCategoryText.textContent =
                             option
-                                .querySelector(
-                                    "span"
-                                )
+                                .querySelector("span")
                                 .textContent
                                 .trim();
+
+                    }
+
+                });
+
+
+                /*
+                 * FILTER PRODUCTS
+                 */
+
+                filterProducts();
+
+            }
+        );
+
+    });
+
+
+    /* =========================================================
+       WISHLIST
+    ========================================================= */
+
+    document
+        .querySelectorAll(".qs-wishlist")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    const icon =
+                        this.querySelector("i");
+
+
+                    /*
+                     * CHANGE HEART ICON
+                     */
+
+                    if (
+                        icon.classList.contains("bi-heart")
+                    ) {
+
+                        icon.classList.remove("bi-heart");
+
+                        icon.classList.add("bi-heart-fill");
+
+                        this.style.color = "#b12704";
+
+                    }
+
+                    else {
+
+                        icon.classList.remove("bi-heart-fill");
+
+                        icon.classList.add("bi-heart");
+
+                        this.style.color = "";
 
                     }
 
                 }
             );
 
-
-            filterProducts();
-
-        }
-
-    );
-
-});
+        });
 
 
-/* =========================================================
-   WISHLIST
-========================================================= */
+    /* =========================================================
+       BACK TO TOP
+    ========================================================= */
 
-document
-    .querySelectorAll(
-        ".qs-wishlist"
-    )
-    .forEach(button => {
-
-
-        button.addEventListener(
-
+    document
+        .getElementById("backToTop")
+        .addEventListener(
             "click",
+            function(event) {
 
-            function() {
-
-
-                const icon =
-                    this.querySelector(
-                        "i"
-                    );
+                event.preventDefault();
 
 
-                icon.classList.toggle(
-                    "bi-heart"
-                );
-
-
-                icon.classList.toggle(
-                    "bi-heart-fill"
-                );
-
-
-                this.style.color =
-
-                    icon.classList.contains(
-                        "bi-heart-fill"
-                    )
-
-                    ? "#b12704"
-
-                    : "";
-
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
 
             }
-
         );
 
-    });
 
+    /* =========================================================
+       INITIAL FILTER
+    ========================================================= */
 
-/* =========================================================
-   BACK TO TOP
-========================================================= */
-
-document
-    .getElementById(
-        "backToTop"
-    )
-    .addEventListener(
-
-        "click",
-
-        function(event) {
-
-            event.preventDefault();
-
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-        }
-
-    );
-
-
-/* =========================================================
-   INITIAL FILTER
-========================================================= */
-
-filterProducts();
+    filterProducts();
 
 </script>
 

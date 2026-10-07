@@ -12,17 +12,39 @@
 <head>
 
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0"/>
 
 <title>Quick Shop Admin Dashboard - Product Page</title>
 
+
+<!-- =========================
+     TAILWIND CSS
+     ========================= -->
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+
+<!-- =========================
+     BOOTSTRAP CSS
+     ========================= -->
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"/>
 
+
+<!-- =========================
+     BOOTSTRAP ICONS
+     ========================= -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
       rel="stylesheet"/>
+
+
+<!-- =========================
+     TAILWIND CONFIG
+     ========================= -->
 
 <script>
 
@@ -35,10 +57,15 @@ tailwind.config = {
             colors: {
 
                 amazonDark: '#131921',
+
                 amazonNav: '#232F3E',
+
                 amazonAccent: '#FF9900',
+
                 amazonYellow: '#FEBD69',
+
                 amazonYellowHover: '#F3A847',
+
                 amazonBg: '#EAEDED'
 
             }
@@ -51,25 +78,40 @@ tailwind.config = {
 
 </script>
 
+
+<!-- =========================
+     CUSTOM CSS
+     ========================= -->
+
 <style>
 
 * {
     box-sizing: border-box;
 }
 
+
 html,
 body {
+
     margin: 0;
+
     padding: 0;
+
     width: 100%;
+
     min-height: 100%;
+
 }
+
 
 body {
 
     background-color: #EAEDED;
 
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-family: "Segoe UI",
+                 system-ui,
+                 -apple-system,
+                 sans-serif;
 
     color: #0F1111;
 
@@ -77,17 +119,35 @@ body {
 
 }
 
+
+/* =========================
+   AMAZON COLORS
+   ========================= */
+
 .bg-amazon-dark {
+
     background-color: #131921 !important;
+
 }
+
 
 .bg-amazon-nav {
+
     background-color: #232F3E !important;
+
 }
 
+
 .text-amazon-orange {
+
     color: #FF9900 !important;
+
 }
+
+
+/* =========================
+   SIDEBAR
+   ========================= */
 
 .sidebar-link {
 
@@ -115,6 +175,7 @@ body {
 
 }
 
+
 .sidebar-link:hover {
 
     color: #FFFFFF;
@@ -124,6 +185,7 @@ body {
     border-color: #FF9900;
 
 }
+
 
 .sidebar-link.active {
 
@@ -139,9 +201,17 @@ body {
 
 }
 
+
 .sidebar-link.active i {
+
     color: #111111 !important;
+
 }
+
+
+/* =========================
+   SEARCH BUTTON
+   ========================= */
 
 .amazon-search-addon {
 
@@ -157,9 +227,17 @@ body {
 
 }
 
+
 .amazon-search-addon:hover {
+
     background-color: #f3a847;
+
 }
+
+
+/* =========================
+   PRODUCT IMAGE
+   ========================= */
 
 .product-img-box {
 
@@ -179,9 +257,21 @@ body {
 
 }
 
+
+/* =========================
+   TABLE
+   ========================= */
+
 .table-hover tbody tr:hover {
+
     background-color: #F7FAFA;
+
 }
+
+
+/* =========================
+   STOCK BADGES
+   ========================= */
 
 .badge-in-stock {
 
@@ -193,6 +283,7 @@ body {
 
 }
 
+
 .badge-low-stock {
 
     background-color: #FEF7E0;
@@ -202,6 +293,7 @@ body {
     border: 1px solid #FEEFC3;
 
 }
+
 
 .badge-out-stock {
 
@@ -213,6 +305,11 @@ body {
 
 }
 
+
+/* =========================
+   APP LAYOUT
+   ========================= */
+
 .app-layout {
 
     display: flex;
@@ -222,6 +319,11 @@ body {
     min-height: 100vh;
 
 }
+
+
+/* =========================
+   SIDEBAR
+   ========================= */
 
 .sidebar {
 
@@ -245,6 +347,11 @@ body {
 
 }
 
+
+/* =========================
+   CONTENT
+   ========================= */
+
 .content-area {
 
     min-width: 0;
@@ -259,11 +366,13 @@ body {
 
 }
 
+
 .top-header {
 
     min-height: 64px;
 
 }
+
 
 .main-content {
 
@@ -272,6 +381,11 @@ body {
     width: 100%;
 
 }
+
+
+/* =========================
+   PRODUCT CARD
+   ========================= */
 
 .product-card {
 
@@ -289,6 +403,11 @@ body {
 
 }
 
+
+/* =========================
+   TABLE RESPONSIVE
+   ========================= */
+
 .table-responsive {
 
     width: 100%;
@@ -303,6 +422,7 @@ body {
 
 }
 
+
 #productsCatalogTable {
 
     min-width: 950px;
@@ -310,6 +430,7 @@ body {
     margin-bottom: 0;
 
 }
+
 
 #productsCatalogTable th {
 
@@ -319,11 +440,17 @@ body {
 
 }
 
+
 #productsCatalogTable td {
 
     white-space: nowrap;
 
 }
+
+
+/* =========================
+   SEARCH
+   ========================= */
 
 .search-wrapper {
 
@@ -331,11 +458,13 @@ body {
 
 }
 
+
 .search-wrapper .input-group {
 
     width: 100%;
 
 }
+
 
 .admin-actions {
 
@@ -343,13 +472,57 @@ body {
 
 }
 
+
 .sidebar-brand {
 
     min-height: 72px;
 
 }
 
-/* Tablet */
+
+/* =========================
+   CATEGORY DROPDOWN
+   ========================= */
+
+.category-dropdown-item {
+
+    cursor: pointer;
+
+}
+
+
+.category-dropdown-item:hover {
+
+    background-color: #f2f2f2;
+
+}
+
+
+.category-dropdown-item.active {
+
+    background-color: #febd69;
+
+    color: #111111;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================
+   NO RESULT
+   ========================= */
+
+.no-filter-result {
+
+    display: none;
+
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
 
 @media (max-width: 991.98px) {
 
@@ -361,6 +534,7 @@ body {
 
     }
 
+
     .sidebar-link {
 
         padding: 10px 12px;
@@ -371,6 +545,7 @@ body {
 
     }
 
+
     .sidebar-brand {
 
         padding-left: 14px !important;
@@ -379,11 +554,13 @@ body {
 
     }
 
+
     .main-content {
 
         padding: 18px;
 
     }
+
 
     .top-header {
 
@@ -393,6 +570,7 @@ body {
 
     }
 
+
     .admin-user {
 
         display: none !important;
@@ -401,7 +579,10 @@ body {
 
 }
 
-/* Mobile */
+
+/* =========================
+   MOBILE
+   ========================= */
 
 @media (max-width: 767.98px) {
 
@@ -412,6 +593,7 @@ body {
         min-height: 100vh;
 
     }
+
 
     .sidebar {
 
@@ -429,6 +611,7 @@ body {
 
     }
 
+
     .sidebar-brand {
 
         padding: 12px 15px !important;
@@ -437,11 +620,13 @@ body {
 
     }
 
+
     .sidebar-brand .brand-arrow {
 
         display: none;
 
     }
+
 
     .sidebar-nav {
 
@@ -456,6 +641,7 @@ body {
         margin-top: 0 !important;
 
     }
+
 
     .sidebar-link {
 
@@ -483,17 +669,20 @@ body {
 
     }
 
+
     .sidebar-link i {
 
         font-size: 1.05rem !important;
 
     }
 
+
     .sidebar-footer {
 
         display: none;
 
     }
+
 
     .content-area {
 
@@ -504,6 +693,7 @@ body {
         display: block;
 
     }
+
 
     .top-header {
 
@@ -517,6 +707,7 @@ body {
 
     }
 
+
     .search-wrapper {
 
         width: 100%;
@@ -527,11 +718,13 @@ body {
 
     }
 
+
     .search-wrapper .input-group {
 
         width: 100%;
 
     }
+
 
     .search-wrapper .dropdown-toggle {
 
@@ -543,6 +736,7 @@ body {
 
     }
 
+
     .search-wrapper .form-control {
 
         min-width: 0;
@@ -553,6 +747,7 @@ body {
 
     }
 
+
     .search-wrapper .amazon-search-addon {
 
         padding-left: 12px !important;
@@ -560,6 +755,7 @@ body {
         padding-right: 12px !important;
 
     }
+
 
     .admin-actions {
 
@@ -575,11 +771,13 @@ body {
 
     }
 
+
     .notification-btn {
 
         padding: 5px 8px !important;
 
     }
+
 
     #logOutBtn {
 
@@ -591,11 +789,13 @@ body {
 
     }
 
+
     .main-content {
 
         padding: 10px !important;
 
     }
+
 
     .product-card {
 
@@ -603,11 +803,13 @@ body {
 
     }
 
+
     .table-responsive {
 
         border-radius: 9px;
 
     }
+
 
     #productsCatalogTable {
 
@@ -617,6 +819,7 @@ body {
 
     }
 
+
     #productsCatalogTable th {
 
         padding: 11px 10px !important;
@@ -625,11 +828,13 @@ body {
 
     }
 
+
     #productsCatalogTable td {
 
         padding: 10px !important;
 
     }
+
 
     .product-img-box {
 
@@ -641,7 +846,10 @@ body {
 
 }
 
-/* Small mobile */
+
+/* =========================
+   SMALL MOBILE
+   ========================= */
 
 @media (max-width: 575.98px) {
 
@@ -651,17 +859,20 @@ body {
 
     }
 
+
     .sidebar-brand .brand-text {
 
         font-size: 1.05rem !important;
 
     }
 
+
     .sidebar-brand .brand-icon {
 
         font-size: 1.35rem !important;
 
     }
+
 
     .sidebar-brand .admin-badge {
 
@@ -670,6 +881,7 @@ body {
         padding: 4px 6px !important;
 
     }
+
 
     .sidebar-nav {
 
@@ -681,6 +893,7 @@ body {
 
     }
 
+
     .sidebar-link {
 
         padding: 8px 2px;
@@ -691,17 +904,20 @@ body {
 
     }
 
+
     .sidebar-link i {
 
         font-size: 0.95rem !important;
 
     }
 
+
     .top-header {
 
         padding: 8px !important;
 
     }
+
 
     .search-wrapper .dropdown-toggle {
 
@@ -715,11 +931,13 @@ body {
 
     }
 
+
     .search-wrapper .form-control {
 
         font-size: 0.74rem;
 
     }
+
 
     .search-wrapper .amazon-search-addon {
 
@@ -729,11 +947,13 @@ body {
 
     }
 
+
     .main-content {
 
         padding: 8px !important;
 
     }
+
 
     .product-card-bottom {
 
@@ -743,11 +963,13 @@ body {
 
     }
 
+
     .product-card-bottom span {
 
         font-size: 0.72rem;
 
     }
+
 
     .inventory-text {
 
@@ -755,15 +977,19 @@ body {
 
     }
 
+
     .dropdown-menu {
 
-        max-width: 250px;
+        max-width: 280px;
 
     }
 
 }
 
-/* Very small phones */
+
+/* =========================
+   VERY SMALL PHONES
+   ========================= */
 
 @media (max-width: 380px) {
 
@@ -773,11 +999,13 @@ body {
 
     }
 
+
     .sidebar-link i {
 
         font-size: 0.88rem !important;
 
     }
+
 
     .search-wrapper .dropdown-toggle {
 
@@ -789,6 +1017,7 @@ body {
 
     }
 
+
     .search-wrapper .amazon-search-addon {
 
         padding-left: 8px !important;
@@ -796,6 +1025,7 @@ body {
         padding-right: 8px !important;
 
     }
+
 
     #productsCatalogTable {
 
@@ -805,7 +1035,10 @@ body {
 
 }
 
-/* Touch devices */
+
+/* =========================
+   TOUCH DEVICES
+   ========================= */
 
 @media (hover: none) {
 
@@ -817,6 +1050,7 @@ body {
 
     }
 
+
     .sidebar-link.active:hover {
 
         background-color: #febd69;
@@ -826,6 +1060,7 @@ body {
     }
 
 }
+
 
 .sidebar,
 .top-header {
@@ -838,372 +1073,555 @@ body {
 
 </head>
 
+
 <body class="min-h-screen antialiased">
+
 
 <div class="app-layout">
 
+
+<!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
 <aside class="sidebar">
 
-<div>
 
-<div class="sidebar-brand px-5 py-4 border-b border-gray-700/60 flex items-center justify-between">
+    <div>
 
-<div class="flex flex-col">
 
-<div class="flex items-center gap-2">
+        <!-- BRAND -->
 
-<i class="bi bi-cart3 text-amazon-orange text-2xl font-bold brand-icon"></i>
+        <div class="sidebar-brand px-5 py-4 border-b border-gray-700/60 flex items-center justify-between">
 
-<span class="text-white font-extrabold tracking-tight text-xl brand-text">
-Quick<span class="text-amazon-orange">Shop</span>
-</span>
 
-</div>
+            <div class="flex flex-col">
 
-<svg class="w-24 h-3 ml-7 -mt-0.5 text-amazon-orange brand-arrow"
-     fill="none"
-     stroke="currentColor"
-     stroke-linecap="round"
-     stroke-width="2.6"
-     viewBox="0 0 100 15">
 
-<path d="M 5 5 Q 50 16 95 4"></path>
+                <div class="flex items-center gap-2">
 
-<polygon fill="currentColor"
-         points="90,1 96,4 92,8"
-         stroke="none"></polygon>
+                    <i class="bi bi-cart3 text-amazon-orange text-2xl font-bold brand-icon"></i>
 
-</svg>
+                    <span class="text-white font-extrabold tracking-tight text-xl brand-text">
 
-</div>
+                        Quick<span class="text-amazon-orange">Shop</span>
 
-<span class="badge bg-amazon-nav border border-gray-600 text-yellow-400 font-semibold px-2 py-1 rounded admin-badge">
-Admin
-</span>
+                    </span>
 
-</div>
+                </div>
 
-<nav class="sidebar-nav p-3 space-y-1.5 mt-2">
 
-<a class="sidebar-link active"
-   href="addProduct.html">
+                <svg class="w-24 h-3 ml-7 -mt-0.5 text-amazon-orange brand-arrow"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-linecap="round"
+                     stroke-width="2.6"
+                     viewBox="0 0 100 15">
 
-<i class="bi bi-plus-circle-fill text-lg"></i>
+                    <path d="M 5 5 Q 50 16 95 4"></path>
 
-<span>Add Product</span>
+                    <polygon fill="currentColor"
+                             points="90,1 96,4 92,8"
+                             stroke="none"></polygon>
 
-</a>
+                </svg>
 
-<a class="sidebar-link"
-   href="#">
 
-<i class="bi bi-pencil-square text-amazon-orange text-lg"></i>
+            </div>
 
-<span>Update Product</span>
 
-</a>
+            <span class="badge bg-amazon-nav border border-gray-600 text-yellow-400 font-semibold px-2 py-1 rounded admin-badge">
 
-<a class="sidebar-link"
-   href="#">
+                Admin
 
-<i class="bi bi-trash3 text-red-400 text-lg"></i>
+            </span>
 
-<span>Delete Product</span>
 
-</a>
+        </div>
 
-<a class="sidebar-link"
-   href="#">
 
-<i class="bi bi-people-fill text-amazon-orange text-lg"></i>
+        <!-- SIDEBAR MENU -->
 
-<span>User Details</span>
+        <nav class="sidebar-nav p-3 space-y-1.5 mt-2">
 
-</a>
 
-<a class="sidebar-link"
-   href="#">
+            <a class="sidebar-link active"
+               href="addProduct.html">
 
-<i class="bi bi-box-seam-fill text-amazon-orange text-lg"></i>
+                <i class="bi bi-plus-circle-fill text-lg"></i>
 
-<span>Order Details</span>
+                <span>Add Product</span>
 
-</a>
+            </a>
 
-</nav>
 
-</div>
+            <a class="sidebar-link"
+               href="#">
 
-<footer class="sidebar-footer p-3 bg-amazon-nav border-t border-gray-700 text-gray-300">
+                <i class="bi bi-pencil-square text-amazon-orange text-lg"></i>
 
-<div class="flex items-center justify-between pt-1 px-1">
+                <span>Update Product</span>
 
-<div class="flex items-center gap-2">
+            </a>
 
-<div class="w-8 h-8 rounded-full bg-amazon-orange text-amazon-dark flex items-center justify-center font-bold text-xs">
-AD
-</div>
 
-<div class="text-xs leading-tight">
+            <a class="sidebar-link"
+               href="#">
 
-<p class="font-bold text-white mb-0">
-@2026 quickshop.com
-</p>
+                <i class="bi bi-trash3 text-red-400 text-lg"></i>
 
-<p class="text-gray-400 text-[11px] mb-0">
-Admin Workspace
-</p>
+                <span>Delete Product</span>
 
-</div>
+            </a>
 
-</div>
 
-<i class="bi bi-shield-lock text-amazon-orange text-sm"></i>
+            <a class="sidebar-link"
+               href="#">
 
-</div>
+                <i class="bi bi-people-fill text-amazon-orange text-lg"></i>
 
-</footer>
+                <span>User Details</span>
+
+            </a>
+
+
+            <a class="sidebar-link"
+               href="#">
+
+                <i class="bi bi-box-seam-fill text-amazon-orange text-lg"></i>
+
+                <span>Order Details</span>
+
+            </a>
+
+
+        </nav>
+
+
+    </div>
+
+
+    <!-- SIDEBAR FOOTER -->
+
+    <footer class="sidebar-footer p-3 bg-amazon-nav border-t border-gray-700 text-gray-300">
+
+
+        <div class="flex items-center justify-between pt-1 px-1">
+
+
+            <div class="flex items-center gap-2">
+
+
+                <div class="w-8 h-8 rounded-full bg-amazon-orange text-amazon-dark flex items-center justify-center font-bold text-xs">
+
+                    AD
+
+                </div>
+
+
+                <div class="text-xs leading-tight">
+
+                    <p class="font-bold text-white mb-0">
+
+                        @2026 quickshop.com
+
+                    </p>
+
+
+                    <p class="text-gray-400 text-[11px] mb-0">
+
+                        Admin Workspace
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <i class="bi bi-shield-lock text-amazon-orange text-sm"></i>
+
+
+        </div>
+
+
+    </footer>
+
 
 </aside>
 
+
+<!-- =====================================================
+     MAIN CONTENT
+     ===================================================== -->
+
 <div class="content-area">
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
 <header class="top-header bg-amazon-dark px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-md sticky top-0 z-40 border-b border-gray-800">
 
-<div class="search-wrapper flex-grow flex items-center max-w-4xl w-full md:w-auto">
 
-<div class="input-group">
+    <!-- SEARCH AREA -->
 
-<button aria-expanded="false"
-        class="btn btn-light bg-gray-100 dropdown-toggle text-xs md:text-sm font-semibold border-gray-300 px-3 text-gray-800 flex items-center gap-1"
-        data-bs-toggle="dropdown"
-        type="button">
+    <div class="search-wrapper flex-grow flex items-center max-w-4xl w-full md:w-auto">
 
-<i class="bi bi-funnel text-amazon-orange me-1"></i>
 
-<span id="selectedCategoryLabel">
-All Categories
-</span>
+        <div class="input-group">
 
-</button>
 
-<ul class="dropdown-menu shadow-lg border-0 text-sm">
+            <!-- CATEGORY BUTTON -->
 
-<li>
+            <button aria-expanded="false"
+                    class="btn btn-light bg-gray-100 dropdown-toggle text-xs md:text-sm font-semibold border-gray-300 px-3 text-gray-800 flex items-center gap-1"
+                    data-bs-toggle="dropdown"
+                    type="button">
 
-<a class="dropdown-item active"
-   href="#"
-   onclick="selectCategory('All Categories'); return false;">
+                <i class="bi bi-funnel text-amazon-orange me-1"></i>
 
-All Categories
+                <span id="selectedCategoryLabel">
 
-</a>
+                    All Categories
 
-</li>
+                </span>
 
-<li>
-<hr class="dropdown-divider">
-</li>
+            </button>
 
-<li>
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Electronics'); return false;">
+            <!-- =================================================
+                 CATEGORY DROPDOWN
+                 ================================================= -->
 
-<i class="bi bi-laptop me-2"></i>
-Electronics
+            <ul class="dropdown-menu shadow-lg border-0 text-sm">
 
-</a>
 
-</li>
+                <!-- ALL -->
 
-<li>
+                <li>
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Clothes'); return false;">
+                    <a class="dropdown-item category-dropdown-item active"
+                       href="#"
+                       data-category="All Categories">
 
-<i class="bi bi-bag me-2"></i>
-Clothes
+                        <i class="bi bi-grid me-2"></i>
 
-</a>
+                        All Categories
 
-</li>
+                    </a>
 
-<li>
+                </li>
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Home & Kitchen'); return false;">
 
-<i class="bi bi-house me-2"></i>
-Home & Kitchen
+                <li>
 
-</a>
+                    <hr class="dropdown-divider">
 
-</li>
+                </li>
 
-<li>
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Computers & Accessories'); return false;">
+                <!-- ELECTRONICS -->
 
-<i class="bi bi-cpu me-2"></i>
-Computers & Acc.
+                <li>
 
-</a>
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Electronics">
 
-</li>
+                        <i class="bi bi-laptop me-2"></i>
 
-<li>
+                        Electronics
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Books & Media'); return false;">
+                    </a>
 
-<i class="bi bi-book me-2"></i>
-Books
+                </li>
 
-</a>
 
-</li>
+                <!-- FASHION -->
 
-<li>
+                <li>
 
-<a class="dropdown-item"
-   href="#"
-   onclick="selectCategory('Fitness & Sports'); return false;">
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Fashion">
 
-<i class="bi bi-activity me-2"></i>
-Sports
+                        <i class="bi bi-bag me-2"></i>
 
-</a>
+                        Fashion
 
-</li>
+                    </a>
 
-</ul>
+                </li>
 
-<input aria-label="product Search bar"
-       class="form-control text-sm border-0 py-2"
-       id="productSearchInput"
-       placeholder="Search product name, category, or ID..."
-       type="text">
 
-<button class="btn amazon-search-addon px-4 text-base font-bold flex items-center justify-center"
-        type="button">
+                <!-- HOME -->
 
-<i class="bi bi-search text-gray-900"></i>
+                <li>
 
-</button>
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Home & Kitchen">
 
-</div>
+                        <i class="bi bi-house me-2"></i>
 
-</div>
+                        Home & Kitchen
 
-<div class="admin-actions flex items-center gap-3 ms-auto">
+                    </a>
 
-<button class="notification-btn relative text-gray-300 hover:text-white p-2 text-lg"
-        title="Notifications"
-        type="button">
+                </li>
 
-<i class="bi bi-bell"></i>
 
-<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-amazon-orange rounded-full"></span>
+                <!-- COMPUTER -->
 
-</button>
+                <li>
 
-<div class="admin-user hidden lg:flex flex-col text-right text-xs leading-none text-gray-300 border-l border-gray-700 pl-3">
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Computer & Accessories">
 
-<span class="text-gray-400 text-[10px]">
-Signed in as
-</span>
+                        <i class="bi bi-cpu me-2"></i>
 
-<span class="font-bold text-white mt-1">
-<%= session.getAttribute("fName") %>
-</span>
+                        Computer & Accessories
 
-</div>
+                    </a>
 
-<button class="btn btn-outline-warning text-amazon-yellow border-amazon-yellow font-semibold text-xs md:text-sm px-3.5 py-1.5 flex items-center gap-1.5 rounded"
-        id="logOutBtn"
-        type="button">
+                </li>
 
-<i class="bi bi-box-arrow-right"></i>
 
-<span>LogOut</span>
+                <!-- BOOK -->
 
-</button>
+                <li>
 
-</div>
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Book">
+
+                        <i class="bi bi-book me-2"></i>
+
+                        Book
+
+                    </a>
+
+                </li>
+
+
+                <!-- SPORTS -->
+
+                <li>
+
+                    <a class="dropdown-item category-dropdown-item"
+                       href="#"
+                       data-category="Sports & Outdoor Gear">
+
+                        <i class="bi bi-activity me-2"></i>
+
+                        Sports & Outdoor Gear
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+
+            <!-- SEARCH INPUT -->
+
+            <input aria-label="product Search bar"
+                   class="form-control text-sm border-0 py-2"
+                   id="productSearchInput"
+                   placeholder="Search product name, category, or ID..."
+                   type="text">
+
+
+            <!-- SEARCH BUTTON -->
+
+            <button class="btn amazon-search-addon px-4 text-base font-bold flex items-center justify-center"
+                    type="button">
+
+                <i class="bi bi-search text-gray-900"></i>
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ADMIN ACTIONS -->
+
+    <div class="admin-actions flex items-center gap-3 ms-auto">
+
+
+        <!-- NOTIFICATION -->
+
+        <button class="notification-btn relative text-gray-300 hover:text-white p-2 text-lg"
+                title="Notifications"
+                type="button">
+
+            <i class="bi bi-bell"></i>
+
+            <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-amazon-orange rounded-full"></span>
+
+        </button>
+
+
+        <!-- ADMIN NAME -->
+
+        <div class="admin-user hidden lg:flex flex-col text-right text-xs leading-none text-gray-300 border-l border-gray-700 pl-3">
+
+            <span class="text-gray-400 text-[10px]">
+
+                Signed in as
+
+            </span>
+
+
+            <span class="font-bold text-white mt-1">
+
+                <%= session.getAttribute("fName") %>
+
+            </span>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <button class="btn btn-outline-warning text-amazon-yellow border-amazon-yellow font-semibold text-xs md:text-sm px-3.5 py-1.5 flex items-center gap-1.5 rounded"
+                id="logOutBtn"
+                type="button">
+
+            <i class="bi bi-box-arrow-right"></i>
+
+            <span>LogOut</span>
+
+        </button>
+
+
+    </div>
+
 
 </header>
 
+
+<!-- =====================================================
+     MAIN PRODUCT TABLE
+     ===================================================== -->
+
 <main class="main-content">
+
 
 <div class="product-card">
 
+
 <div class="table-responsive">
+
 
 <table class="table table-hover align-middle mb-0"
        id="productsCatalogTable">
 
+
+<!-- TABLE HEADER -->
+
 <thead class="bg-gray-100/80 border-b border-gray-200 text-gray-700 text-xs uppercase font-bold tracking-wider">
+
 
 <tr>
 
+
 <th class="py-3.5 px-4 w-12 text-center">
+
 #
+
 </th>
+
 
 <th class="py-3.5 px-3 w-20">
+
 productImage
+
 </th>
 
+
 <th class="py-3.5 px-4">
+
 productName
+
 </th>
 
+
 <th class="py-3.5 px-4">
+
 category
+
 </th>
 
+
 <th class="py-3.5 px-4">
+
 productPrice
+
 </th>
 
+
 <th class="py-3.5 px-4">
+
 productQty
+
 </th>
+
 
 <th class="py-3.5 px-4 text-center w-36">
+
 Actions
+
 </th>
+
 
 </tr>
 
+
 </thead>
+
+
+<!-- TABLE BODY -->
 
 <tbody class="divide-y divide-gray-200 text-sm"
        id="productTableBody">
+
 
 <%
 
 List<Product> products =
         (List<Product>) request.getAttribute("product");
 
+
 if (products != null && !products.isEmpty())
 {
 
     int count = 1;
 
+
     for (Product prod : products)
     {
 
+
+        /* =========================
+           STOCK STATUS
+           ========================= */
+
         String status;
+
         String badgeClass;
+
         String badgeLabel;
+
 
         if (prod.getProductQty() == 0)
         {
@@ -1215,6 +1633,7 @@ if (products != null && !products.isEmpty())
             badgeLabel = "0 (Out of stock)";
 
         }
+
         else if (prod.getProductQty() <= 5)
         {
 
@@ -1222,9 +1641,12 @@ if (products != null && !products.isEmpty())
 
             badgeClass = "badge-low-stock";
 
-            badgeLabel = prod.getProductQty() + " left (Low Stock)";
+            badgeLabel =
+                    prod.getProductQty()
+                    + " left (Low Stock)";
 
         }
+
         else
         {
 
@@ -1232,26 +1654,28 @@ if (products != null && !products.isEmpty())
 
             badgeClass = "badge-in-stock";
 
-            badgeLabel = prod.getProductQty() + " in stock";
+            badgeLabel =
+                    prod.getProductQty()
+                    + " in stock";
 
         }
 
-        /*
-         * IMAGE HANDLING
-         *
-         * If database contains a full ImageKit URL,
-         * use it directly.
-         *
-         * If database contains an old local filename,
-         * use /images/filename.
-         */
 
-        String imageUrl = prod.getImage();
+        /* =========================
+           IMAGE HANDLING
+           ========================= */
 
-        if (imageUrl != null && !imageUrl.trim().isEmpty())
+        String imageUrl =
+                prod.getImage();
+
+
+        if (imageUrl != null
+                && !imageUrl.trim().isEmpty())
         {
 
-            imageUrl = imageUrl.trim();
+            imageUrl =
+                    imageUrl.trim();
+
 
             if (!imageUrl.startsWith("http://")
                     && !imageUrl.startsWith("https://"))
@@ -1265,6 +1689,7 @@ if (products != null && !products.isEmpty())
             }
 
         }
+
         else
         {
 
@@ -1273,17 +1698,46 @@ if (products != null && !products.isEmpty())
 
         }
 
+
+        /* =========================
+           CATEGORY VALUE
+           ========================= */
+
+        String productCategory =
+                prod.getCategory();
+
+
+        if (productCategory == null)
+        {
+
+            productCategory = "";
+
+        }
+
+
+        productCategory =
+                productCategory.trim();
+
 %>
 
+
+<!-- PRODUCT ROW -->
+
 <tr class="product-row"
-    data-category="<%= prod.getCategory() %>"
+    data-category="<%= productCategory %>"
     data-status="<%= status %>">
+
+
+<!-- NUMBER -->
 
 <td class="text-center font-mono text-xs text-gray-500">
 
 <%= String.format("%02d", count) %>
 
 </td>
+
+
+<!-- IMAGE -->
 
 <td>
 
@@ -1295,6 +1749,9 @@ if (products != null && !products.isEmpty())
 
 </td>
 
+
+<!-- PRODUCT NAME -->
+
 <td>
 
 <div class="font-bold text-gray-900">
@@ -1303,23 +1760,31 @@ if (products != null && !products.isEmpty())
 
 </div>
 
+
 <span class="text-xs text-gray-400 font-mono">
 
-Product ID: <%= prod.getProductId() %>
+Product ID:
+<%= prod.getProductId() %>
 
 </span>
 
 </td>
+
+
+<!-- CATEGORY -->
 
 <td>
 
 <span class="badge bg-blue-50 text-blue-700 border border-blue-200 font-medium px-2 py-1">
 
-<%= prod.getCategory() %>
+<%= productCategory %>
 
 </span>
 
 </td>
+
+
+<!-- PRICE -->
 
 <td>
 
@@ -1329,6 +1794,7 @@ Product ID: <%= prod.getProductId() %>
 
 </div>
 
+
 <span class="text-[11px] text-emerald-600">
 
 Available
@@ -1337,14 +1803,18 @@ Available
 
 </td>
 
+
+<!-- QUANTITY -->
+
 <td>
 
 <span class="badge <%= badgeClass %> rounded-pill px-3 py-1 font-semibold text-xs inline-flex items-center gap-1">
 
+
 <%
 
-        if (prod.getProductQty() == 0)
-        {
+if (prod.getProductQty() == 0)
+{
 
 %>
 
@@ -1352,9 +1822,10 @@ Available
 
 <%
 
-        }
-        else if (prod.getProductQty() <= 5)
-        {
+}
+
+else if (prod.getProductQty() <= 5)
+{
 
 %>
 
@@ -1362,9 +1833,10 @@ Available
 
 <%
 
-        }
-        else
-        {
+}
+
+else
+{
 
 %>
 
@@ -1372,43 +1844,57 @@ Available
 
 <%
 
-        }
+}
 
 %>
 
+
 <%= badgeLabel %>
+
 
 </span>
 
 </td>
+
+
+<!-- ACTIONS -->
 
 <td class="text-center">
 
 <div class="btn-group btn-group-sm"
      role="group">
 
+
+<!-- UPDATE -->
+
 <a class="btn btn-outline-secondary"
    title="Update Product"
    href="updateProduct?productId=<%= prod.getProductId() %>">
 
-<i class="bi bi-pencil-square text-primary"></i>
+    <i class="bi bi-pencil-square text-primary"></i>
 
 </a>
+
+
+<!-- DELETE -->
 
 <a class="btn btn-outline-secondary"
    title="Delete Product"
    href="deleteProduct?productId=<%= prod.getProductId() %>"
    onclick="return confirm('Are you sure you want to delete this product?');">
 
-<i class="bi bi-trash3 text-danger"></i>
+    <i class="bi bi-trash3 text-danger"></i>
 
 </a>
+
 
 </div>
 
 </td>
 
+
 </tr>
+
 
 <%
 
@@ -1417,17 +1903,24 @@ Available
     }
 
 }
+
 else
+
 {
 
 %>
 
-<tr>
+
+<!-- NO PRODUCTS FROM DATABASE -->
+
+<tr id="databaseNoProductsRow">
 
 <td colspan="7"
     class="text-center py-5 text-gray-500">
 
+
 <i class="bi bi-box-seam text-4xl text-gray-400"></i>
+
 
 <div class="mt-2 font-semibold">
 
@@ -1435,15 +1928,18 @@ No products found
 
 </div>
 
+
 <div class="text-sm">
 
 There is no product data available in the database.
 
 </div>
 
+
 </td>
 
 </tr>
+
 
 <%
 
@@ -1451,19 +1947,58 @@ There is no product data available in the database.
 
 %>
 
-</tbody>
 
-</table>
+<!-- NO FILTER RESULT -->
+
+<tr id="noFilterResultRow"
+    class="no-filter-result">
+
+<td colspan="7"
+    class="text-center py-5 text-gray-500">
+
+
+<i class="bi bi-search text-4xl text-gray-400"></i>
+
+
+<div class="mt-2 font-semibold">
+
+No matching products
 
 </div>
 
+
+<div class="text-sm">
+
+No product matches the selected category or search.
+
+</div>
+
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+<!-- FOOTER -->
+
 <div class="product-card-bottom px-4 py-3 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
+
 
 <span>
 
 Showing
 
-<span class="font-bold text-gray-900">
+<span class="font-bold text-gray-900"
+      id="visibleProductCount">
 
 <%= products != null ? products.size() : 0 %>
 
@@ -1473,137 +2008,656 @@ products
 
 </span>
 
+
 <span class="text-gray-500 inventory-text">
 
 Quick Shop Product Inventory
 
 </span>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </main>
 
-</div>
 
 </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     BOOTSTRAP JAVASCRIPT
+     ===================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+
+<!-- =====================================================
+     CUSTOM JAVASCRIPT
+     ===================================================== -->
+
 <script>
 
-/* =========================
-   PRODUCT SEARCH
-   ========================= */
+
+/* =====================================================
+   SELECTED CATEGORY
+   ===================================================== */
+
+let selectedCategory = 'All Categories';
+
+
+
+/* =====================================================
+   SEARCH INPUT
+   ===================================================== */
 
 const searchInput =
-    document.getElementById('productSearchInput');
+        document.getElementById(
+            'productSearchInput'
+        );
 
-if (searchInput)
+
+
+/* =====================================================
+   CATEGORY NORMALIZATION
+   =====================================================
+
+   This is the important fix.
+
+   Database can contain:
+
+   home
+   Home
+   Home & Kitchen
+
+   computers
+   computer
+   Computer & Accessories
+
+   sport
+   sports
+   Sports & Outdoor Gear
+
+   All of these are converted to
+   one common category name.
+   ===================================================== */
+
+function normalizeCategory(category)
 {
 
-    searchInput.addEventListener('input', function(e)
+    if (!category)
     {
 
-        const term =
-            e.target.value.toLowerCase().trim();
+        return '';
 
-        const rows =
-            document.querySelectorAll(
-                '#productTableBody .product-row'
-            );
+    }
 
-        rows.forEach(function(row)
-        {
 
-            const text =
-                row.innerText.toLowerCase();
+    let value =
+        category
+            .toString()
+            .trim()
+            .replace(/\s+/g, ' ')
+            .toLowerCase();
 
-            row.style.display =
-                text.includes(term) ? '' : 'none';
 
-        });
+    /*
+     * Remove unnecessary spaces around &
+     */
 
-    });
+    value =
+        value.replace(
+            /\s*&\s*/g,
+            ' & '
+        );
+
+
+    /* =========================
+       ELECTRONICS
+       ========================= */
+
+    if (
+        value === 'electronics'
+        ||
+        value === 'electronic'
+    )
+    {
+
+        return 'electronics';
+
+    }
+
+
+    /* =========================
+       FASHION
+       ========================= */
+
+    if (
+        value === 'fashion'
+        ||
+        value === 'clothes'
+        ||
+        value === 'clothing'
+    )
+    {
+
+        return 'fashion';
+
+    }
+
+
+    /* =========================
+       HOME
+       ========================= */
+
+    if (
+        value === 'home'
+        ||
+        value === 'home & kitchen'
+        ||
+        value === 'home and kitchen'
+        ||
+        value === 'home kitchen'
+    )
+    {
+
+        return 'home';
+
+    }
+
+
+    /* =========================
+       COMPUTER
+       ========================= */
+
+    if (
+        value === 'computer'
+        ||
+        value === 'computers'
+        ||
+        value === 'computer & accessories'
+        ||
+        value === 'computer and accessories'
+        ||
+        value === 'computers & accessories'
+        ||
+        value === 'computers and accessories'
+        ||
+        value === 'computer accessories'
+    )
+    {
+
+        return 'computers';
+
+    }
+
+
+    /* =========================
+       BOOK
+       ========================= */
+
+    if (
+        value === 'book'
+        ||
+        value === 'books'
+    )
+    {
+
+        return 'book';
+
+    }
+
+
+    /* =========================
+       SPORTS
+       ========================= */
+
+    if (
+        value === 'sport'
+        ||
+        value === 'sports'
+        ||
+        value === 'sports & outdoor gear'
+        ||
+        value === 'sports and outdoor gear'
+        ||
+        value === 'sport & outdoor gear'
+        ||
+        value === 'sport and outdoor gear'
+    )
+    {
+
+        return 'sports';
+
+    }
+
+
+    /*
+     * If category is something else,
+     * return normalized original value.
+     */
+
+    return value;
 
 }
 
 
-/* =========================
-   CATEGORY FILTER
-   ========================= */
 
-function selectCategory(categoryName)
+/* =====================================================
+   FILTER PRODUCTS
+   ===================================================== */
+
+function filterProducts()
 {
 
-    const label =
-        document.getElementById('selectedCategoryLabel');
+    /*
+     * Get search text
+     */
 
-    if (label)
-    {
+    const term =
+        searchInput
+            ? searchInput.value
+                .toLowerCase()
+                .trim()
+            : '';
 
-        label.innerText = categoryName;
 
-    }
+    /*
+     * Normalize selected category
+     */
+
+    const selected =
+        normalizeCategory(
+            selectedCategory
+        );
+
+
+    /*
+     * Get all product rows
+     */
 
     const rows =
         document.querySelectorAll(
             '#productTableBody .product-row'
         );
 
+
+    /*
+     * Visible product counter
+     */
+
+    let visibleCount = 0;
+
+
+    /*
+     * Check every product
+     */
+
     rows.forEach(function(row)
     {
 
-        const rowCategory =
-            row.getAttribute('data-category');
+        /*
+         * Get database category
+         */
 
-        if (categoryName === 'All Categories')
+        const rowCategory =
+            normalizeCategory(
+                row.getAttribute(
+                    'data-category'
+                )
+            );
+
+
+        /*
+         * Get complete product text
+         */
+
+        const rowText =
+            (
+                row.innerText || ''
+            )
+            .toLowerCase();
+
+
+        /*
+         * CATEGORY MATCH
+         */
+
+        const categoryMatch =
+            selected === ''
+            ||
+            selected === 'all categories'
+            ||
+            rowCategory === selected;
+
+
+        /*
+         * SEARCH MATCH
+         */
+
+        const searchMatch =
+            term === ''
+            ||
+            rowText.includes(term);
+
+
+        /*
+         * FINAL MATCH
+         */
+
+        const shouldShow =
+            categoryMatch
+            &&
+            searchMatch;
+
+
+        /*
+         * SHOW / HIDE ROW
+         */
+
+        if (shouldShow)
         {
 
             row.style.display = '';
 
+            visibleCount++;
+
         }
+
         else
         {
 
-            row.style.display =
-                rowCategory === categoryName
-                    ? ''
-                    : 'none';
+            row.style.display = 'none';
 
         }
 
     });
 
+
+    /*
+     * Update product count
+     */
+
+    const countElement =
+        document.getElementById(
+            'visibleProductCount'
+        );
+
+
+    if (countElement)
+    {
+
+        countElement.innerText =
+                visibleCount;
+
+    }
+
+
+    /*
+     * Show "No matching products"
+     */
+
+    const noFilterResult =
+        document.getElementById(
+            'noFilterResultRow'
+        );
+
+
+    if (noFilterResult)
+    {
+
+        if (
+            rows.length > 0
+            &&
+            visibleCount === 0
+        )
+        {
+
+            noFilterResult.style.display =
+                    'table-row';
+
+        }
+
+        else
+        {
+
+            noFilterResult.style.display =
+                    'none';
+
+        }
+
+    }
+
 }
 
 
-/* =========================
+
+/* =====================================================
+   CATEGORY DROPDOWN CLICK
+   ===================================================== */
+
+const categoryItems =
+        document.querySelectorAll(
+            '.category-dropdown-item'
+        );
+
+
+categoryItems.forEach(function(item)
+{
+
+    item.addEventListener(
+        'click',
+        function(event)
+        {
+
+            /*
+             * Prevent page navigation
+             */
+
+            event.preventDefault();
+
+
+            /*
+             * Get selected category
+             */
+
+            const category =
+                    item.getAttribute(
+                        'data-category'
+                    );
+
+
+            /*
+             * Set selected category
+             */
+
+            selectCategory(category);
+
+
+            /*
+             * Remove active class
+             * from every category
+             */
+
+            categoryItems.forEach(
+                function(otherItem)
+                {
+
+                    otherItem.classList.remove(
+                        'active'
+                    );
+
+                }
+            );
+
+
+            /*
+             * Add active class
+             * to selected category
+             */
+
+            item.classList.add(
+                'active'
+            );
+
+        }
+    );
+
+});
+
+
+
+/* =====================================================
+   SELECT CATEGORY
+   ===================================================== */
+
+function selectCategory(categoryName)
+{
+
+    /*
+     * Save selected category
+     */
+
+    selectedCategory =
+            categoryName;
+
+
+    /*
+     * Change dropdown button text
+     */
+
+    const label =
+            document.getElementById(
+                'selectedCategoryLabel'
+            );
+
+
+    if (label)
+    {
+
+        label.innerText =
+                categoryName;
+
+    }
+
+
+    /*
+     * Apply filter
+     */
+
+    filterProducts();
+
+}
+
+
+
+/* =====================================================
+   SEARCH EVENT
+   ===================================================== */
+
+if (searchInput)
+{
+
+    searchInput.addEventListener(
+        'input',
+        function()
+        {
+
+            filterProducts();
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   SEARCH BUTTON
+   ===================================================== */
+
+const searchButton =
+        document.querySelector(
+            '.amazon-search-addon'
+        );
+
+
+if (searchButton)
+{
+
+    searchButton.addEventListener(
+        'click',
+        function()
+        {
+
+            filterProducts();
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
    LOGOUT
-   ========================= */
+   ===================================================== */
 
 const logOutBtn =
-    document.getElementById('logOutBtn');
+        document.getElementById(
+            'logOutBtn'
+        );
+
 
 if (logOutBtn)
 {
 
-    logOutBtn.addEventListener('click', function()
-    {
-
-        if (confirm('Are you sure you want to log out?'))
+    logOutBtn.addEventListener(
+        'click',
+        function()
         {
 
-            window.location.href = 'index.html';
+            if (
+                confirm(
+                    'Are you sure you want to log out?'
+                )
+            )
+            {
+
+                window.location.href =
+                        'index.html';
+
+            }
 
         }
-
-    });
+    );
 
 }
 
+
+
+/* =====================================================
+   INITIAL FILTER
+   ===================================================== */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function()
+    {
+
+        filterProducts();
+
+    }
+);
+
 </script>
+
 
 </body>
 
