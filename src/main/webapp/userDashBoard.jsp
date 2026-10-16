@@ -1507,7 +1507,7 @@ List<Product> products =
 
                 <!-- ACCOUNT -->
 
-                <a href="#"
+                <a href=""
                    class="qs-nav-box qs-account">
 
                     <span class="qs-small-text">
@@ -1543,7 +1543,7 @@ List<Product> products =
 
                 <!-- CART -->
 
-                <a href="#"
+                <a href="viewCart"
                    class="qs-nav-box qs-cart-link">
 
                     <div class="qs-cart-container">
@@ -1551,7 +1551,7 @@ List<Product> products =
                         <i class="bi bi-cart2"></i>
 
                         <span class="qs-cart-count">
-                            3
+
                         </span>
 
                         <span class="qs-cart-text">
@@ -1922,18 +1922,22 @@ List<Product> products =
 
                     <div class="qs-buttons">
 
-
                         <!-- ADD TO CART -->
 
-                        <button
-                            type="button"
-                            class="qs-cart-btn">
+                        <form action="addToCart" method="post">
+                            <input type="hidden"
+                                   name="productId"
+                                   value="<%= prod.getProductId() %>">
 
-                            <i class="bi bi-cart-plus"></i>
+                            <button type="submit"
+                                    class="qs-cart-btn"
+                                    <%= prod.getProductQty() <= 0 ? "disabled" : "" %>>
 
-                            Add to Cart
+                                <i class="bi bi-cart-plus"></i>
+                                Add to Cart
 
-                        </button>
+                            </button>
+                        </form>
 
 
                         <!-- BUY NOW -->

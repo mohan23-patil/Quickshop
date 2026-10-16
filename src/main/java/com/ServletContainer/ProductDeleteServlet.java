@@ -20,13 +20,11 @@ public class ProductDeleteServlet extends HttpServlet
         if (k > 0)
         {
 //            req.setAttribute("msg","Product Deleted SuccessFully");
-//
             resp.sendRedirect(req.getContextPath() + "/viewAllProduct");
         }
         else
         {
             req.setAttribute("msg","Somethings is Wrong! Your Passing Id No : "+productId+" Is Wrong");
-//
         }
     }
 
