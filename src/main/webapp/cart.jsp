@@ -1,26 +1,45 @@
 <%@ page language="java"
          contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="com.entity.Cart_Item" %>
 
 <%
-String username = (String) session.getAttribute("username");
+    String username = (String) session.getAttribute("username");
 
-if (username == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
+    if (username == null || username.trim().isEmpty()) {
+        response.sendRedirect(request.getContextPath() + "/login.jsp");
+        return;
+    }
 
-List<Cart_Item> cartList =
-        (List<Cart_Item>) request.getAttribute("cartList");
+    List<Cart_Item> cartList =
+            (List<Cart_Item>) request.getAttribute("cartList");
 
-double grandTotal = 0;
+    if (cartList == null) {
+        cartList = new ArrayList<Cart_Item>();
+    }
 
-if (cartList == null) {
-    cartList = new java.util.ArrayList<>();
-}
+    double grandTotal = 0.0;
+    int totalItems = 0;
+
+    for (Cart_Item item : cartList) {
+        grandTotal += item.getProductPrice() * item.getQuantity();
+        totalItems += item.getQuantity();
+    }
+
+    String cartMessage = (String) session.getAttribute("cartMessage");
+
+    if (cartMessage != null) {
+        session.removeAttribute("cartMessage");
+    }
+
+    String contextPath = request.getContextPath();
+
+    String formattedGrandTotal =
+            String.format(Locale.US, "%.2f", grandTotal);
 %>
 
 <!DOCTYPE html>
@@ -30,7 +49,7 @@ if (cartList == null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Shopping Cart | QuickShop</title>
+    <title>QuickShop - Shopping Cart</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
@@ -38,297 +57,528 @@ if (cartList == null) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
           rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
+        :root {
+            --qs-dark-navy: #131921;
+            --qs-slate: #232f3e;
+            --qs-yellow: #ffd814;
+            --qs-yellow-hover: #f7ca00;
+            --qs-orange: #ffa41c;
+            --qs-bg-light: #eaeded;
+            --qs-border: #d5d9d9;
+            --qs-text: #0f1111;
+            --qs-link: #007185;
+            --qs-green: #007600;
+            --qs-price-red: #b12704;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            background: #EAEDED;
-            font-family: Arial, sans-serif;
-            color: #0F1111;
+            background: var(--qs-bg-light);
+            color: var(--qs-text);
+            font-family: 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        .top-header {
-            background: #131921;
-            color: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
+        /* HEADER */
+
+        .navbar-quickshop {
+            background-color: var(--qs-dark-navy);
+            padding: 0.65rem 1.25rem;
+        }
+
+        .logo-container {
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .brand {
-            color: #FF9900;
-            font-size: 27px;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .header-link {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .header-link:hover {
-            color: #FF9900;
-        }
-
-        .page-container {
-            max-width: 1400px;
-            margin: 25px auto;
-            padding: 0 18px;
-        }
-
-        .cart-heading {
-            background: white;
-            padding: 22px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-
-        .cart-heading h2 {
-            font-size: 27px;
-            margin: 0 0 8px;
-        }
-
-        .cart-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 300px;
-            gap: 20px;
-            align-items: start;
-        }
-
-        .cart-products {
-            background: white;
-            padding: 20px;
-            border-radius: 4px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 20px;
-            padding: 22px 0;
-            border-bottom: 1px solid #DDD;
-        }
-
-        .cart-item:first-child {
-            padding-top: 5px;
-        }
-
-        .product-image {
-            width: 150px;
-            height: 150px;
-            object-fit: contain;
+            gap: 4px;
             flex-shrink: 0;
         }
 
-        .product-details {
-            flex: 1;
+        .logo-text {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+        }
+
+        .logo-text span {
+            color: var(--qs-orange);
+        }
+
+        .nav-subline {
+            font-size: 0.75rem;
+            color: #cccccc;
+            line-height: 1.3;
+        }
+
+        .nav-mainline {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+
+        .btn-continue-nav {
+            background-color: #37475a;
+            color: #ffffff;
+            border: 1px solid #485769;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.45rem 1.15rem;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .btn-continue-nav:hover {
+            background-color: #485769;
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        /* SEARCH */
+
+        .quickshop-search {
+            flex: 1 1 400px;
+            max-width: 550px;
             min-width: 0;
         }
 
-        .product-name {
-            font-size: 19px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .quickshop-search .input-group {
+            width: 100%;
+            flex-wrap: nowrap;
         }
 
-        .product-price {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .quickshop-search .form-control {
+            min-width: 0;
         }
 
-        .stock-text {
-            color: #007600;
-            font-size: 14px;
-            margin-bottom: 12px;
+        .search-category {
+            width: 125px;
+            max-width: 145px;
+            flex: 0 0 125px;
+            background: #e6e6e6;
+            font-size: 0.82rem;
+            border: none;
         }
 
-        .quantity-text {
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-
-        /* Quantity + and - buttons */
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 8px;
-            margin-bottom: 8px;
-        }
-
-        .quantity-controls form {
-            margin: 0;
-        }
-
-        .quantity-btn {
-            width: 32px;
-            height: 32px;
-            border: 1px solid #CCC;
-            border-radius: 50%;
-            background: #FFF;
+        .search-submit {
+            background: var(--qs-orange);
             color: #111;
-            cursor: pointer;
-            font-size: 17px;
+            border: none;
+            min-width: 45px;
+        }
+
+        .search-submit:hover {
+            background: #fa8900;
+            color: #111;
+        }
+
+        /* MAIN LAYOUT */
+
+        .cart-surface,
+        .order-summary-box {
+            background: #fff;
+            border: 1px solid var(--qs-border);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .order-summary-box {
+            position: sticky;
+            top: 16px;
+        }
+
+        /* CART ITEMS */
+
+        .item-card {
+            border-top: 1px solid #e7e7e7;
+            padding: 20px 0;
+        }
+
+        .item-card:first-child {
+            border-top: none;
+            padding-top: 8px;
+        }
+
+        .product-img-box {
+            width: 130px;
+            height: 130px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #f7f7f7;
+            border: 1px solid #e2e5e5;
+            border-radius: 6px;
+            overflow: hidden;
         }
 
-        .quantity-btn:hover {
-            background: #F7CA00;
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            object-fit: contain;
         }
 
-        .quantity-btn:disabled {
-            opacity: 0.5;
+        .product-title {
+            color: #0f1111;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.4;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .product-title:hover {
+            color: var(--qs-link);
+            text-decoration: underline;
+        }
+
+        .in-stock-label {
+            color: var(--qs-green);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .price-tag {
+            color: var(--qs-price-red);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        /* QUANTITY */
+
+        .qty-stepper {
+            display: inline-flex;
+            align-items: center;
+            background: #f0f2f2;
+            border: 1px solid #d5d9d9;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .qty-stepper form {
+            display: flex;
+        }
+
+        .qty-btn {
+            min-width: 38px;
+            min-height: 36px;
+            border: none;
+            background: transparent;
+            color: #0f1111;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .qty-btn:hover:not(:disabled) {
+            background: #e3e6e6;
+        }
+
+        .qty-btn:disabled {
+            color: #999;
             cursor: not-allowed;
         }
 
-        .quantity-number {
-            min-width: 22px;
+        .qty-val {
+            min-width: 35px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
+            align-self: center;
         }
 
-        .item-subtotal {
-            margin-top: 8px;
-            font-weight: bold;
+        .btn-delete-icon {
+            border: 1px solid transparent;
+            background: transparent;
+            color: #565959;
+            border-radius: 6px;
+            padding: 6px 9px;
         }
 
-        .delete-form {
-            margin-top: 12px;
+        .btn-delete-icon:hover {
+            color: #c40000;
+            background: #fee;
+            border-color: #f5c2c7;
         }
 
-        .delete-btn {
-            background: white;
-            color: #B12704;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-            padding: 7px 14px;
-            cursor: pointer;
-            font-size: 14px;
+        .item-subtotal-badge {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 7px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
-        .delete-btn:hover {
-            background: #FFF0F0;
-            border-color: #B12704;
+        /* TOTALS */
+
+        .final-total-container {
+            background: #fbfbfb;
+            border: 1px dashed #c0c6c6;
+            border-radius: 8px;
+            padding: 16px 20px;
         }
 
-        .summary-card {
-            background: white;
-            padding: 22px;
-            border-radius: 4px;
-            position: sticky;
-            top: 20px;
-        }
-
-        .summary-card h4 {
-            font-size: 21px;
-            margin-bottom: 20px;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 15px;
-            font-size: 15px;
-        }
-
-        .grand-total {
-            border-top: 1px solid #DDD;
-            padding-top: 15px;
-            font-size: 19px;
-            font-weight: bold;
-            color: #B12704;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            border: none;
-            border-radius: 20px;
-            background: #FFD814;
-            padding: 11px;
-            font-size: 15px;
-            margin-top: 12px;
-            cursor: pointer;
-        }
-
-        .checkout-btn:hover {
-            background: #F7CA00;
-        }
-
-        .continue-btn {
+        .final-total-pill {
             display: inline-block;
-            background: #FFD814;
-            color: #111;
-            padding: 10px 18px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-size: 14px;
-            margin-top: 15px;
+            background: #e7f4f5;
+            border: 1px solid #007185;
+            color: #004b57;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 6px;
         }
 
-        .continue-btn:hover {
-            background: #F7CA00;
-            color: #111;
+        .btn-primary-order {
+            width: 100%;
+            background: var(--qs-yellow);
+            border: 1px solid #fcd200;
+            border-radius: 100px;
+            color: #0f1111;
+            font-weight: 700;
+            padding: 11px 16px;
         }
 
-        .empty-cart {
-            background: white;
-            text-align: center;
-            padding: 60px 20px;
-            border-radius: 4px;
+        .btn-primary-order:hover {
+            background: var(--qs-yellow-hover);
+            color: #0f1111;
         }
 
-        .empty-cart i {
-            font-size: 65px;
+        .btn-primary-order:disabled {
+            background: #e5e5e5;
+            border-color: #d5d9d9;
             color: #777;
         }
 
-        .empty-cart h3 {
-            margin-top: 18px;
+        .btn-secondary-continue {
+            width: 100%;
+            background: #fff;
+            border: 1px solid #d5d9d9;
+            border-radius: 100px;
+            color: #0f1111;
+            font-weight: 600;
+            padding: 10px 16px;
         }
 
-        .footer {
-            background: #232F3E;
-            color: white;
+        .btn-secondary-continue:hover {
+            background: #f7fafa;
+            color: #0f1111;
+        }
+
+        .summary-divider {
+            border-top: 1px solid #d5d9d9;
+            margin: 20px 0;
+        }
+
+        /* SEARCH EMPTY RESULT */
+
+        #noCartSearchResult {
+            display: none;
             text-align: center;
-            padding: 22px;
-            margin-top: 35px;
-            font-size: 14px;
+            background: #fff;
+            padding: 30px 15px;
+            border-radius: 8px;
+            color: #565959;
         }
 
-        @media (max-width: 850px) {
-            .cart-layout {
-                grid-template-columns: 1fr;
+        #noCartSearchResult i {
+            font-size: 2.5rem;
+            color: #999;
+        }
+
+        /* FOOTER */
+
+        .qs-footer {
+            margin-top: auto;
+            background: var(--qs-slate);
+            color: #fff;
+        }
+
+        .back-to-top {
+            display: block;
+            background: #37475a;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .back-to-top:hover {
+            background: #485769;
+            color: #fff;
+        }
+
+        .footer-bottom {
+            background: var(--qs-dark-navy);
+            padding: 22px 10px;
+            color: #aaa;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* TABLET */
+
+        @media (max-width: 991.98px) {
+            .cart-surface,
+            .order-summary-box {
+                padding: 20px;
             }
 
-            .summary-card {
+            .order-summary-box {
                 position: static;
             }
+
+            .product-img-box {
+                width: 110px;
+                height: 110px;
+            }
+
+            .navbar-quickshop .container-fluid {
+                gap: 10px !important;
+            }
+
+            .quickshop-search {
+                order: 3;
+                flex: 1 1 100%;
+                max-width: 100%;
+                margin: 4px 0 0 !important;
+            }
         }
 
-        @media (max-width: 500px) {
-            .cart-item {
-                gap: 12px;
-                flex-direction: column;
+        /* MOBILE */
+
+        @media (max-width: 575.98px) {
+            .navbar-quickshop {
+                padding: 12px;
             }
 
-            .product-image {
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            .btn-continue-nav {
+                padding: 7px 10px;
+                font-size: 0.75rem;
+            }
+
+            .user-session-block {
+                display: none !important;
+            }
+
+            .quickshop-search {
+                flex-basis: 100%;
                 width: 100%;
-                height: 180px;
             }
 
-            .cart-heading h2 {
-                font-size: 23px;
+            .search-category {
+                width: 95px;
+                max-width: 95px;
+                flex-basis: 95px;
+                padding: 6px 4px;
+                font-size: 0.72rem;
+            }
+
+            .quickshop-search input {
+                font-size: 0.82rem;
+                padding-left: 8px;
+                padding-right: 5px;
+            }
+
+            .search-submit {
+                min-width: 40px;
+                padding: 7px 10px;
+            }
+
+            .cart-surface,
+            .order-summary-box {
+                padding: 15px;
+            }
+
+            .cart-surface h1 {
+                font-size: 1.45rem;
+            }
+
+            .item-card {
+                padding: 16px 0;
+            }
+
+            .product-img-box {
+                width: 88px;
+                height: 88px;
+            }
+
+            .product-title {
+                font-size: 0.9rem;
+            }
+
+            .price-tag {
+                font-size: 1rem;
+            }
+
+            .qty-btn {
+                min-width: 32px;
+                min-height: 32px;
+            }
+
+            .item-subtotal-badge {
+                font-size: 0.8rem;
+                padding: 6px 8px;
+            }
+
+            .final-total-container {
+                padding: 13px;
+            }
+
+            .final-total-pill {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .navbar-quickshop {
+                padding: 10px;
+            }
+
+            .logo-text {
+                font-size: 1.1rem;
+            }
+
+            .btn-continue-nav {
+                padding: 6px 8px;
+                font-size: 0.7rem;
+            }
+
+            .product-img-box {
+                width: 72px;
+                height: 72px;
+            }
+
+            .cart-surface,
+            .order-summary-box {
+                padding: 12px;
+            }
+
+            .item-subtotal-badge {
+                white-space: normal;
             }
         }
     </style>
@@ -336,44 +586,109 @@ if (cartList == null) {
 
 <body>
 
-<header class="top-header">
+<!-- ================= HEADER ================= -->
 
-    <a href="userViewAllProduct" class="brand">
-        <i class="bi bi-shop"></i> QuickShop
-    </a>
+<header>
+    <nav class="navbar navbar-quickshop"
+         data-purpose="primary-navigation">
 
-    <span>
-        <i class="bi bi-person-circle"></i>
-        Hello, <%= username %>
-    </span>
+        <div class="container-fluid px-lg-4 d-flex align-items-center
+                    justify-content-between flex-wrap gap-2">
 
-    <a href="userViewAllProduct" class="header-link">
-        <i class="bi bi-arrow-left"></i> Continue Shopping
-    </a>
+            <!-- LOGO -->
 
+            <a aria-label="QuickShop Home"
+               class="logo-container"
+               href="<%= contextPath %>/userViewAllProduct">
+
+                <span class="logo-text">
+                    <i class="bi bi-cart3 me-1 text-warning"></i>Quick<span>Shop</span>
+                </span>
+            </a>
+
+            <!-- SEARCH AND CATEGORY
+                 Search is handled by JavaScript on this page.
+                 It does not call the missing search servlet. -->
+
+            <form class="input-group quickshop-search mx-lg-3"
+                  id="cartSearchForm"
+                  role="search">
+
+                <select class="form-select search-category"
+                        id="cartCategorySelect"
+                        aria-label="Select product category">
+
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="home">Home &amp; Kitchen</option>
+                    <option value="computers">Computers &amp; Accessories</option>
+                    <option value="books">Books</option>
+                    <option value="sports">Sports</option>
+
+                </select>
+
+                <input class="form-control"
+                       type="search"
+                       id="cartSearchInput"
+                       placeholder="Search cart items..."
+                       aria-label="Search cart items">
+
+                <button class="btn search-submit"
+                        type="submit"
+                        aria-label="Search">
+
+                    <i class="bi bi-search"></i>
+                </button>
+
+            </form>
+
+            <!-- SESSION USERNAME -->
+
+            <div class="d-flex align-items-center gap-3">
+
+                <div class="text-white text-end user-session-block">
+
+                    <div class="nav-subline">
+                        Hello,
+                        <%= username.replace("&", "&amp;")
+                                    .replace("<", "&lt;")
+                                    .replace(">", "&gt;") %>
+                    </div>
+
+                    <div class="nav-mainline">
+                        Account &amp; Lists
+                        <i class="bi bi-caret-down-fill"
+                           style="font-size:0.6rem;"></i>
+                    </div>
+
+                </div>
+
+                <a class="btn btn-continue-nav"
+                   href="<%= contextPath %>/userViewAllProduct">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+                    <span class="d-none d-sm-inline">Continue Shopping</span>
+                    <span class="d-sm-none">Shop</span>
+
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
 </header>
 
-<main class="page-container">
+<!-- ================= MAIN CONTENT ================= -->
 
-    <div class="cart-heading">
-        <h2>Shopping Cart</h2>
+<main class="container-fluid px-3 px-lg-4 my-4 flex-grow-1">
 
-        <span class="text-secondary">
-            <%= cartList.size() %> item(s) in your cart
-        </span>
-    </div>
-
-    <%-- Display messages from UpdateCartServlet --%>
-    <%
-        String cartMessage =
-                (String) session.getAttribute("cartMessage");
-
-        if (cartMessage != null) {
-    %>
+    <% if (cartMessage != null && !cartMessage.trim().isEmpty()) { %>
 
         <div class="alert alert-warning alert-dismissible fade show"
              role="alert">
 
+            <i class="bi bi-info-circle me-2"></i>
             <%= cartMessage %>
 
             <button type="button"
@@ -381,134 +696,190 @@ if (cartList == null) {
                     data-bs-dismiss="alert"
                     aria-label="Close">
             </button>
-
         </div>
 
-    <%
-            session.removeAttribute("cartMessage");
-        }
-    %>
+    <% } %>
 
-    <% if (cartList.isEmpty()) { %>
+    <div class="row g-4">
 
-        <div class="empty-cart">
+        <!-- ========== CART ITEMS ========== -->
 
-            <i class="bi bi-cart3"></i>
+        <section class="col-lg-8"
+                 aria-labelledby="shopping-cart-heading">
 
-            <h3>Your QuickShop cart is empty</h3>
+            <div class="cart-surface">
 
-            <p class="text-secondary">
-                Looks like you haven't added anything to your cart yet.
-            </p>
+                <div class="d-flex justify-content-between
+                            align-items-center border-bottom pb-3 mb-3">
 
-            <a href="userViewAllProduct" class="continue-btn">
-                <i class="bi bi-bag"></i> Start Shopping
-            </a>
+                    <div>
+                        <h1 class="h3 fw-bold mb-1"
+                            id="shopping-cart-heading">
+                            Shopping Cart
+                        </h1>
 
-        </div>
+                        <span class="text-muted small">
+                            <%= totalItems %> item(s) in your cart
+                        </span>
+                    </div>
 
-    <% } else { %>
+                    <i class="bi bi-cart3 fs-2 text-secondary"></i>
+                </div>
 
-        <div class="cart-layout">
+                <% if (cartList.isEmpty()) { %>
 
-            <section class="cart-products">
+                    <div class="text-center py-5">
 
-                <% for (Cart_Item item : cartList) {
+                        <i class="bi bi-cart-x text-muted"
+                           style="font-size: 4rem;"></i>
 
-                    double subtotal =
-                            item.getProductPrice() * item.getQuantity();
+                        <h3 class="mt-3 fw-bold">
+                            Your QuickShop Cart is empty
+                        </h3>
 
-                    grandTotal += subtotal;
+                        <p class="text-muted">
+                            Explore our products and find items you'll love.
+                        </p>
 
-                    String imagePath = item.getImage();
+                        <a class="btn btn-primary-order mt-2 d-inline-block"
+                           style="max-width: 250px;"
+                           href="<%= contextPath %>/userViewAllProduct">
 
-                    if (imagePath == null || imagePath.trim().isEmpty()) {
+                            <i class="bi bi-shop me-2"></i>
+                            Continue Shopping
+                        </a>
 
-                        imagePath =
+                    </div>
+
+                <% } else { %>
+
+                    <% for (Cart_Item item : cartList) {
+
+                        String imagePath = item.getImage();
+
+                        String imageUrl =
                                 "https://placehold.co/150x150?text=No+Image";
 
-                    } else if (!imagePath.startsWith("http://")
-                            && !imagePath.startsWith("https://")) {
+                        if (imagePath != null && !imagePath.trim().isEmpty()) {
 
-                        imagePath = request.getContextPath()
-                                + "/images/" + imagePath;
-                    }
-                %>
+                            imagePath = imagePath.trim();
 
-                    <div class="cart-item">
+                            if (imagePath.startsWith("http://")
+                                    || imagePath.startsWith("https://")) {
 
-                        <img src="<%= imagePath %>"
-                             alt="Product image"
-                             class="product-image"
-                             onerror="this.onerror=null;this.src='https://placehold.co/150x150?text=No+Image';">
+                                imageUrl = imagePath;
 
-                        <div class="product-details">
+                            } else {
 
-                            <div class="product-name">
-                                <%= item.getProductName() %>
+                                imageUrl = contextPath + "/images/" + imagePath;
+                            }
+                        }
+
+                        double itemPrice = item.getProductPrice();
+                        int quantity = item.getQuantity();
+                        int availableQty = item.getAvailableQty();
+                        double itemSubtotal = itemPrice * quantity;
+
+                        String itemName = item.getProductName() == null
+                                ? ""
+                                : item.getProductName().trim();
+
+                        /*
+                         * Read category only if Cart_Item has a getCategory()
+                         * method. This avoids a compilation error if your
+                         * current Cart_Item class does not define that getter.
+                         */
+                        String itemCategory = "";
+
+                        try {
+                            Object categoryValue =
+                                    item.getClass().getMethod("getCategory")
+                                         .invoke(item);
+
+                            if (categoryValue != null) {
+                                itemCategory = categoryValue.toString();
+                            }
+                        } catch (Exception ignored) {
+                            itemCategory = "";
+                        }
+
+                        String safeItemName =
+                                itemName.replace("&", "&amp;")
+                                        .replace("\"", "&quot;")
+                                        .replace("<", "&lt;")
+                                        .replace(">", "&gt;");
+
+                        String safeItemCategory =
+                                itemCategory.replace("&", "&amp;")
+                                            .replace("\"", "&quot;")
+                                            .replace("<", "&lt;")
+                                            .replace(">", "&gt;");
+                    %>
+
+                    <article class="item-card cart-filter-item"
+                             data-name="<%= safeItemName.toLowerCase(Locale.ROOT) %>"
+                             data-category="<%= safeItemCategory %>">
+
+                        <div class="d-flex gap-3 align-items-start">
+
+                            <!-- PRODUCT IMAGE -->
+
+                            <div class="product-img-box">
+
+                                <img src="<%= imageUrl %>"
+                                     alt="<%= safeItemName %>"
+                                     loading="lazy"
+                                     onerror="this.onerror=null;this.src='https://placehold.co/150x150?text=No+Image';">
+
                             </div>
 
-                            <div class="product-price">
-                                ₹<%= String.format("%.2f",
-                                        item.getProductPrice()) %>
-                            </div>
+                            <!-- PRODUCT DETAILS -->
 
-                            <div class="stock-text">
-                                <i class="bi bi-check-circle"></i>
-                                In your cart
-                            </div>
+                            <div class="flex-grow-1 min-w-0">
 
-                            <%-- Quantity controls --%>
-                            <div class="quantity-text">
+                                <div class="d-flex justify-content-between
+                                            align-items-start gap-2">
 
-                                <strong>Quantity:</strong>
+                                    <div class="flex-grow-1">
 
-                                <div class="quantity-controls">
+                                        <span class="product-title d-block mb-2">
+                                            <%= itemName %>
+                                        </span>
 
-                                    <%-- Decrease quantity --%>
-                                    <form action="updateCart" method="post">
+                                        <% if (availableQty > 0) { %>
+
+                                            <span class="in-stock-label d-block">
+                                                <i class="bi bi-check-circle-fill me-1"></i>
+                                                In Stock
+                                            </span>
+
+                                        <% } else { %>
+
+                                            <span class="text-danger small fw-semibold">
+                                                <i class="bi bi-exclamation-circle me-1"></i>
+                                                Currently unavailable
+                                            </span>
+
+                                        <% } %>
+
+                                    </div>
+
+                                    <!-- DELETE ITEM -->
+
+                                    <form action="<%= contextPath %>/deleteCart"
+                                          method="get"
+                                          onsubmit="return confirm('Remove this product from your cart?');">
 
                                         <input type="hidden"
                                                name="productId"
                                                value="<%= item.getProductId() %>">
 
-                                        <input type="hidden"
-                                               name="action"
-                                               value="decrease">
-
                                         <button type="submit"
-                                                class="quantity-btn"
-                                                aria-label="Decrease quantity">
+                                                class="btn-delete-icon"
+                                                aria-label="Delete product"
+                                                title="Remove item">
 
-                                            <i class="bi bi-dash"></i>
-
-                                        </button>
-
-                                    </form>
-
-                                    <span class="quantity-number">
-                                        <%= item.getQuantity() %>
-                                    </span>
-
-                                    <%-- Increase quantity --%>
-                                    <form action="updateCart" method="post">
-
-                                        <input type="hidden"
-                                               name="productId"
-                                               value="<%= item.getProductId() %>">
-
-                                        <input type="hidden"
-                                               name="action"
-                                               value="increase">
-
-                                        <button type="submit"
-                                                class="quantity-btn"
-                                                aria-label="Increase quantity"
-                                                <%= item.getQuantity()
-                                                        >= item.getAvailableQty()
-                                                        ? "disabled" : "" %>>
-
-                                            <i class="bi bi-plus"></i>
+                                            <i class="bi bi-trash3-fill fs-5"></i>
 
                                         </button>
 
@@ -516,36 +887,172 @@ if (cartList == null) {
 
                                 </div>
 
-                                <small class="text-secondary">
-                                    Available stock:
-                                    <%= item.getAvailableQty() %>
-                                </small>
+                                <!-- PRICE AND QUANTITY -->
+
+                                <div class="d-flex flex-wrap
+                                            align-items-center
+                                            justify-content-between
+                                            gap-3 mt-3 pt-3 border-top">
+
+                                    <div>
+                                        <div class="text-muted small">
+                                            Price
+                                        </div>
+
+                                        <div class="price-tag">
+                                            ₹ <%= String.format(Locale.US, "%.2f", itemPrice) %>
+                                        </div>
+                                    </div>
+
+                                    <!-- QUANTITY -->
+
+                                    <div>
+
+                                        <div class="text-muted small mb-1">
+                                            Quantity
+                                        </div>
+
+                                        <div class="qty-stepper">
+
+                                            <form action="<%= contextPath %>/updateCart"
+                                                  method="post"
+                                                  class="m-0">
+
+                                                <input type="hidden"
+                                                       name="productId"
+                                                       value="<%= item.getProductId() %>">
+
+                                                <input type="hidden"
+                                                       name="action"
+                                                       value="decrease">
+
+                                                <button type="submit"
+                                                        class="qty-btn"
+                                                        aria-label="Decrease quantity"
+                                                        <%= quantity <= 1 ? "disabled" : "" %>>
+
+                                                    <i class="bi bi-dash"></i>
+
+                                                </button>
+
+                                            </form>
+
+                                            <span class="qty-val">
+                                                <%= quantity %>
+                                            </span>
+
+                                            <form action="<%= contextPath %>/updateCart"
+                                                  method="post"
+                                                  class="m-0">
+
+                                                <input type="hidden"
+                                                       name="productId"
+                                                       value="<%= item.getProductId() %>">
+
+                                                <input type="hidden"
+                                                       name="action"
+                                                       value="increase">
+
+                                                <button type="submit"
+                                                        class="qty-btn"
+                                                        aria-label="Increase quantity"
+                                                        <%= quantity >= availableQty ? "disabled" : "" %>>
+
+                                                    <i class="bi bi-plus"></i>
+
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                        <% if (quantity >= availableQty && availableQty > 0) { %>
+
+                                            <small class="text-muted d-block mt-1">
+                                                Stock limit reached
+                                            </small>
+
+                                        <% } %>
+
+                                    </div>
+
+                                    <!-- SUBTOTAL -->
+
+                                    <div class="item-subtotal-badge">
+
+                                        <span class="text-muted">Subtotal: </span>
+
+                                        <strong>
+                                            ₹ <%= String.format(Locale.US, "%.2f", itemSubtotal) %>
+                                        </strong>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-                            <div class="item-subtotal">
-                                Subtotal:
-                                ₹<%= String.format("%.2f", subtotal) %>
+                        </div>
+
+                    </article>
+
+                    <% } %>
+
+                    <!-- NO SEARCH RESULTS -->
+
+                    <div id="noCartSearchResult" class="mt-3">
+
+                        <i class="bi bi-search"></i>
+
+                        <h5 class="mt-3">
+                            No matching cart items
+                        </h5>
+
+                        <p class="mb-0">
+                            Try another product name or category.
+                        </p>
+
+                        <button type="button"
+                                class="btn btn-outline-secondary btn-sm mt-3"
+                                id="clearCartSearch">
+
+                            Clear Search
+
+                        </button>
+
+                    </div>
+
+                    <!-- CART TOTAL -->
+
+                    <div class="final-total-container mt-3
+                                d-flex flex-column flex-sm-row
+                                justify-content-between
+                                align-items-sm-center gap-3">
+
+                        <div>
+                            <span class="badge bg-success-subtle
+                                         text-success-emphasis
+                                         border border-success-subtle">
+
+                                <i class="bi bi-truck me-1"></i>
+                                Eligible for FREE Shipping
+
+                            </span>
+
+                            <p class="small text-muted mb-0 mt-2">
+                                Delivery charges are free.
+                            </p>
+                        </div>
+
+                        <div class="text-sm-end">
+
+                            <div class="small text-muted mb-1">
+                                Cart Total
                             </div>
 
-                            <%-- Delete product form --%>
-                            <form action="deleteCart"
-                                  method="get"
-                                  class="delete-form"
-                                  onsubmit="return confirm('Are you sure you want to remove this product from your cart?');">
-
-                                <input type="hidden"
-                                       name="productId"
-                                       value="<%= item.getProductId() %>">
-
-                                <button type="submit" class="delete-btn">
-
-                                    <i class="bi bi-trash"></i>
-                                    Delete
-
-                                </button>
-
-                            </form>
+                            <div class="final-total-pill">
+                                ₹ <%= formattedGrandTotal %>
+                            </div>
 
                         </div>
 
@@ -553,69 +1060,321 @@ if (cartList == null) {
 
                 <% } %>
 
-                <div class="text-end mt-4">
+            </div>
 
-                    <strong>
-                        Total:
-                        ₹<%= String.format("%.2f", grandTotal) %>
-                    </strong>
+        </section>
+
+        <!-- ========== ORDER SUMMARY ========== -->
+
+        <aside class="col-lg-4"
+               aria-labelledby="order-summary-heading">
+
+            <div class="order-summary-box">
+
+                <h2 class="h5 fw-bold mb-3 pb-3 border-bottom"
+                    id="order-summary-heading">
+                    Order Summary
+                </h2>
+
+                <div class="mb-3 p-3 rounded"
+                     style="background-color:#f0fff4;border:1px solid #b7eb8f;">
+
+                    <div class="d-flex align-items-center
+                                text-success small fw-semibold">
+
+                        <i class="bi bi-shield-check fs-5 me-2"></i>
+
+                        Your order qualifies for FREE Delivery
+
+                    </div>
 
                 </div>
 
-            </section>
+                <div class="d-flex justify-content-between
+                            align-items-center mb-3">
 
-            <aside class="summary-card">
+                    <span class="text-muted">
+                        Items (<%= totalItems %>)
+                    </span>
 
-                <h4>Order Summary</h4>
-
-                <div class="summary-row">
-                    <span>Items</span>
-                    <span><%= cartList.size() %></span>
-                </div>
-
-                <div class="summary-row">
-                    <span>Delivery</span>
-                    <span class="text-success">FREE</span>
-                </div>
-
-                <div class="summary-row grand-total">
-
-                    <span>Total</span>
-
-                    <span>
-                        ₹<%= String.format("%.2f", grandTotal) %>
+                    <span class="fw-semibold">
+                        ₹ <%= formattedGrandTotal %>
                     </span>
 
                 </div>
 
-                <button type="button"
-                        class="checkout-btn"
-                        onclick="alert('Checkout will be developed in the next step.');">
+                <div class="d-flex justify-content-between
+                            align-items-center mb-3">
 
-                    Proceed to Checkout
+                    <span class="text-muted">
+                        Delivery charge
+                    </span>
 
-                </button>
+                    <span class="text-success fw-bold">
+                        FREE
+                    </span>
 
-                <a href="userViewAllProduct"
-                   class="continue-btn w-100 text-center">
+                </div>
 
+                <div class="d-flex justify-content-between
+                            align-items-center mb-3 small">
+
+                    <span class="text-muted">
+                        Estimated tax
+                    </span>
+
+                    <span>
+                        ₹ 0.00
+                    </span>
+
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="d-flex justify-content-between
+                            align-items-baseline gap-2 mb-4">
+
+                    <span class="fs-5 fw-bold">
+                        Total Amount
+                    </span>
+
+                    <span class="fs-4 fw-bolder text-danger">
+                        ₹ <%= formattedGrandTotal %>
+                    </span>
+
+                </div>
+
+                <% if (cartList.isEmpty()) { %>
+
+                    <button type="button"
+                            class="btn btn-primary-order mb-2"
+                            disabled>
+
+                        <i class="bi bi-lock-fill me-2"></i>
+                        Proceed to Checkout
+
+                    </button>
+
+                <% } else { %>
+
+                    <button type="button"
+                            class="btn btn-primary-order mb-2"
+                            >
+
+                        <a href="<%= request.getContextPath() %>/checkout">
+                            Proceed to Checkout
+                        </a>
+
+                    </button>
+
+                <% } %>
+
+                <a class="btn btn-secondary-continue mb-3 d-block"
+                   href="<%= contextPath %>/userViewAllProduct">
+
+                    <i class="bi bi-arrow-left me-2"></i>
                     Continue Shopping
 
                 </a>
 
-            </aside>
+                <div class="text-center mt-3 pt-3 border-top small text-muted">
 
-        </div>
+                    <i class="bi bi-shield-lock me-1"></i>
 
-    <% } %>
+                    <span style="font-size:0.75rem;">
+                        Secure shopping with QuickShop
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
 
 </main>
 
-<footer class="footer">
-    © 2026 QuickShop | Your Online Shopping Store
+<!-- ================= FOOTER ================= -->
+
+<footer class="qs-footer">
+
+
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <p class="mb-0">
+                &copy; 2026 QuickShop.com - Developed by Mohan Patil.
+            </p>
+
+        </div>
+
+    </div>
+
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const cartSearchForm =
+        document.getElementById("cartSearchForm");
+
+    const cartSearchInput =
+        document.getElementById("cartSearchInput");
+
+    const cartCategorySelect =
+        document.getElementById("cartCategorySelect");
+
+    const cartItems =
+        document.querySelectorAll(".cart-filter-item");
+
+    const noCartSearchResult =
+        document.getElementById("noCartSearchResult");
+
+    const clearCartSearch =
+        document.getElementById("clearCartSearch");
+
+
+    /*
+     * Normalize category names using the same idea
+     * as the User Dashboard.
+     */
+    function normalizeCategory(category) {
+        category = (category || "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, " ");
+
+        if (category === "electronic" ||
+            category === "electronics") {
+            return "electronics";
+        }
+
+        if (category === "clothes" ||
+            category === "cloth" ||
+            category === "fashion") {
+            return "clothes";
+        }
+
+        if (category === "home" ||
+            category === "home & kitchen" ||
+            category === "home and kitchen") {
+            return "home";
+        }
+
+        if (category === "computer" ||
+            category === "computers" ||
+            category === "computer & accessories" ||
+            category === "computers & accessories" ||
+            category === "computer accessories" ||
+            category === "computers & acc." ||
+            category === "computer & acc." ||
+            category === "computers and accessories" ||
+            category === "computer and accessories") {
+            return "computers";
+        }
+
+        if (category === "book" || category === "books") {
+            return "books";
+        }
+
+        if (category === "sport" || category === "sports") {
+            return "sports";
+        }
+
+        return category;
+    }
+
+
+    /*
+     * Filter the cart items by product name and category.
+     */
+    function filterCartItems() {
+        const searchText =
+            cartSearchInput.value.trim().toLowerCase();
+
+        const selectedCategory =
+            normalizeCategory(cartCategorySelect.value);
+
+        let visibleItems = 0;
+
+        cartItems.forEach(function(item) {
+            const productName =
+                (item.dataset.name || "").toLowerCase();
+
+            const productCategory =
+                normalizeCategory(item.dataset.category || "");
+
+            const nameMatches =
+                productName.includes(searchText);
+
+            /*
+             * If the Cart_Item object does not provide a category,
+             * don't hide the item based on category alone.
+             * See the note below about category support.
+             */
+            const categoryMatches =
+                selectedCategory === "all" ||
+                productCategory === "" ||
+                productCategory === selectedCategory;
+
+            const showItem = nameMatches && categoryMatches;
+
+            item.style.display = showItem ? "" : "none";
+
+            if (showItem) {
+                visibleItems++;
+            }
+        });
+
+        if (noCartSearchResult) {
+            noCartSearchResult.style.display =
+                cartItems.length > 0 && visibleItems === 0
+                    ? "block"
+                    : "none";
+        }
+    }
+
+
+    /*
+     * Stop the browser from submitting to a missing servlet.
+     */
+    if (cartSearchForm) {
+        cartSearchForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            filterCartItems();
+        });
+    }
+
+
+    /*
+     * Live search, like the User Dashboard.
+     */
+    if (cartSearchInput) {
+        cartSearchInput.addEventListener("input", filterCartItems);
+    }
+
+    if (cartCategorySelect) {
+        cartCategorySelect.addEventListener("change", filterCartItems);
+    }
+
+
+    /*
+     * Clear the search and show all cart items again.
+     */
+    if (clearCartSearch) {
+        clearCartSearch.addEventListener("click", function() {
+            cartSearchInput.value = "";
+            cartCategorySelect.value = "all";
+            filterCartItems();
+        });
+    }
+
+
+    filterCartItems();
+</script>
 
 </body>
 </html>

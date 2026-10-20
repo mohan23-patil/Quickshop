@@ -889,55 +889,90 @@ List<Product> products =
         }
 
 
-        /* =========================================================
-           BUTTONS
-        ========================================================= */
+                /* =========================================================
+                   BUTTONS
+                ========================================================= */
 
-        .qs-buttons {
-            margin-top: auto;
+                .qs-buttons {
+                    margin-top: auto;
+                    display: grid;
+                    gap: 5px;
+                    width: 100%;
+                }
 
-            display: grid;
+                /* Make the form take the full card width */
+                .qs-buttons form {
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
 
-            gap: 5px;
-        }
+                /* ADD TO CART BUTTON */
+                .qs-cart-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
 
-        .qs-cart-btn {
-            background: var(--qs-yellow);
+                    width: 100%;
+                    min-height: 36px;
 
-            border: 1px solid #fcd200;
+                    background: var(--qs-yellow);
+                    color: var(--qs-text);
 
-            border-radius: 20px;
+                    border: 1px solid #fcd200;
+                    border-radius: 20px;
 
-            padding: 6px;
+                    padding: 7px 8px;
 
-            font-size: 0.78rem;
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    line-height: 1.2;
 
-            cursor: pointer;
-        }
+                    white-space: nowrap;
+                    cursor: pointer;
+                }
 
-        .qs-cart-btn:hover {
-            background: var(--qs-yellow-hover);
-        }
+                .qs-cart-btn:hover:not(:disabled) {
+                    background: var(--qs-yellow-hover);
+                }
 
-        .qs-buy-btn {
-            background: var(--qs-orange);
+                .qs-cart-btn:disabled {
+                    background: #e7e7e7;
+                    border-color: #d5d9d9;
+                    color: #777;
+                    cursor: not-allowed;
+                }
 
-            border: 1px solid #ff8f00;
+                /* BUY NOW BUTTON */
+                .qs-buy-btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
 
-            border-radius: 20px;
+                    width: 100%;
+                    min-height: 36px;
 
-            padding: 6px;
+                    background: var(--qs-orange);
+                    color: var(--qs-text);
 
-            font-size: 0.78rem;
+                    border: 1px solid #ff8f00;
+                    border-radius: 20px;
 
-            cursor: pointer;
-        }
+                    padding: 7px 8px;
 
-        .qs-buy-btn:hover {
-            background: var(--qs-orange-hover);
-        }
+                    font-size: 0.78rem;
+                    font-weight: 600;
+                    line-height: 1.2;
 
+                    white-space: nowrap;
+                    cursor: pointer;
+                }
 
+                .qs-buy-btn:hover {
+                    background: var(--qs-orange-hover);
+                }
         /* =========================================================
            NO PRODUCTS
         ========================================================= */
@@ -1262,12 +1297,14 @@ List<Product> products =
                 margin: 4px 0 7px;
             }
 
-            .qs-cart-btn,
-            .qs-buy-btn {
-                padding: 5px;
-
-                font-size: 0.68rem;
-            }
+                        .qs-cart-btn,
+                        .qs-buy-btn {
+                            width: 100%;
+                            min-height: 34px;
+                            padding: 6px 4px;
+                            font-size: 0.68rem;
+                            gap: 4px;
+                        }
         }
 
 
@@ -1527,7 +1564,7 @@ List<Product> products =
 
                 <!-- ORDERS -->
 
-                <a href="#"
+                <a href="<%= request.getContextPath() %>/myOrders"
                    class="qs-nav-box qs-orders">
 
                     <span class="qs-small-text">

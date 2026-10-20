@@ -1,72 +1,80 @@
+
 package com.dbConnection;
 
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConnection
-{
-    private static Connection con = null;
+public class DBConnection {
 
-    private DBConnection() {}
+    private DBConnection() {
+    }
 
-    public static Connection getConnection()
-    {
-        try
-        {
-            if (con == null || con.isClosed())
-            {
-                Class.forName("com.mysql.cj.jdbc.Driver");
+    public static Connection getConnection() {
 
-                String url = System.getenv("DB_URL");
-                String username = System.getenv("DB_USERNAME");
-                String password = System.getenv("DB_PASSWORD");
+        String url = System.getenv("DB_URL");
+        String username = System.getenv("DB_USERNAME");
+        String password = System.getenv("DB_PASSWORD");
 
-                // Local system
-                if (url == null || username == null || password == null)
-                {
-                    Properties properties = new Properties();
+        try {
 
-                    InputStream inputStream =
-                            DBConnection.class
-                                    .getClassLoader()
-                                    .getResourceAsStream("db.properties");
+            // Load local configuration if environment variables are missing
+            if (url == null || url.trim().isEmpty()
+                    || username == null || username.trim().isEmpty()
+                    || password == null || password.trim().isEmpty()) {
 
-                    if (inputStream == null)
-                    {
-                        throw new RuntimeException(
-                                "db.properties file not found!"
+                Properties properties = new Properties();
+
+                try (InputStream inputStream =
+                             DBConnection.class.getClassLoader()
+                                     .getResourceAsStream("db.properties")) {
+
+                    if (inputStream == null) {
+                        throw new SQLException(
+                                "db.properties not found in src/main/resources"
                         );
                     }
 
                     properties.load(inputStream);
-
-                    url = properties.getProperty("db.url");
-                    username = properties.getProperty("db.username");
-                    password = properties.getProperty("db.password");
-
-                    inputStream.close();
                 }
 
-                con = DriverManager.getConnection(
-                        url,
-                        username,
-                        password
-                );
+                url = properties.getProperty("db.url");
+                username = properties.getProperty("db.username");
+                password = properties.getProperty("db.password");
+            }
 
-                System.out.println(
-                        "MySQL Connection established Successfully"
+            // Validate database configuration
+            if (url == null || url.trim().isEmpty()
+                    || username == null || username.trim().isEmpty()
+                    || password == null || password.trim().isEmpty()) {
+
+                throw new SQLException(
+                        "Database URL or credentials are missing."
                 );
             }
 
-            return con;
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+            // Load MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-        return null;
+            // Establish database connection
+            Connection connection =
+                    DriverManager.getConnection(url, username, password);
+
+            System.out.println(
+                    "MySQL connection established successfully."
+            );
+
+            return connection;
+
+        } catch (Exception e) {
+
+            throw new IllegalStateException(
+                    "Unable to connect to MySQL. Check database credentials, "
+                            + "db.properties, JDBC URL, and connectivity.",
+                    e
+            );
+        }
     }
 }
