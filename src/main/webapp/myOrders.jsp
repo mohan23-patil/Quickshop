@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -52,6 +53,19 @@
 
         return value.trim();
     }
+
+    // Check whether an order is cancelled
+    private boolean isCancelledOrder(Order order) {
+
+        if (order == null || order.getOrderStatus() == null) {
+            return false;
+        }
+
+        String status = order.getOrderStatus().trim();
+
+        return status.equalsIgnoreCase("Cancelled")
+                || status.equalsIgnoreCase("Canceled");
+    }
 %>
 
 <%
@@ -67,6 +81,16 @@
 
     if (orders == null) {
         orders = Collections.emptyList();
+    }
+
+    // Create a separate list containing only active orders
+    List<Order> activeOrders = new ArrayList<>();
+
+    for (Order order : orders) {
+
+        if (!isCancelledOrder(order)) {
+            activeOrders.add(order);
+        }
     }
 
     String placed = (String) request.getAttribute("placed");
@@ -583,25 +607,45 @@
         </form>
     </div>
 
-    <!-- NO ORDERS -->
-    <% if (orders.isEmpty()) { %>
+    <!-- NO ACTIVE ORDERS -->
+    <% if (activeOrders.isEmpty()) { %>
 
         <div class="empty-state my-4">
             <i class="bi bi-box-seam text-secondary"
                style="font-size:3rem"></i>
 
-            <h2 class="h5 fw-bold mt-3">No orders found</h2>
+            <h2 class="h5 fw-bold mt-3">
+                <% if (!searchTerm.trim().isEmpty()) { %>
+                    No active orders found
+                <% } else if (!orders.isEmpty()) { %>
+                    You have no active orders
+                <% } else { %>
+                    No orders found
+                <% } %>
+            </h2>
 
-            <% if (!searchTerm.isEmpty()) { %>
+            <% if (!searchTerm.trim().isEmpty()) { %>
 
                 <p class="text-muted">
-                    No orders match “<%= esc(searchTerm) %>”.
+                    No active orders match “<%= esc(searchTerm) %>”.
                     Try another search.
                 </p>
 
                 <a class="qs-btn-secondary-flat"
                    href="<%= ctx %>/myOrders">
                     Clear search
+                </a>
+
+            <% } else if (!orders.isEmpty()) { %>
+
+                <p class="text-muted">
+                    Your cancelled orders are not displayed here.
+                    You can continue shopping and place a new order.
+                </p>
+
+                <a class="qs-btn-buynow"
+                   href="<%= ctx %>/userViewAllProduct">
+                    Continue shopping
                 </a>
 
             <% } else { %>
@@ -620,8 +664,8 @@
 
     <% } else { %>
 
-        <!-- DISPLAY ORDERS FROM DATABASE -->
-        <% for (Order order : orders) { %>
+        <!-- DISPLAY ONLY ACTIVE ORDERS -->
+        <% for (Order order : activeOrders) { %>
 
             <section class="qs-order-card">
 

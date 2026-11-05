@@ -997,6 +997,14 @@ List<Product> products =
             color: #aaa;
         }
 
+        .qs-buy-btn:disabled {
+            background: #e7e7e7;
+            border-color: #d5d9d9;
+            color: #777;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
 
         /* =========================================================
            FOOTER
@@ -1118,9 +1126,36 @@ List<Product> products =
                 grid-row: 1;
             }
 
-            .qs-account,
-            .qs-orders {
+            /* Hide only Account on mobile */
+            .qs-account {
                 display: none;
+            }
+
+            /* Show Orders button before Cart */
+            .qs-orders {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                padding: 5px 8px;
+
+                margin-right: 5px;
+
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+
+            .qs-orders:hover {
+                border-color: white;
+                color: white;
+            }
+
+            .qs-orders .qs-small-text {
+                font-size: 0.60rem;
+            }
+
+            .qs-orders .qs-nav-title {
+                font-size: 0.72rem;
             }
 
             .qs-cart-link {
@@ -1978,17 +2013,31 @@ List<Product> products =
 
 
                         <!-- BUY NOW -->
+                        <% if (prod.getProductQty() > 0) { %>
 
-                        <button
-                            type="button"
-                            class="qs-buy-btn">
+                            <a href="<%= request.getContextPath() %>/checkout?productId=<%= prod.getProductId() %>"
+                               class="qs-buy-btn"
+                               style="text-decoration: none;">
 
-                            <i class="bi bi-lightning-fill"></i>
+                                <i class="bi bi-lightning-fill"></i>
+                                Buy Now
 
-                            Buy Now
+                            </a>
 
-                        </button>
+                        <% } else { %>
 
+                            <button type="button"
+                                    class="qs-buy-btn"
+                                    disabled
+                                    title="This product is out of stock"
+                                    style="opacity: 0.55; cursor: not-allowed;">
+
+                                <i class="bi bi-x-circle"></i>
+                                Out of Stock
+
+                            </button>
+
+                        <% } %>
                     </div>
 
 
@@ -2191,11 +2240,6 @@ List<Product> products =
 
         /*
          * HOME
-         *
-         * Database may contain:
-         * home
-         * home & kitchen
-         * home and kitchen
          */
 
         if (
@@ -2210,14 +2254,6 @@ List<Product> products =
 
         /*
          * COMPUTERS
-         *
-         * Database may contain:
-         * computers
-         * computer
-         * computers & acc.
-         * computers & accessories
-         * computer & accessories
-         * computer accessories
          */
 
         if (

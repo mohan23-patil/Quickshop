@@ -519,4 +519,162 @@ public class OrderDao {
             }
         }
     }
+    public long placeBuyNowOrder(
+            String username,
+            String productId,
+            String address,
+            String paymentMethod) throws Exception {
+
+        if (username == null || username.trim().isEmpty()
+                || productId == null || productId.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "User and product are required.");
+        }
+
+        if (address == null || address.trim().isEmpty()
+                || address.length() > 500) {
+            throw new IllegalArgumentException(
+                    "Please provide a valid delivery address.");
+        }
+
+        // Your current DAO supports Cash on Delivery only.
+        if (!"COD".equalsIgnoreCase(paymentMethod)) {
+            throw new IllegalArgumentException(
+                    "Currently, only Cash on Delivery is available.");
+        }
+
+        try (java.sql.Connection con =
+                     com.dbConnection.DBConnection.getConnection()) {
+
+            con.setAutoCommit(false);
+
+            try {
+                String productName;
+                java.math.BigDecimal price;
+                int stock;
+
+                // Lock the selected product while validating stock.
+                String selectSql =
+                        "SELECT productName, productPrice, productQty "
+                                + "FROM quickshop WHERE productId = ? FOR UPDATE";
+
+                try (java.sql.PreparedStatement ps =
+                             con.prepareStatement(selectSql)) {
+
+                    ps.setString(1, productId);
+
+                    try (java.sql.ResultSet rs = ps.executeQuery()) {
+                        if (!rs.next()) {
+                            throw new IllegalArgumentException(
+                                    "Product not found.");
+                        }
+
+                        productName = rs.getString("productName");
+                        price = rs.getBigDecimal("productPrice");
+                        stock = rs.getInt("productQty");
+                    }
+                }
+
+                if (price == null || price.signum() < 0) {
+                    throw new IllegalStateException(
+                            "Product price is invalid.");
+                }
+
+                if (stock < 1) {
+                    throw new IllegalStateException(
+                            "This product is out of stock.");
+                }
+
+                long orderId;
+
+                // Create the order for one product only.
+                String orderSql =
+                        "INSERT INTO orders "
+                                + "(user_name, total_amount, payment_method, "
+                                + "payment_status, order_status, delivery_address) "
+                                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+                try (java.sql.PreparedStatement ps =
+                             con.prepareStatement(
+                                     orderSql,
+                                     java.sql.Statement.RETURN_GENERATED_KEYS)) {
+
+                    ps.setString(1, username);
+                    ps.setBigDecimal(2, price);
+                    ps.setString(3, "COD");
+                    ps.setString(4, "Pending");
+                    ps.setString(5, "Pending");
+                    ps.setString(6, address.trim());
+
+                    if (ps.executeUpdate() != 1) {
+                        throw new java.sql.SQLException(
+                                "Could not create the order.");
+                    }
+
+                    try (java.sql.ResultSet keys =
+                                 ps.getGeneratedKeys()) {
+                        if (!keys.next()) {
+                            throw new java.sql.SQLException(
+                                    "Could not retrieve the order ID.");
+                        }
+
+                        orderId = keys.getLong(1);
+                    }
+                }
+
+                // Add only the selected product to order_items.
+                String itemSql =
+                        "INSERT INTO order_items "
+                                + "(order_id, product_id, product_name, quantity, price) "
+                                + "VALUES (?, ?, ?, ?, ?)";
+
+                try (java.sql.PreparedStatement ps =
+                             con.prepareStatement(itemSql)) {
+
+                    ps.setLong(1, orderId);
+                    ps.setString(2, productId);
+                    ps.setString(3, productName);
+                    ps.setInt(4, 1);
+                    ps.setBigDecimal(5, price);
+
+                    ps.executeUpdate();
+                }
+
+                // Reduce stock by one, with a second stock check.
+                String stockSql =
+                        "UPDATE quickshop "
+                                + "SET productQty = productQty - 1 "
+                                + "WHERE productId = ? AND productQty >= 1";
+
+                try (java.sql.PreparedStatement ps =
+                             con.prepareStatement(stockSql)) {
+
+                    ps.setString(1, productId);
+
+                    if (ps.executeUpdate() != 1) {
+                        throw new IllegalStateException(
+                                "Product stock changed. Please try again.");
+                    }
+                }
+                con.commit();
+                return orderId;
+
+            } catch (Exception e) {
+                try {
+                    con.rollback();
+                } catch (java.sql.SQLException rollbackError) {
+                    e.addSuppressed(rollbackError);
+                }
+
+                throw e;
+
+            } finally {
+                try {
+                    con.setAutoCommit(true);
+                } catch (java.sql.SQLException ignored) {
+                    // Connection is being closed.
+                }
+            }
+        }
+    }
 }

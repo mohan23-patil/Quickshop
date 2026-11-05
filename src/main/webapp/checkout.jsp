@@ -9,12 +9,21 @@
         return;
     }
 
+
     List<CheckoutItem> checkoutItems =
             (List<CheckoutItem>) request.getAttribute("checkoutItems");
     BigDecimal cartTotal = (BigDecimal) request.getAttribute("cartTotal");
     if (cartTotal == null) cartTotal = BigDecimal.ZERO;
     if (checkoutItems == null) checkoutItems = java.util.Collections.emptyList();
     String checkoutMessage = request.getParameter("message");
+
+    String checkoutType = (String) request.getAttribute("checkoutType");
+
+    if (checkoutType == null) {
+        checkoutType = "CART";
+    }
+
+    String buyNowProductId = request.getParameter("productId");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,7 +163,22 @@
                             </div>
                             <div class="small text-secondary">Enter the delivery details for this order below.</div>
                         </div>
-                        <form id="checkoutForm" action="<%= request.getContextPath() %>/placeOrder" method="post">
+                        <form id="checkoutForm"
+                              action="<%= request.getContextPath() %>/placeOrder"
+                              method="post">
+                              <input type="hidden"
+                                     name="checkoutType"
+                                     value="<%= checkoutType %>">
+
+                              <% if ("BUY_NOW".equals(checkoutType)
+                                      && buyNowProductId != null
+                                      && !buyNowProductId.trim().isEmpty()) { %>
+
+                                  <input type="hidden"
+                                         name="productId"
+                                         value="<%= buyNowProductId %>">
+
+                              <% } %>
                             <div class="row g-3">
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="fullName">Full name</label>
@@ -257,7 +281,9 @@
                                     </div>
                                     <div class="flex-grow-1 min-w-0">
                                         <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
-                                            <h3 class="product-name h6 fw-bold mb-1">Cart item</h3>
+                                            <h3 class="product-name h6 fw-bold mb-1">
+                                                <%= item.getProductName() %>
+                                            </h3>
                                             <span class="fw-bold text-dark text-nowrap">₹<%= item.getSubtotal().setScale(2, java.math.RoundingMode.HALF_UP) %></span>
                                         </div>
                                         <div class="small text-secondary">Item subtotal</div>
@@ -291,7 +317,13 @@
                             <div class="d-flex align-items-center gap-2 mb-2"><i class="bi bi-shield-check text-success fs-5"></i><span class="fw-semibold">Shopping securely</span></div>
                             <div class="text-secondary">Your order should only be confirmed after the server has successfully created it.</div>
                         </div>
-                        <div class="text-center mt-3"><a class="small text-secondary text-decoration-none" href="<%= request.getContextPath() %>/viewCart"><i class="bi bi-arrow-left me-1"></i>Return to cart</a></div>
+                        <div class="text-center mt-3">
+                            <a class="small text-secondary text-decoration-none"
+                               href="<%= request.getContextPath() %>/userViewAllProduct">
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Continue shopping
+                            </a>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -303,7 +335,7 @@
 <footer class="qs-footer py-3 mt-auto">
     <div class="container text-center">
         <div class="footer-links mb-2"><a href="#conditions">Conditions of Use</a><span class="text-secondary">|</span><a href="#privacy">Privacy Notice</a><span class="text-secondary">|</span><a href="#help">Help &amp; Customer Service</a></div>
-        <p class="mb-0 text-secondary" style="font-size:.75rem">© 2026 QuickShop. All rights reserved.</p>
+        <p class="mb-0 text-secondary" style="font-size:.75rem"> © 2026 QuickShop.com dev - Mohan Patil.</p>
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
